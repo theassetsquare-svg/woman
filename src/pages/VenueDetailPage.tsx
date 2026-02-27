@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getVenueByRegionSlug, getRegionName, getVenuesByRegion } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
@@ -37,6 +37,52 @@ export default function VenueDetailPage() {
   const related = getVenuesByRegion(venue.region).filter((v) => v.id !== venue.id).slice(0, 3);
   const venueContent = getVenueContent(venue.id);
   const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.name + ' ' + getRegionName(venue.region))}`;
+  const BASE = 'https://woman-5nj.pages.dev';
+
+  // Inject BreadcrumbList + FAQPage JSON-LD
+  useEffect(() => {
+    const scripts: HTMLScriptElement[] = [];
+
+    // BreadcrumbList
+    const breadcrumb = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '홈', item: BASE },
+        { '@type': 'ListItem', position: 2, name: getRegionName(venue.region), item: `${BASE}/${venue.region}` },
+        { '@type': 'ListItem', position: 3, name: venue.name, item: `${BASE}${venuePath(venue)}` },
+      ],
+    };
+    const s1 = document.createElement('script');
+    s1.type = 'application/ld+json';
+    s1.dataset.dynamic = 'true';
+    s1.textContent = JSON.stringify(breadcrumb);
+    document.head.appendChild(s1);
+    scripts.push(s1);
+
+    // FAQPage (if content has FAQ)
+    if (venueContent && venueContent.faq.length > 0) {
+      const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: venueContent.faq.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+      };
+      const s2 = document.createElement('script');
+      s2.type = 'application/ld+json';
+      s2.dataset.dynamic = 'true';
+      s2.textContent = JSON.stringify(faqSchema);
+      document.head.appendChild(s2);
+      scripts.push(s2);
+    }
+
+    return () => {
+      scripts.forEach((s) => s.remove());
+    };
+  }, [venue, venueContent]);
 
   return (
     <div className="max-w-[760px] mx-auto px-5 md:px-8 py-12 md:py-16">

@@ -1,4 +1,4 @@
-import { venues, getRegionName, type Venue } from '../data/venues';
+import { venues, getRegionName, getVenueLabel, type Venue } from '../data/venues';
 
 interface SearchEntry {
   venue: Venue;
@@ -20,6 +20,9 @@ const index: SearchEntry[] = venues.map((v) => {
     getRegionName(v.region),
     v.region,
     ...v.tags,
+    v.seoArea + v.name,       // "강남보스턴"
+    getVenueLabel(v),          // "강남호빠 보스턴"
+    v.seoArea + '호빠',        // "강남호빠"
   ];
   return {
     venue: v,
@@ -44,12 +47,13 @@ export function searchVenues(query: string): SearchResult[] {
   const partialMatches: SearchResult[] = [];
   const seen = new Set<string>();
 
-  // Pass 1: exact name match
+  // Pass 1: exact name match (name or combined label)
   for (const entry of index) {
-    const nameNorm = normalize(entry.venue.name);
-    if (nameNorm === q) {
-      exactMatches.push({ venue: entry.venue, matchType: 'exact' });
-      seen.add(entry.venue.id);
+    const v = entry.venue;
+    const exactTokens = [v.name, v.seoArea + v.name, getVenueLabel(v)].map(normalize);
+    if (exactTokens.some((t) => t === q)) {
+      exactMatches.push({ venue: v, matchType: 'exact' });
+      seen.add(v.id);
     }
   }
 

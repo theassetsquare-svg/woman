@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { searchVenues, type SearchResult } from '../utils/searchIndex';
-import { getRegionName } from '../data/venues';
+import { getRegionName, getVenueLabel } from '../data/venues';
 import { venuePath } from '../utils/slug';
 
 export default function SearchBox() {
@@ -9,6 +9,7 @@ export default function SearchBox() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (query.trim().length === 0) {
@@ -45,6 +46,14 @@ export default function SearchBox() {
           placeholder="업소명으로 검색 (예: 보스턴, 미슐랭, 비스트...)"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && results.length > 0) {
+              e.preventDefault();
+              setOpen(false);
+              setQuery('');
+              navigate(venuePath(results[0].venue));
+            }
+          }}
           onFocus={() => results.length > 0 && setOpen(true)}
           className="w-full bg-white/95 backdrop-blur-sm text-navy rounded-xl pl-12 pr-5 py-4 text-base placeholder-slate-400 border-2 border-transparent focus:outline-none focus:border-accent/40 focus:bg-white shadow-xl shadow-black/10 transition-all"
           autoComplete="off"
@@ -65,7 +74,7 @@ export default function SearchBox() {
               >
                 <div className="min-w-0">
                   <span className="text-base font-bold text-navy block truncate">
-                    {r.venue.name}
+                    {getVenueLabel(r.venue)}
                   </span>
                   <span className="text-sm text-text-muted">
                     {getRegionName(r.venue.region)} · {r.venue.area}

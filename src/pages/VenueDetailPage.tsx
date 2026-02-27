@@ -1,13 +1,14 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
-import { getVenueById, getRegionName, getVenuesByRegion } from '../data/venues';
+import { getVenueByRegionSlug, getRegionName, getVenuesByRegion } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
+import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
 
 export default function VenueDetailPage() {
-  const { id } = useParams<{ id: string }>();
-  const venue = id ? getVenueById(id) : undefined;
+  const { region, slug } = useParams<{ region: string; slug: string }>();
+  const venue = region && slug ? getVenueByRegionSlug(region, slug) : undefined;
 
   // OG meta (must be called unconditionally)
   useOgMeta(
@@ -16,7 +17,7 @@ export default function VenueDetailPage() {
           title: `${venue.name} — ${getRegionName(venue.region)} ${venue.area}`,
           description: venue.description,
           image: `/og/${venue.id}.svg`,
-          url: `/venue/${venue.id}`,
+          url: venuePath(venue),
         }
       : { title: '업소를 찾을 수 없습니다', description: '', image: '', url: '' }
   );
@@ -43,7 +44,7 @@ export default function VenueDetailPage() {
       <nav className="flex items-center gap-2 text-[15px] text-text-muted mb-8" aria-label="경로">
         <Link to="/" target="_blank" rel="noopener noreferrer" className="hover:text-navy transition-colors">홈</Link>
         <span aria-hidden="true">/</span>
-        <Link to={`/region/${venue.region}`} target="_blank" rel="noopener noreferrer" className="hover:text-navy transition-colors">{getRegionName(venue.region)}</Link>
+        <Link to={`/${venue.region}`} target="_blank" rel="noopener noreferrer" className="hover:text-navy transition-colors">{getRegionName(venue.region)}</Link>
         <span aria-hidden="true">/</span>
         <span className="text-navy font-medium">{venue.name}</span>
       </nav>

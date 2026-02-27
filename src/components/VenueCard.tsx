@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import type { Venue } from '../data/venues';
 import { getRegionName } from '../data/venues';
+import { venuePath } from '../utils/slug';
 
 export default function VenueCard({ venue }: { venue: Venue }) {
   return (
     <Link
-      to={`/venue/${venue.id}`}
+      to={venuePath(venue)}
       target="_blank"
       rel="noopener noreferrer"
       className="venue-card group"

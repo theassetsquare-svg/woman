@@ -397,3 +397,14 @@ export function getRegionName(regionId: string): string {
 export function getRegionCount(regionId: string): number {
   return venues.filter((v) => v.region === regionId).length;
 }
+
+/**
+ * Reverse-lookup a venue by region + deduplicated slug.
+ * Handles both cases:
+ *  - region-prefixed IDs:  region='seoul', slug='boston' → id='seoul-boston'
+ *  - non-matching prefix:  region='gyeonggi', slug='suwon-beast' → id='suwon-beast'
+ */
+export function getVenueByRegionSlug(region: string, slug: string): Venue | undefined {
+  return venues.find((v) => v.id === `${region}-${slug}` && v.region === region)
+    || venues.find((v) => v.id === slug && v.region === region);
+}

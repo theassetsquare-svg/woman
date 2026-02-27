@@ -42,7 +42,7 @@ export default function RegionPage() {
         {regions.map((r) => (
           <Link
             key={r.id}
-            to={`/region/${r.id}`}
+            to={`/${r.id}`}
             target="_blank"
             rel="noopener noreferrer"
             className={`px-5 py-2.5 rounded-full text-[15px] font-semibold transition-all ${

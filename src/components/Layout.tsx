@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <NavLink to="/venues" current={location.pathname}>전체 목록</NavLink>
             <span className="w-px h-5 bg-border mx-2" aria-hidden="true" />
             {regions.map((r) => (
-              <NavLink key={r.id} to={`/region/${r.id}`} current={location.pathname}>
+              <NavLink key={r.id} to={`/${r.id}`} current={location.pathname}>
                 {r.name}
               </NavLink>
             ))}
@@ -44,7 +44,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <ul className="space-y-2.5">
                 {regions.map((r) => (
                   <li key={r.id}>
-                    <Link to={`/region/${r.id}`} target="_blank" rel="noopener noreferrer" className="text-[15px] text-slate-400 hover:text-white transition-colors">
+                    <Link to={`/${r.id}`} target="_blank" rel="noopener noreferrer" className="text-[15px] text-slate-400 hover:text-white transition-colors">
                       {r.name} ({getRegionCount(r.id)})
                     </Link>
                   </li>
@@ -125,7 +125,7 @@ function MobileMenu() {
           {regions.map((r) => (
             <MobileLink
               key={r.id}
-              to={`/region/${r.id}`}
+              to={`/${r.id}`}
               label={`${r.emoji} ${r.name}`}
               current={location.pathname}
               onClick={() => setOpen(false)}

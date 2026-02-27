@@ -63,7 +63,7 @@ export default function HomePage() {
             return (
               <Link
                 key={r.id}
-                to={`/region/${r.id}`}
+                to={`/${r.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-surface border border-border rounded-2xl p-6 text-center hover:shadow-lg hover:border-accent/30 transition-all group"
@@ -90,7 +90,7 @@ export default function HomePage() {
                 {r.emoji} {r.name} 호빠
               </h2>
               <Link
-                to={`/region/${r.id}`}
+                to={`/${r.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[15px] text-accent hover:text-accent-hover font-semibold"

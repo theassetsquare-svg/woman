@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { searchVenues, type SearchResult } from '../utils/searchIndex';
 import { getRegionName } from '../data/venues';
+import { venuePath } from '../utils/slug';
 
 export default function SearchBox() {
   const [query, setQuery] = useState('');
@@ -52,7 +53,7 @@ export default function SearchBox() {
           {results.map((r) => (
             <li key={r.venue.id} role="option">
               <a
-                href={`/venue/${r.venue.id}`}
+                href={venuePath(r.venue)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between px-5 py-3.5 hover:bg-purple-50 transition-colors border-b border-border/50 last:border-b-0 no-underline"

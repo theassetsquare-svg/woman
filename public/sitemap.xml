@@ -12,212 +12,183 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  <!-- Region pages -->
   <url>
-    <loc>https://woman-5nj.pages.dev/region/seoul</loc>
+    <loc>https://woman-5nj.pages.dev/seoul</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/region/busan</loc>
+    <loc>https://woman-5nj.pages.dev/busan</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/region/gyeonggi</loc>
+    <loc>https://woman-5nj.pages.dev/gyeonggi</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/region/daejeon</loc>
+    <loc>https://woman-5nj.pages.dev/daejeon</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/region/gwangju</loc>
+    <loc>https://woman-5nj.pages.dev/gwangju</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/region/changwon</loc>
+    <loc>https://woman-5nj.pages.dev/changwon</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- Seoul venues -->
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/seoul</loc>
+    <loc>https://woman-5nj.pages.dev/seoul/boston</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/busan</loc>
+    <loc>https://woman-5nj.pages.dev/seoul/i</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/gyeonggi</loc>
+    <loc>https://woman-5nj.pages.dev/seoul/flirting</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/daejeon</loc>
+    <loc>https://woman-5nj.pages.dev/seoul/wclub</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/gwangju</loc>
+    <loc>https://woman-5nj.pages.dev/seoul/123</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/changwon</loc>
+    <loc>https://woman-5nj.pages.dev/seoul/372</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Busan venues -->
+  <url>
+    <loc>https://woman-5nj.pages.dev/busan/michelin</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/seoul-boston</loc>
+    <loc>https://woman-5nj.pages.dev/busan/q</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/seoul-i</loc>
+    <loc>https://woman-5nj.pages.dev/busan/david</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/seoul-flirting</loc>
+    <loc>https://woman-5nj.pages.dev/busan/aura</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/seoul-wclub</loc>
+    <loc>https://woman-5nj.pages.dev/busan/menz</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/seoul-123</loc>
+    <loc>https://woman-5nj.pages.dev/busan/w</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/seoul-372</loc>
+    <loc>https://woman-5nj.pages.dev/busan/theking</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/busan-michelin</loc>
+    <loc>https://woman-5nj.pages.dev/busan/js</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/busan-q</loc>
+    <loc>https://woman-5nj.pages.dev/busan/michelin-jisung</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Gyeonggi/Suwon venues -->
+  <url>
+    <loc>https://woman-5nj.pages.dev/gyeonggi/suwon-beast</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/busan-david</loc>
+    <loc>https://woman-5nj.pages.dev/gyeonggi/suwon-maid</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/busan-aura</loc>
+    <loc>https://woman-5nj.pages.dev/gyeonggi/suwon-play</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/busan-menz</loc>
+    <loc>https://woman-5nj.pages.dev/gyeonggi/suwon-lasvegas</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Daejeon venues -->
+  <url>
+    <loc>https://woman-5nj.pages.dev/daejeon/eclipse</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/busan-w</loc>
+    <loc>https://woman-5nj.pages.dev/daejeon/tombar</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+  <!-- Gwangju venues -->
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/busan-theking</loc>
+    <loc>https://woman-5nj.pages.dev/gwangju/w</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+  <!-- Changwon venues -->
   <url>
-    <loc>https://woman-5nj.pages.dev/venue/busan-js</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://woman-5nj.pages.dev/venue/busan-michelin-jisung</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://woman-5nj.pages.dev/venue/suwon-beast</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://woman-5nj.pages.dev/venue/suwon-maid</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://woman-5nj.pages.dev/venue/suwon-play</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://woman-5nj.pages.dev/venue/suwon-lasvegas</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://woman-5nj.pages.dev/venue/daejeon-eclipse</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://woman-5nj.pages.dev/venue/daejeon-tombar</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://woman-5nj.pages.dev/venue/gwangju-w</loc>
-    <lastmod>2026-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://woman-5nj.pages.dev/venue/changwon-avengers</loc>
+    <loc>https://woman-5nj.pages.dev/changwon/avengers</loc>
     <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

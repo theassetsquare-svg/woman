@@ -1,9 +1,17 @@
 import { useState, useMemo } from 'react';
 import { venues } from '../data/venues';
+import { useOgMeta } from '../hooks/useOgMeta';
 import VenueCard from '../components/VenueCard';
 import RegionFilter from '../components/RegionFilter';
 
 export default function VenueListPage() {
+  useOgMeta({
+    title: `호빠 추천 순위 — 전국 ${venues.length}곳 비교`,
+    description: `전국 호빠 ${venues.length}곳 — 서울, 부산, 수원, 대전, 광주, 창원 영업중 호스트바 비교`,
+    image: '',
+    url: '/venues',
+  });
+
   const [selectedRegion, setSelectedRegion] = useState('all');
   const [search, setSearch] = useState('');
 
@@ -25,7 +33,7 @@ export default function VenueListPage() {
       <div className="mb-10">
         <h1 className="mb-3">전체 호빠 목록</h1>
         <p className="text-text-muted text-base leading-relaxed max-w-xl">
-          2026년 영업 확인 완료, 전국 {venues.length}개 업소를 검색하고 비교해 보세요.
+          전국 {venues.length}개 업소를 검색하고 비교해 보세요.
         </p>
       </div>
 

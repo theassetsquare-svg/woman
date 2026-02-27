@@ -54,8 +54,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h4 className="text-base font-bold text-white mb-4">안내</h4>
               <ul className="space-y-2.5 text-[15px] text-slate-400">
-                <li>2026년 영업 확인 완료</li>
-                <li>가격은 변동 가능</li>
+                <li>영업 확인된 업소만 수록</li>
+                <li>영업시간은 변동 가능</li>
                 <li>방문 전 전화 확인 권장</li>
               </ul>
             </div>
@@ -63,12 +63,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <h4 className="text-base font-bold text-white mb-4">호빠 디렉토리</h4>
               <p className="text-[15px] text-slate-400 leading-relaxed">
                 전국 호빠 정보를 한곳에서.<br />
-                2026년 영업 확인된 업소만 수록합니다.
+                영업 확인된 업소만 수록합니다.
               </p>
             </div>
           </div>
           <div className="border-t border-slate-700 pt-6 text-center text-sm text-slate-500">
-            &copy; 2026 호빠 디렉토리. 본 사이트의 정보는 참고용이며, 정확한 정보는 각 업소에 직접 확인하시기 바랍니다.
+            &copy; 호빠 디렉토리. 본 사이트의 정보는 참고용이며, 정확한 정보는 각 업소에 직접 확인하시기 바랍니다.
           </div>
         </div>
       </footer>

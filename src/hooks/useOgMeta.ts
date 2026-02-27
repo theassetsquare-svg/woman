@@ -46,14 +46,14 @@ export function useOgMeta({ title, description, image, url }: OgMetaOptions) {
 
     return () => {
       // Reset to defaults on unmount
-      document.title = '호빠 디렉토리 | 2026 전국 호스트바 정보';
-      setMeta('og:title', '호빠 디렉토리 | 2026 전국 호스트바 정보');
-      setMeta('og:description', '2026년 전국 호빠 디렉토리 - 서울, 부산, 수원, 대전, 광주, 창원 영업중 호스트바 정보');
+      document.title = '전국 호빠 추천 TOP 25 — 서울·부산·수원 완벽 가이드 | 호빠 디렉토리';
+      setMeta('og:title', '전국 호빠 추천 TOP 25 — 서울·부산·수원 완벽 가이드');
+      setMeta('og:description', '전국 호빠 디렉토리 — 서울, 부산, 수원, 대전, 광주, 창원 영업중 호스트바 정보');
       setMeta('og:image', '');
       setMeta('og:url', BASE_URL);
       setMeta('twitter:card', 'summary');
-      setMeta('twitter:title', '호빠 디렉토리 | 2026 전국 호스트바 정보');
-      setMeta('twitter:description', '2026년 전국 호빠 디렉토리');
+      setMeta('twitter:title', '전국 호빠 추천 TOP 25 — 서울·부산·수원 완벽 가이드');
+      setMeta('twitter:description', '전국 호빠 디렉토리 — 영업중 호스트바 정보');
       setMeta('twitter:image', '');
     };
   }, [title, description, image, url]);

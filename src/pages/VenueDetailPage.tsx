@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getVenueByRegionSlug, getRegionName, getVenuesByRegion } from '../data/venues';
+import { getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
@@ -11,10 +11,12 @@ export default function VenueDetailPage() {
   const venue = region && slug ? getVenueByRegionSlug(region, slug) : undefined;
 
   // OG meta (must be called unconditionally)
+  const venueLabel = venue ? getVenueLabel(venue) : '';
+  const hook = venue ? getVenueHook(venue.id) : '';
   useOgMeta(
     venue
       ? {
-          title: `${venue.name} — ${getRegionName(venue.region)} ${venue.area}`,
+          title: `${venueLabel} — ${hook}`,
           description: venue.description,
           image: `/og/${venue.id}.svg`,
           url: venuePath(venue),
@@ -109,7 +111,7 @@ export default function VenueDetailPage() {
         </div>
 
         {/* 2) H1 = Store name */}
-        <h1 className="text-3xl md:text-[2.5rem] leading-tight mb-3">{venue.name}</h1>
+        <h1 className="text-3xl md:text-[2.5rem] leading-tight mb-3">{venueLabel}</h1>
 
         {/* 3) Quick meta row */}
         <div className="flex flex-wrap items-center gap-3 mb-6">
@@ -118,9 +120,6 @@ export default function VenueDetailPage() {
           </span>
           <span className="text-text-muted text-[15px] font-medium">
             {getRegionName(venue.region)} · {venue.area}
-          </span>
-          <span className="text-text-light text-sm">
-            2026년 확인 완료
           </span>
         </div>
 
@@ -164,7 +163,6 @@ export default function VenueDetailPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <InfoRow icon="📍" label="주소" value={venue.address} />
-          <InfoRow icon="💰" label="가격대" value={venue.price} highlight />
           <InfoRow icon="🕐" label="영업시간" value={venue.hours} />
           <InfoRow icon="📞" label="연락처" value={venue.phone} />
         </div>

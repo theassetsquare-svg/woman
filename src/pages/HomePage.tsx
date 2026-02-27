@@ -1,27 +1,35 @@
 import { Link } from 'react-router-dom';
 import { regions, venues, getRegionCount, getVenuesByRegion } from '../data/venues';
+import { useOgMeta } from '../hooks/useOgMeta';
 import VenueCard from '../components/VenueCard';
 import SearchBox from '../components/SearchBox';
 
 export default function HomePage() {
+  useOgMeta({
+    title: '전국 호빠 추천 TOP 25 — 서울·부산·수원 완벽 가이드',
+    description: '전국 호빠 디렉토리 — 서울, 부산, 수원, 대전, 광주, 창원 영업중 호스트바 정보',
+    image: '',
+    url: '',
+  });
+
   return (
     <div>
       {/* Hero */}
       <section className="bg-navy text-white">
         <div className="max-w-6xl mx-auto px-5 md:px-8 py-20 md:py-28 text-center">
           <p className="text-accent text-sm font-bold tracking-widest uppercase mb-4">
-            2026 NIGHTLIFE DIRECTORY
+            NIGHTLIFE DIRECTORY
           </p>
           <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-white leading-tight mb-5">
-            전국 호빠 디렉토리
+            전국 호빠 추천 TOP {venues.length}
           </h1>
           <p className="text-lg md:text-xl text-slate-300 mb-3 leading-relaxed">
             서울 · 부산 · 수원 · 대전 · 광주 · 창원
           </p>
           <p className="text-base text-slate-400 mb-10 max-w-xl mx-auto leading-relaxed">
-            2026년 영업 확인 완료,{' '}
+            영업 확인된{' '}
             <span className="text-white font-bold">{venues.length}개</span> 업소의
-            위치, 가격, 영업시간 정보를 제공합니다.
+            위치, 영업시간 정보를 한눈에 비교하세요.
           </p>
           {/* Search Box */}
           <div className="mb-8">
@@ -54,8 +62,8 @@ export default function HomePage() {
         <div className="bg-surface border border-border rounded-2xl p-8 md:p-10">
           <p className="text-sm text-accent font-bold tracking-widest uppercase mb-3">에디터 안내</p>
           <p className="text-text text-base leading-relaxed">
-            본 디렉토리는 2026년 직접 영업 여부를 확인한 전국 {venues.length}개 호빠만 수록했습니다.
-            폐업·휴업 업소는 제외했으며, 가격과 영업시간은 각 업소에 전화 확인한 정보입니다.
+            본 디렉토리는 직접 영업 여부를 확인한 전국 {venues.length}개 호빠만 수록했습니다.
+            폐업·휴업 업소는 제외했으며, 영업시간은 각 업소에 전화 확인한 정보입니다.
             방문 전 한 번 더 전화로 확인하시길 권장합니다.
           </p>
         </div>
@@ -122,9 +130,9 @@ export default function HomePage() {
       {/* Info Banner */}
       <section className="max-w-6xl mx-auto px-5 md:px-8 py-16">
         <div className="bg-navy rounded-2xl p-10 md:p-14 text-center">
-          <h3 className="text-2xl font-extrabold text-white mb-4">2026년 영업 확인 완료</h3>
+          <h3 className="text-2xl font-extrabold text-white mb-4">영업 확인된 업소만 수록</h3>
           <p className="text-slate-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            본 디렉토리는 2026년 영업 확인된 호빠만 수록하고 있습니다.
+            본 디렉토리는 영업 확인된 호빠만 수록하고 있습니다.
             폐업 및 휴업 업소는 포함하지 않으며, 방문 전 전화 확인을 권장합니다.
           </p>
         </div>

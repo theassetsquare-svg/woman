@@ -319,8 +319,8 @@ if (paraDensityFails === 0) pass('Per-paragraph name density: all ≤2');
 // ══════════════════════════════════════════
 console.log('(15) AI summary completeness...');
 const summaryCount = (contentSource.match(/summary:\s*\[/g) || []).length;
-if (summaryCount === 23) pass('AI Summary: all 23 venues');
-else fail('content', `AI Summary: only ${summaryCount}/23`);
+if (summaryCount === 25) pass('AI Summary: all 25 venues');
+else fail('content', `AI Summary: only ${summaryCount}/25`);
 
 // ══════════════════════════════════════════
 // REPORT

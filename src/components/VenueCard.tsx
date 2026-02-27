@@ -14,7 +14,6 @@ export default function VenueCard({ venue }: { venue: Venue }) {
       {/* Thumbnail */}
       <div className="venue-card-thumb" aria-hidden="true">
         <span className="text-3xl">{getRegionEmoji(venue.region)}</span>
-        <span className="text-[11px] font-bold text-white/80 mt-1">{venue.price}</span>
       </div>
 
       {/* Text content */}

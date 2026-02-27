@@ -1,6 +1,6 @@
-# 호빠 디렉토리 — 2026 전국 호스트바 정보
+# 호빠 디렉토리 — 전국 호스트바 정보
 
-> 2026년 영업 확인된 전국 호빠(호스트바) 25곳의 위치, 가격, 영업시간, 상세 리뷰 정보를 제공하는 디렉토리 사이트입니다.
+> 영업 확인된 전국 호빠(호스트바) 25곳의 위치, 영업시간, 상세 리뷰 정보를 제공하는 디렉토리 사이트입니다.
 
 ## Sitemap
 - https://woman-5nj.pages.dev/sitemap.xml
@@ -25,41 +25,41 @@
 - https://woman-5nj.pages.dev/changwon (창원 1곳)
 
 ### 서울 호빠
-- https://woman-5nj.pages.dev/seoul/boston (보스턴 — 강남, 160,000원~)
-- https://woman-5nj.pages.dev/seoul/i (아이(I) — 역삼, 250,000원~)
-- https://woman-5nj.pages.dev/seoul/flirting (플러팅진혁 — 강남, 140,000원~)
-- https://woman-5nj.pages.dev/seoul/wclub (W클럽 — 건대, 140,000원~)
-- https://woman-5nj.pages.dev/seoul/123 (원투쓰리 — 종로, 130,000원~)
-- https://woman-5nj.pages.dev/seoul/372 (37.2 — 홍대, 별도문의)
-- https://woman-5nj.pages.dev/seoul/blackhole (블랙홀 — 역삼, 200,000원~)
-- https://woman-5nj.pages.dev/seoul/bini (빈이 — 장안동, 170,000원~)
+- https://woman-5nj.pages.dev/seoul/boston (강남호빠 보스턴)
+- https://woman-5nj.pages.dev/seoul/i (강남호빠 아이(I))
+- https://woman-5nj.pages.dev/seoul/flirting (강남호빠 플러팅진혁)
+- https://woman-5nj.pages.dev/seoul/wclub (건대호빠 W클럽)
+- https://woman-5nj.pages.dev/seoul/123 (종로호빠 원투쓰리)
+- https://woman-5nj.pages.dev/seoul/372 (홍대호빠 37.2)
+- https://woman-5nj.pages.dev/seoul/blackhole (강남호빠 블랙홀)
+- https://woman-5nj.pages.dev/seoul/bini (장안동호빠 빈이)
 
 ### 부산 호빠
-- https://woman-5nj.pages.dev/busan/michelin (미슐랭 — 해운대, 250,000원~)
-- https://woman-5nj.pages.dev/busan/q (큐(Q) — 해운대, 180,000원~)
-- https://woman-5nj.pages.dev/busan/david (다비드바 — 해운대, 129,000원~)
-- https://woman-5nj.pages.dev/busan/aura (아우라 — 수영구, 100,000원~)
-- https://woman-5nj.pages.dev/busan/menz (맨즈 — 광안리, 100,000원~)
-- https://woman-5nj.pages.dev/busan/w (더블유(W) — 연산동, 130,000원~)
-- https://woman-5nj.pages.dev/busan/theking (더킹 — 연제구, 90,000원~)
-- https://woman-5nj.pages.dev/busan/js (제이에스(JS) — 하단, 120,000원~)
-- https://woman-5nj.pages.dev/busan/michelin-jisung (미슐랭(지성) — 해운대, 250,000원~)
+- https://woman-5nj.pages.dev/busan/michelin (해운대호빠 미슐랭)
+- https://woman-5nj.pages.dev/busan/q (해운대호빠 큐(Q))
+- https://woman-5nj.pages.dev/busan/david (해운대호빠 다비드바)
+- https://woman-5nj.pages.dev/busan/aura (부산호빠 아우라)
+- https://woman-5nj.pages.dev/busan/menz (부산호빠 맨즈)
+- https://woman-5nj.pages.dev/busan/w (부산호빠 더블유(W))
+- https://woman-5nj.pages.dev/busan/theking (부산호빠 더킹)
+- https://woman-5nj.pages.dev/busan/js (부산호빠 제이에스(JS))
+- https://woman-5nj.pages.dev/busan/michelin-jisung (해운대호빠 미슐랭(지성))
 
 ### 경기/수원 호빠
-- https://woman-5nj.pages.dev/gyeonggi/suwon-beast (비스트 — 인계동, 170,000원~)
-- https://woman-5nj.pages.dev/gyeonggi/suwon-maid (메이드 — 인계동, 180,000원~)
-- https://woman-5nj.pages.dev/gyeonggi/suwon-play (플레이 가라오케 — 인계동, 200,000원~)
-- https://woman-5nj.pages.dev/gyeonggi/suwon-lasvegas (라스베가스 — 인계동, 150,000원~)
+- https://woman-5nj.pages.dev/gyeonggi/suwon-beast (수원호빠 비스트)
+- https://woman-5nj.pages.dev/gyeonggi/suwon-maid (수원호빠 메이드)
+- https://woman-5nj.pages.dev/gyeonggi/suwon-play (수원호빠 플레이 가라오케)
+- https://woman-5nj.pages.dev/gyeonggi/suwon-lasvegas (수원호빠 라스베가스)
 
 ### 대전 호빠
-- https://woman-5nj.pages.dev/daejeon/eclipse (이클립스 — 둔산동)
-- https://woman-5nj.pages.dev/daejeon/tombar (톰바 — 봉명동)
+- https://woman-5nj.pages.dev/daejeon/eclipse (대전호빠 이클립스)
+- https://woman-5nj.pages.dev/daejeon/tombar (대전호빠 톰바)
 
 ### 광주 호빠
-- https://woman-5nj.pages.dev/gwangju/w (W — 상무지구)
+- https://woman-5nj.pages.dev/gwangju/w (광주호빠 W)
 
 ### 창원 호빠
-- https://woman-5nj.pages.dev/changwon/avengers (어벤져스 — 상남동, 45,000원~)
+- https://woman-5nj.pages.dev/changwon/avengers (창원호빠 어벤져스)
 
 ## Content Structure per Venue Page
 Each venue detail page contains:

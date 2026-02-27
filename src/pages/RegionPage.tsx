@@ -1,11 +1,32 @@
 import { useParams, Link } from 'react-router-dom';
 import { regions, getVenuesByRegion, getRegionName } from '../data/venues';
+import { useOgMeta } from '../hooks/useOgMeta';
 import VenueCard from '../components/VenueCard';
 
 export default function RegionPage() {
   const { regionId } = useParams<{ regionId: string }>();
   const region = regions.find((r) => r.id === regionId);
   const venueList = regionId ? getVenuesByRegion(regionId) : [];
+
+  const regionAreas: Record<string, string> = {
+    seoul: '강남·건대·종로 총정리',
+    busan: '해운대·광안리 총정리',
+    gyeonggi: '수원 인계동 총정리',
+    daejeon: '둔산동·봉명동 총정리',
+    gwangju: '상무지구 대표',
+    changwon: '상남동 완벽 가이드',
+  };
+
+  useOgMeta(
+    region
+      ? {
+          title: `${region.name}호빠 추천 TOP ${venueList.length} — ${regionAreas[region.id] ?? ''}`,
+          description: `${region.name} 영업중 호빠 ${venueList.length}곳 — 위치, 영업시간 비교`,
+          image: '',
+          url: `/${region.id}`,
+        }
+      : { title: '지역을 찾을 수 없습니다', description: '', image: '', url: '' }
+  );
 
   if (!region) {
     return (
@@ -33,7 +54,7 @@ export default function RegionPage() {
           {region.emoji} {region.name} 호빠
         </h1>
         <p className="text-text-muted text-base leading-relaxed max-w-xl">
-          2026년 영업 확인 완료 — {venueList.length}개 업소 정보를 확인하세요.
+          영업 확인된 {venueList.length}개 업소 정보를 확인하세요.
         </p>
       </div>
 

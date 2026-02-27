@@ -4,10 +4,17 @@ import HomePage from './pages/HomePage';
 import VenueListPage from './pages/VenueListPage';
 import VenueDetailPage from './pages/VenueDetailPage';
 import RegionPage from './pages/RegionPage';
+import { useCanonical } from './hooks/useCanonical';
+
+function CanonicalUpdater() {
+  useCanonical();
+  return null;
+}
 
 function App() {
   return (
     <BrowserRouter>
+      <CanonicalUpdater />
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />

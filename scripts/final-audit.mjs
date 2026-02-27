@@ -207,8 +207,8 @@ else fail('seo', 'RSS feed missing');
 // ── (a) HOMEPAGE/CATEGORY AI FEEL ──
 console.log('(a) Homepage/Category page audit...');
 const homePage = readFileSync(resolve(root, 'src/pages/HomePage.tsx'), 'utf-8');
-if (!homePage.includes('editor') && !homePage.includes('에디터') && !homePage.includes('안내')) {
-  fail('ai-pattern', 'Homepage lacks editorial/human intro section');
+if (!homePage.includes('첫 방문') && !homePage.includes('실수') && !homePage.includes('가이드')) {
+  fail('ai-pattern', 'Homepage lacks hooking/guide section');
 }
 
 const regionPage = readFileSync(resolve(root, 'src/pages/RegionPage.tsx'), 'utf-8');

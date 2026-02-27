@@ -25,7 +25,7 @@ export default function VenueListPage() {
       <div className="mb-10">
         <h1 className="mb-3">전체 호빠 목록</h1>
         <p className="text-text-muted text-base leading-relaxed max-w-xl">
-          2026년 기준 영업 확인된 전국 {venues.length}개 업소를 검색하고 비교해 보세요.
+          2026년 영업 확인 완료, 전국 {venues.length}개 업소를 검색하고 비교해 보세요.
         </p>
       </div>
 

@@ -8,6 +8,7 @@ export default function VenueCard({ venue }: { venue: Venue }) {
       to={`/venue/${venue.id}`}
       className="block bg-white border border-border rounded-2xl p-6 hover:shadow-lg hover:border-accent/30 transition-all group"
     >
+      {/* Header: Name + Badge */}
       <div className="flex items-start justify-between mb-3">
         <div>
           <h3 className="text-lg font-bold text-navy group-hover:text-accent transition-colors">
@@ -22,19 +23,20 @@ export default function VenueCard({ venue }: { venue: Venue }) {
         </span>
       </div>
 
-      <p className="text-[15px] text-text-muted leading-relaxed mb-4 line-clamp-2">{venue.description}</p>
+      {/* Hook: emotional 2-line max */}
+      <p className="text-[15px] text-text leading-relaxed mb-3 line-clamp-2 whitespace-pre-line font-medium">
+        {venue.card_hook}
+      </p>
 
-      <div className="flex flex-wrap gap-1.5 mb-4">
-        {venue.tags.slice(0, 3).map((tag) => (
-          <span key={tag} className="text-xs bg-slate-100 text-text-muted px-2.5 py-1 rounded-md font-medium">
-            #{tag}
-          </span>
-        ))}
-      </div>
+      {/* Value: practical 1-line */}
+      <p className="text-sm text-text-muted mb-4 truncate">
+        {venue.card_value}
+      </p>
 
+      {/* Tags: compact 1-line */}
       <div className="flex items-center justify-between pt-3 border-t border-border">
-        <span className="text-accent font-bold text-base">{venue.price}</span>
-        <span className="text-text-light text-sm">{venue.hours}</span>
+        <span className="text-sm text-text-light truncate">{venue.card_tags}</span>
+        <span className="text-accent font-bold text-base whitespace-nowrap ml-3">{venue.price}</span>
       </div>
     </Link>
   );

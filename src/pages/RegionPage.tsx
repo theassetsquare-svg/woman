@@ -33,7 +33,7 @@ export default function RegionPage() {
           {region.emoji} {region.name} 호빠
         </h1>
         <p className="text-text-muted text-base leading-relaxed max-w-xl">
-          2026년 기준 영업 확인된 {venueList.length}개 업소 정보를 확인하세요.
+          2026년 영업 확인 완료 — {venueList.length}개 업소 정보를 확인하세요.
         </p>
       </div>
 

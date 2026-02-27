@@ -18,7 +18,7 @@ export default function HomePage() {
             서울 · 부산 · 수원 · 대전 · 광주 · 창원
           </p>
           <p className="text-base text-slate-400 mb-10 max-w-xl mx-auto leading-relaxed">
-            2026년 기준 영업 확인된{' '}
+            2026년 영업 확인 완료,{' '}
             <span className="text-white font-bold">{venues.length}개</span> 업소의
             위치, 가격, 영업시간 정보를 제공합니다.
           </p>
@@ -44,7 +44,7 @@ export default function HomePage() {
         <div className="text-center mb-12">
           <h2 className="text-navy mb-3">지역별 호빠</h2>
           <p className="text-text-muted text-base max-w-lg mx-auto leading-relaxed">
-            원하는 지역을 선택하면 해당 지역의 모든 업소 정보를 확인할 수 있습니다.
+            원하는 지역을 선택하면 그 지역의 모든 업소 정보를 확인할 수 있습니다.
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -98,7 +98,7 @@ export default function HomePage() {
         <div className="bg-navy rounded-2xl p-10 md:p-14 text-center">
           <h3 className="text-2xl font-extrabold text-white mb-4">2026년 영업 확인 완료</h3>
           <p className="text-slate-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            본 디렉토리는 2026년 기준 영업 중인 호빠만 수록하고 있습니다.
+            본 디렉토리는 2026년 영업 확인된 호빠만 수록하고 있습니다.
             폐업 및 휴업 업소는 포함하지 않으며, 방문 전 전화 확인을 권장합니다.
           </p>
         </div>

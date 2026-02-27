@@ -66,7 +66,7 @@ export default function VenueDetailPage() {
       {/* Notice */}
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-12" role="alert">
         <p className="text-[15px] text-amber-800 leading-relaxed">
-          <strong>안내:</strong> 본 정보는 2026년 기준이며, 가격 및 영업시간은 변동될 수 있습니다. 방문 전 반드시 전화로 확인하시기 바랍니다.
+          <strong>안내:</strong> 본 정보는 2026년 확인 자료이며, 가격 및 영업시간은 변동될 수 있습니다. 방문 전 반드시 전화로 확인하시기 바랍니다.
         </p>
       </div>
 

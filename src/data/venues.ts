@@ -9,6 +9,9 @@ export interface Venue {
   hours: string;
   phone: string;
   tags: string[];
+  card_hook: string;
+  card_value: string;
+  card_tags: string;
 }
 
 export const regions = [
@@ -33,6 +36,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '0507-0094-1200',
     tags: ['강남', '프리미엄', '12년전통'],
+    card_hook: '강남 테헤란로, 12년째 같은 자리.\n한 번 온 손님이 다시 찾는 이유가 있습니다.',
+    card_value: '보스턴 — 강남역 도보 5분, 정찰제 운영',
+    card_tags: '강남 · 12년전통 · 정찰제',
   },
   {
     id: 'seoul-i',
@@ -45,6 +51,9 @@ export const venues: Venue[] = [
     hours: 'PM 8:00 ~ AM 6:00',
     phone: '별도문의',
     tags: ['역삼', '하이엔드', 'VIP', '17년전통'],
+    card_hook: '조선호텔 뒷골목, 17년 무사고 운영.\n재방문율 업계 1위 — 아는 사람만 오는 곳.',
+    card_value: '아이(I) — VIP 전담 시스템, 새벽 6시까지',
+    card_tags: '역삼 · VIP전담 · 17년경력',
   },
   {
     id: 'seoul-flirting',
@@ -57,6 +66,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['강남', '무한초이스', '인기'],
+    card_hook: '강남대로 한복판, 14만원대로 무한초이스.\n선수 교체 눈치 볼 필요 없는 시스템.',
+    card_value: '플러팅진혁 — 무한초이스 포함 14만원~',
+    card_tags: '강남 · 무한초이스 · 가성비',
   },
   {
     id: 'seoul-wclub',
@@ -69,6 +81,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['건대', '10년전통', '트렌디'],
+    card_hook: '건대입구역 2번 출구, 10년 연속 생존.\n20대 후반 직장인 모임에 딱 맞는 에너지.',
+    card_value: 'W클럽 — 건대 도보 3분, 14만원~',
+    card_tags: '건대 · 20대후반 · 활기찬밤',
   },
   {
     id: 'seoul-123',
@@ -81,6 +96,9 @@ export const venues: Venue[] = [
     hours: 'PM 8:30 ~ AM 5:00',
     phone: '별도문의',
     tags: ['종로', '콜1위', '클래식'],
+    card_hook: '종로 낙원동, 콜 예약 1위에는 이유가 있다.\n떠들썩함 대신 대화에 집중할 수 있는 밤.',
+    card_value: '원투쓰리 — 종각역 인근, 13만원~',
+    card_tags: '종로 · 콜1위 · 차분한분위기',
   },
   {
     id: 'seoul-372',
@@ -93,6 +111,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['홍대', '마포', '20대', '트렌디'],
+    card_hook: '홍대입구역 도보권, 체온처럼 따뜻한 37.2.\n클럽도 바도 아닌, 대화가 되는 밤.',
+    card_value: '37.2 — 홍대 유일 컨셉 호빠, 20대 특화',
+    card_tags: '홍대 · 컨셉바 · 20대초반',
   },
 
   // ===== 부산 =====
@@ -107,6 +128,9 @@ export const venues: Venue[] = [
     hours: 'PM 8:00 ~ AM 6:00',
     phone: '별도문의',
     tags: ['해운대', '프리미엄', '마린시티'],
+    card_hook: '마린시티 야경 앞, 부산 선수 랭킹 1~5위 집결.\n서울에서 일부러 내려오는 손님이 있는 곳.',
+    card_value: '미슐랭 — 마린시티 직통, 새벽 6시까지',
+    card_tags: '해운대 · 에이스집결 · 야경뷰',
   },
   {
     id: 'busan-q',
@@ -119,6 +143,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['해운대', '해변', '프리미엄'],
+    card_hook: '해운대 해변에서 걸어서 2분.\n파도 소리 들리는 거리에서 시작되는 밤.',
+    card_value: '큐(Q) — 해변 도보 2분, 18만원~',
+    card_tags: '해운대 · 해변인접 · 프리미엄',
   },
   {
     id: 'busan-david',
@@ -131,6 +158,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['해운대', '이벤트바', '합리적'],
+    card_hook: '해운대에서 13만원 미만? 다비드바가 유일.\n첫 방문 부담 낮추고 싶을 때 정답.',
+    card_value: '다비드바 — 여성전용 토킹바, 12.9만원~',
+    card_tags: '해운대 · 저부담 · 토킹이벤트',
   },
   {
     id: 'busan-aura',
@@ -143,6 +173,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['수영구', '최대규모', '대형'],
+    card_hook: '선수 30명 상시 대기, 부산 최대 규모.\n"초이스 폭이 좁다"는 불만과는 거리가 먼 곳.',
+    card_value: '아우라 — 수영구 광남로, 10만원~',
+    card_tags: '수영구 · 30명대기 · 넓은초이스',
   },
   {
     id: 'busan-menz',
@@ -155,6 +188,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '010-5557-8179',
     tags: ['광안리', '최저주대', '신규오픈'],
+    card_hook: '광안대교 불빛 아래, 40명 중 고르는 밤.\n광안리에서 10만원이면 시작할 수 있다.',
+    card_value: '맨즈 — 광안해변로, 선수 40명 상주',
+    card_tags: '광안리 · 10만원~ · 대규모선수진',
   },
   {
     id: 'busan-w',
@@ -167,6 +203,9 @@ export const venues: Venue[] = [
     hours: 'PM 8:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['연산동', '최다선수', '오래된전통'],
+    card_hook: '연산동 터줏대감, 부산 최장수 운영 기록.\n오래 살아남은 가게 — 실력이 곧 증거다.',
+    card_value: '더블유(W) — 연산동, 오후 8시 오픈',
+    card_tags: '연산동 · 최장수 · 선수다양',
   },
   {
     id: 'busan-theking',
@@ -179,6 +218,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['연제구', '합리적', '무한음료'],
+    card_hook: '9만원에 무한 음료까지, 부산 최저가 도전.\n가볍게 한 잔 하고 싶은 금요일에.',
+    card_value: '더킹 — 연제구, 9만원~ 무한음료 포함',
+    card_tags: '연제구 · 9만원~ · 무한음료',
   },
   {
     id: 'busan-js',
@@ -187,10 +229,13 @@ export const venues: Venue[] = [
     area: '하단',
     address: '부산시 사하구 하단동 511-11',
     price: '120,000원~',
-    description: '깨끗한 시설과 시크릿 공간을 갖춘 하단 지역 대표 호빠.',
+    description: '깨끗한 시설과 분리형 프라이빗 룸을 갖춘 하단 지역 대표 호빠.',
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
-    tags: ['하단', '깨끗한시설', '시크릿공간'],
+    tags: ['하단', '깨끗한시설', '프라이빗룸'],
+    card_hook: '하단역 근처, 분리된 프라이빗 룸 완비.\n아는 사람 마주칠 걱정 없는 설계.',
+    card_value: '제이에스 — 하단동, 프라이빗 룸 12만원~',
+    card_tags: '하단 · 프라이빗룸 · 신축시설',
   },
   {
     id: 'busan-michelin-jisung',
@@ -203,6 +248,9 @@ export const venues: Venue[] = [
     hours: 'PM 8:00 ~ AM 6:00',
     phone: '별도문의',
     tags: ['해운대', '프리미엄', 'VIP'],
+    card_hook: 'MD 지성 실장이 직접 큐레이션하는 밤.\n취향 말하면 3분 안에 맞춤 선수 배정.',
+    card_value: '미슐랭(지성) — 해운대, 맞춤 큐레이션',
+    card_tags: '해운대 · MD직접관리 · 맞춤배정',
   },
 
   // ===== 경기/수원 =====
@@ -217,6 +265,9 @@ export const venues: Venue[] = [
     hours: 'PM 8:00 ~ AM 8:00',
     phone: '010-8289-9196',
     tags: ['수원', '인계동', '럭셔리'],
+    card_hook: '인계동 유흥가 한가운데, 새벽 8시까지 논스톱.\n서울 안 가도 되는 이유를 비스트가 증명한다.',
+    card_value: '비스트 — 수원 인계동, 12시간 영업',
+    card_tags: '수원 · 새벽8시까지 · 럭셔리인테리어',
   },
   {
     id: 'suwon-maid',
@@ -229,6 +280,9 @@ export const venues: Venue[] = [
     hours: 'PM 8:00 ~ AM 8:00',
     phone: '별도문의',
     tags: ['수원', '인계동', '신규오픈', '최대규모'],
+    card_hook: '인계동 신축 최대 규모, 인테리어부터 다르다.\n"수원에 이런 데가?" 라는 반응이 후기의 절반.',
+    card_value: '메이드 — 수원 최대, 신축 시설 18만원~',
+    card_tags: '수원 · 신축오픈 · 최대규모',
   },
   {
     id: 'suwon-play',
@@ -241,6 +295,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 11:00',
     phone: '별도문의',
     tags: ['수원', '인계동', '프리미엄', '가라오케'],
+    card_hook: '노래방 음향에 호빠 서비스를 더한 조합.\n다음 날 오전 11시까지 — 시간 제한 걱정 없다.',
+    card_value: '플레이 — 가라오케+호빠, 오전 11시까지',
+    card_tags: '수원 · 가라오케 · 14시간영업',
   },
   {
     id: 'suwon-lasvegas',
@@ -253,6 +310,9 @@ export const venues: Venue[] = [
     hours: 'PM 8:00 ~ PM 1:00(익일)',
     phone: '별도문의',
     tags: ['수원', '인계동', '합리적'],
+    card_hook: '인계동 가성비 끝판왕, 15만원이면 충분.\n화려한 조명 아래 부담 없이 즐기는 금요 밤.',
+    card_value: '라스베가스 — 인계동, 15만원~ 가성비',
+    card_tags: '수원 · 15만원~ · 화려한연출',
   },
 
   // ===== 대전 =====
@@ -267,6 +327,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['둔산동', '대전1위', '프리미엄'],
+    card_hook: '둔산동 중심, 대전에서 경쟁자 없는 독보적 1위.\n충청권 전역에서 일부러 원정 오는 단골이 많다.',
+    card_value: '이클립스 — 둔산동 중심가, 대전 유일 프리미엄',
+    card_tags: '둔산동 · 대전1위 · 충청권대표',
   },
   {
     id: 'daejeon-tombar',
@@ -279,6 +342,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '010-2390-0472',
     tags: ['유성', '봉명동', '대전1등'],
+    card_hook: '유성 봉명동, 대전 유흥의 중심축.\n카이스트·충남대 근처 — 젊은 에너지가 다르다.',
+    card_value: '톰바 — 봉명동, 전화 예약 필수',
+    card_tags: '유성 · 봉명동 · 젊은분위기',
   },
 
   // ===== 광주 =====
@@ -293,6 +359,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:30 ~ AM 5:00',
     phone: '별도문의',
     tags: ['상무지구', '광주대표'],
+    card_hook: '상무지구 번영로, 광주 유일의 선택지.\n호남권에서 움직이지 않아도 되는 밤.',
+    card_value: 'W — 광주 상무지구, PM 9:30 오픈',
+    card_tags: '상무지구 · 광주유일 · 호남권대표',
   },
 
   // ===== 창원 =====
@@ -307,6 +376,9 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['상남동', '창원1등', '합리적', '1인TC'],
+    card_hook: '4만 5천원부터 시작하는 1인 TC — 전국 최저.\n혼자 와도, 둘이 와도 부담 제로.',
+    card_value: '어벤져스 — 창원 상남동, 1인 4.5만원~',
+    card_tags: '창원 · 1인TC · 전국최저가',
   },
 ];
 

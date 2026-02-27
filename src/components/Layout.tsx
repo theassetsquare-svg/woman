@@ -54,7 +54,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h4 className="text-base font-bold text-white mb-4">안내</h4>
               <ul className="space-y-2.5 text-[15px] text-slate-400">
-                <li>2026년 영업 기준</li>
+                <li>2026년 영업 확인 완료</li>
                 <li>가격은 변동 가능</li>
                 <li>방문 전 전화 확인 권장</li>
               </ul>

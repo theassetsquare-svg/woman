@@ -1,5 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
+import { useState } from 'react';
 import { getVenueById, getRegionName, getVenuesByRegion } from '../data/venues';
+import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import VenueCard from '../components/VenueCard';
 
@@ -32,6 +34,7 @@ export default function VenueDetailPage() {
   }
 
   const related = getVenuesByRegion(venue.region).filter((v) => v.id !== venue.id).slice(0, 3);
+  const venueContent = getVenueContent(venue.id);
   const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.name + ' ' + getRegionName(venue.region))}`;
 
   return (
@@ -128,6 +131,74 @@ export default function VenueDetailPage() {
         </div>
       </section>
 
+      {/* ===== CONTENT ENGINE ===== */}
+      {venueContent && (
+        <>
+          {/* AI Summary */}
+          <section className="mb-10">
+            <h2 className="text-xl md:text-2xl mb-5">한눈에 보기</h2>
+            <div className="bg-slate-50 border border-border rounded-xl p-6">
+              <ul className="space-y-2.5">
+                {venueContent.summary.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-base text-text leading-relaxed">
+                    <span className="text-accent font-bold mt-0.5 shrink-0">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          {/* 2-Minute Intro */}
+          <section className="mb-10">
+            <h2 className="text-xl md:text-2xl mb-5">2분 소개</h2>
+            <p className="text-text text-base leading-[1.85] whitespace-pre-line">{venueContent.intro}</p>
+          </section>
+
+          {/* Story Body Sections */}
+          {venueContent.sections.map((sec, i) => (
+            <section key={i} className="mb-10">
+              <h3 className="text-lg md:text-xl font-bold text-navy mb-4">{sec.title}</h3>
+              <p className="text-text text-base leading-[1.85] whitespace-pre-line">{sec.body}</p>
+            </section>
+          ))}
+
+          {/* Quick Plan */}
+          <section className="mb-10">
+            <h2 className="text-xl md:text-2xl mb-5">30초 플랜</h2>
+            <div className="bg-purple-50 border border-purple-200 rounded-xl p-6">
+              <p className="text-navy font-bold text-base mb-4">{venueContent.quickPlan.decision}</p>
+              <div className="space-y-2 mb-4">
+                {venueContent.quickPlan.scenarios.map((s, i) => (
+                  <div key={i} className="flex items-start gap-2.5 text-base text-text leading-relaxed">
+                    <span className="text-accent font-bold mt-0.5 shrink-0">▸</span>
+                    <span>{s}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-text-muted font-medium border-t border-purple-200 pt-3">{venueContent.quickPlan.costNote}</p>
+            </div>
+          </section>
+
+          {/* FAQ */}
+          <section className="mb-10">
+            <h2 className="text-xl md:text-2xl mb-5">자주 묻는 질문</h2>
+            <div className="space-y-3">
+              {venueContent.faq.map((item, i) => (
+                <FaqItem key={i} q={item.q} a={item.a} />
+              ))}
+            </div>
+          </section>
+
+          {/* Conclusion */}
+          <section className="mb-10">
+            <div className="bg-navy rounded-xl p-6 md:p-8">
+              <p className="text-white text-base leading-[1.85] whitespace-pre-line">{venueContent.conclusion}</p>
+            </div>
+          </section>
+        </>
+      )}
+
       {/* ===== BOTTOM CTA ===== */}
       <section className="bg-navy rounded-2xl p-8 md:p-10 text-center mb-10">
         <h3 className="text-xl font-extrabold text-white mb-3">방문 전 확인하세요</h3>
@@ -185,6 +256,34 @@ function InfoRow({ icon, label, value, highlight }: { icon: string; label: strin
           {value}
         </span>
       </div>
+    </div>
+  );
+}
+
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border border-border rounded-xl overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-slate-50 transition-colors"
+      >
+        <span className="text-base font-semibold text-navy">{q}</span>
+        <svg
+          className={`w-5 h-5 text-text-muted shrink-0 transition-transform ${open ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {open && (
+        <div className="px-5 pb-4 pt-0">
+          <p className="text-text text-[15px] leading-relaxed whitespace-pre-line">{a}</p>
+        </div>
+      )}
     </div>
   );
 }

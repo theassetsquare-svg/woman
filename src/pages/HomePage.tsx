@@ -49,8 +49,20 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Editor's Note */}
+      <section className="max-w-6xl mx-auto px-5 md:px-8 pt-16 md:pt-20 pb-6">
+        <div className="bg-surface border border-border rounded-2xl p-8 md:p-10">
+          <p className="text-sm text-accent font-bold tracking-widest uppercase mb-3">에디터 안내</p>
+          <p className="text-text text-base leading-relaxed">
+            본 디렉토리는 2026년 직접 영업 여부를 확인한 전국 {venues.length}개 호빠만 수록했습니다.
+            폐업·휴업 업소는 제외했으며, 가격과 영업시간은 각 업소에 전화 확인한 정보입니다.
+            방문 전 한 번 더 전화로 확인하시길 권장합니다.
+          </p>
+        </div>
+      </section>
+
       {/* Region Cards */}
-      <section id="regions" className="max-w-6xl mx-auto px-5 md:px-8 py-16 md:py-20">
+      <section id="regions" className="max-w-6xl mx-auto px-5 md:px-8 py-10 md:py-14">
         <div className="text-center mb-12">
           <h2 className="text-navy mb-3">지역별 호빠</h2>
           <p className="text-text-muted text-base max-w-lg mx-auto leading-relaxed">

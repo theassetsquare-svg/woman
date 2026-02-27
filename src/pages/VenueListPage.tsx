@@ -46,7 +46,7 @@ export default function VenueListPage() {
           placeholder="업소명, 지역, 태그로 검색..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-[420px] bg-surface border border-border rounded-xl px-5 py-3.5 text-base text-navy placeholder-text-light focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all"
+          className="search-input md:w-[420px]"
         />
       </div>
 
@@ -62,7 +62,6 @@ export default function VenueListPage() {
 
       {filtered.length === 0 ? (
         <div className="text-center py-24 text-text-muted">
-          <p className="text-5xl mb-5" aria-hidden="true">🔍</p>
           <p className="text-lg font-medium">검색 결과가 없습니다.</p>
           <p className="text-base mt-2">다른 키워드로 검색해 보세요.</p>
         </div>

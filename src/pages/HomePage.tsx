@@ -15,15 +15,15 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-navy text-white">
-        <div className="max-w-6xl mx-auto px-5 md:px-8 py-20 md:py-28 text-center">
-          <p className="text-accent text-sm font-bold tracking-widest uppercase mb-4">
+      <section className="hero-section text-white">
+        <div className="relative max-w-6xl mx-auto px-5 md:px-8 py-24 md:py-32 text-center">
+          <p className="text-accent-light text-sm font-bold tracking-[0.2em] uppercase mb-5 animate-fade-in">
             NIGHTLIFE DIRECTORY
           </p>
-          <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-white leading-tight mb-5">
+          <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-tight mb-6 animate-fade-in-up">
             전국 호빠 추천 TOP {venues.length}
           </h1>
-          <p className="text-lg md:text-xl text-slate-300 mb-3 leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-300 mb-3 leading-relaxed animate-fade-in">
             서울 · 부산 · 수원 · 대전 · 광주 · 창원
           </p>
           <p className="text-base text-slate-400 mb-10 max-w-xl mx-auto leading-relaxed">
@@ -32,7 +32,7 @@ export default function HomePage() {
             위치, 영업시간 정보를 한눈에 비교하세요.
           </p>
           {/* Search Box */}
-          <div className="mb-8">
+          <div className="mb-10 max-w-xl mx-auto">
             <SearchBox />
           </div>
 
@@ -41,7 +41,7 @@ export default function HomePage() {
               to="/venues"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3.5 bg-accent hover:bg-accent-hover text-white font-bold rounded-xl transition-colors text-base shadow-lg shadow-accent/30"
+              className="btn-primary text-base"
             >
               전체 목록 보기
             </Link>
@@ -49,7 +49,7 @@ export default function HomePage() {
               href="#regions"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition-colors text-base border border-white/20"
+              className="btn-secondary text-base"
             >
               지역별 보기
             </a>
@@ -59,12 +59,12 @@ export default function HomePage() {
 
       {/* Hooking Section 1 — 첫 방문 필독 */}
       <section className="max-w-6xl mx-auto px-5 md:px-8 pt-16 md:pt-20 pb-6">
-        <div className="bg-gradient-to-br from-navy via-[#1a2744] to-[#0c1a30] rounded-2xl p-8 md:p-10 border border-accent/20 shadow-xl shadow-accent/5">
-          <p className="text-accent text-sm font-bold tracking-widest uppercase mb-2">첫 방문이라면 반드시 읽으세요</p>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-6 leading-tight">
-            호빠 처음 가는 분들이<br className="md:hidden" /> 가장 많이 하는 <span className="text-accent">5가지 실수</span>
+        <div className="hooking-dark p-8 md:p-10">
+          <p className="text-accent-light text-sm font-bold tracking-[0.15em] uppercase mb-3">첫 방문이라면 반드시 읽으세요</p>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-8 leading-tight">
+            호빠 처음 가는 분들이<br className="md:hidden" /> 가장 많이 하는 <span className="text-accent-light">5가지 실수</span>
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {[
               { num: '01', title: '아무 가게나 들어간다', desc: '검증 안 된 가게에 가면 바가지 확률 80%. 후기 0건인 곳은 피하세요.' },
               { num: '02', title: '전화 한 통 없이 그냥 간다', desc: '영업시간, 초이스 방식, 예약 가능 여부 — 전화로 미리 확인하세요. 현장에서 당황하는 건 항상 준비 안 한 사람입니다.' },
@@ -72,8 +72,8 @@ export default function HomePage() {
               { num: '04', title: '선수 퀄리티를 안 따진다', desc: '같은 지역이라도 가게마다 선수 수준이 천차만별. 출근 인원, 초이스 횟수, 후기를 반드시 비교하세요.' },
               { num: '05', title: '혼자 가기 무섭다고 포기한다', desc: '실제로 첫 방문객의 40%가 1인 방문. 혼자 가면 오히려 실장이 더 신경 써줍니다.' },
             ].map((item) => (
-              <div key={item.num} className="flex gap-4 items-start bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors">
-                <span className="text-accent font-black text-lg shrink-0 w-8">{item.num}</span>
+              <div key={item.num} className="hooking-item">
+                <span className="text-accent-light font-black text-lg shrink-0 w-8">{item.num}</span>
                 <div>
                   <p className="text-white font-bold text-[15px] mb-1">{item.title}</p>
                   <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
@@ -87,42 +87,25 @@ export default function HomePage() {
       {/* Hooking Section 2 — 내부자 팁 */}
       <section className="max-w-6xl mx-auto px-5 md:px-8 py-6">
         <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-surface border border-border rounded-2xl p-7 hover:border-accent/30 transition-all">
-            <h3 className="text-lg font-extrabold text-navy mb-2">실장에게 이 한마디만 하세요</h3>
-            <p className="text-text-muted text-sm leading-relaxed">
-              "초이스 몇 번까지 되나요?" — 이 질문 하나로 가게 수준을 바로 파악할 수 있습니다.
-              무제한 초이스를 자신 있게 말하는 곳이 선수 퀄리티에 자신 있는 곳입니다.
-            </p>
-          </div>
-          <div className="bg-surface border border-border rounded-2xl p-7 hover:border-accent/30 transition-all">
-            <h3 className="text-lg font-extrabold text-navy mb-2">요일별 꿀타임이 다릅니다</h3>
-            <p className="text-text-muted text-sm leading-relaxed">
-              월~목 밤 10시 = 선수 선택권 최대, 금토 밤 9시 = 분위기 최고.
-              일요일은 쉬는 곳이 많으니 반드시 전화 확인 후 방문하세요.
-            </p>
-          </div>
-          <div className="bg-surface border border-border rounded-2xl p-7 hover:border-accent/30 transition-all">
-            <h3 className="text-lg font-extrabold text-navy mb-2">강남 vs 장안동 vs 해운대</h3>
-            <p className="text-text-muted text-sm leading-relaxed">
-              강남 = 최고급 선수 + 하이엔드 분위기, 장안동 = 프라이빗 룸 + 편안함,
-              해운대 = 관광지 분위기 + 파티형. 취향에 따라 지역부터 정하세요.
-            </p>
-          </div>
-          <div className="bg-surface border border-border rounded-2xl p-7 hover:border-accent/30 transition-all">
-            <h3 className="text-lg font-extrabold text-navy mb-2">이런 가게는 무조건 피하세요</h3>
-            <p className="text-text-muted text-sm leading-relaxed">
-              전화 시 조건을 안 알려주는 곳, 후기가 전혀 없는 곳, "일단 오시면 됩니다"만 반복하는 곳.
-              이 3가지 중 하나라도 해당되면 다른 곳을 찾으세요.
-            </p>
-          </div>
+          {[
+            { title: '실장에게 이 한마디만 하세요', desc: '"초이스 몇 번까지 되나요?" — 이 질문 하나로 가게 수준을 바로 파악할 수 있습니다. 무제한 초이스를 자신 있게 말하는 곳이 선수 퀄리티에 자신 있는 곳입니다.' },
+            { title: '요일별 꿀타임이 다릅니다', desc: '월~목 밤 10시 = 선수 선택권 최대, 금토 밤 9시 = 분위기 최고. 일요일은 쉬는 곳이 많으니 반드시 전화 확인 후 방문하세요.' },
+            { title: '강남 vs 장안동 vs 해운대', desc: '강남 = 최고급 선수 + 하이엔드 분위기, 장안동 = 프라이빗 룸 + 편안함, 해운대 = 관광지 분위기 + 파티형. 취향에 따라 지역부터 정하세요.' },
+            { title: '이런 가게는 무조건 피하세요', desc: '전화 시 조건을 안 알려주는 곳, 후기가 전혀 없는 곳, "일단 오시면 됩니다"만 반복하는 곳. 이 3가지 중 하나라도 해당되면 다른 곳을 찾으세요.' },
+          ].map((item) => (
+            <div key={item.title} className="tip-card">
+              <h3 className="text-lg font-extrabold text-navy mb-2">{item.title}</h3>
+              <p className="text-text-muted text-sm leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Region Cards */}
-      <section id="regions" className="max-w-6xl mx-auto px-5 md:px-8 py-10 md:py-14">
-        <div className="text-center mb-12">
+      <section id="regions" className="max-w-6xl mx-auto px-5 md:px-8 py-12 md:py-16">
+        <div className="section-header">
           <h2 className="text-navy mb-3">지역별 호빠</h2>
-          <p className="text-text-muted text-base max-w-lg mx-auto leading-relaxed">
+          <p className="text-text-muted text-base max-w-lg mx-auto leading-relaxed mt-6">
             원하는 지역을 선택하면 그 지역의 모든 업소 정보를 확인할 수 있습니다.
           </p>
         </div>
@@ -135,12 +118,12 @@ export default function HomePage() {
                 to={`/${r.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-surface border border-border rounded-2xl p-6 text-center hover:shadow-lg hover:border-accent/30 transition-all group"
+                className="region-card group"
               >
                 <h3 className="text-base font-bold text-navy group-hover:text-accent transition-colors">
                   {r.name}
                 </h3>
-                <p className="text-sm text-text-muted mt-1.5 font-medium">{count}곳</p>
+                <p className="text-sm text-text-muted mt-2 font-medium">{count}곳</p>
               </Link>
             );
           })}
@@ -161,7 +144,7 @@ export default function HomePage() {
                 to={`/${r.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[15px] text-accent hover:text-accent-hover font-semibold"
+                className="text-[15px] text-accent hover:text-accent-hover font-semibold transition-colors"
               >
                 전체보기 &rarr;
               </Link>
@@ -177,10 +160,10 @@ export default function HomePage() {
 
       {/* Hooking Section 3 — 지역별 특징 비교 */}
       <section className="max-w-6xl mx-auto px-5 md:px-8 py-10">
-        <div className="bg-gradient-to-br from-navy via-[#1a2744] to-[#0c1a30] rounded-2xl p-8 md:p-10 border border-accent/20">
-          <p className="text-accent text-sm font-bold tracking-widest uppercase mb-2">지역별 완벽 비교</p>
-          <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-6 leading-tight">
-            나에게 맞는 지역은<br className="md:hidden" /> <span className="text-accent">어디일까?</span>
+        <div className="hooking-dark p-8 md:p-10">
+          <p className="text-accent-light text-sm font-bold tracking-[0.15em] uppercase mb-3">지역별 완벽 비교</p>
+          <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-8 leading-tight">
+            나에게 맞는 지역은<br className="md:hidden" /> <span className="text-accent-light">어디일까?</span>
           </h3>
           <div className="space-y-3">
             {[
@@ -189,10 +172,10 @@ export default function HomePage() {
               { area: '해운대·부산', tag: '파티형', desc: '관광지 특유의 개방적 분위기. 여행 중 특별한 밤을 보내고 싶을 때 최적의 선택지.', color: 'text-blue-400' },
               { area: '수원·대전·광주', tag: '지역 대표', desc: '서울·부산까지 원정 갈 필요 없이, 동네에서 동일한 수준의 서비스. 접근성과 편의성이 강점.', color: 'text-amber-400' },
             ].map((item) => (
-              <div key={item.area} className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-start bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors">
-                <div className="shrink-0 flex items-center gap-2">
+              <div key={item.area} className="hooking-item">
+                <div className="shrink-0 flex items-center gap-2.5">
                   <span className={`font-black text-base ${item.color}`}>{item.area}</span>
-                  <span className="text-[11px] bg-white/10 text-slate-300 px-2 py-0.5 rounded-full font-bold">{item.tag}</span>
+                  <span className="text-[11px] bg-white/10 text-slate-300 px-2.5 py-0.5 rounded-full font-bold">{item.tag}</span>
                 </div>
                 <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
               </div>
@@ -203,11 +186,11 @@ export default function HomePage() {
 
       {/* Hooking Section 4 — CTA */}
       <section className="max-w-6xl mx-auto px-5 md:px-8 py-10 pb-16">
-        <div className="bg-surface border-2 border-accent/30 rounded-2xl p-8 md:p-10 text-center">
+        <div className="cta-section p-8 md:p-10 text-center">
           <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-3">
             지금 이 순간에도 자리가 빠지고 있습니다
           </h3>
-          <p className="text-text-muted text-base max-w-2xl mx-auto leading-relaxed mb-6">
+          <p className="text-text-muted text-base max-w-2xl mx-auto leading-relaxed mb-8">
             금·토 밤 10시 이후는 인기 가게 대기 30분 이상.
             미리 전화해서 자리를 잡아두는 것이 현명한 선택입니다.
             아래에서 지역별 업소를 확인하고, 지금 바로 전화해보세요.
@@ -216,7 +199,7 @@ export default function HomePage() {
             to="/venues"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-10 py-4 bg-accent hover:bg-accent-hover text-white font-bold rounded-xl transition-colors text-base shadow-lg shadow-accent/30"
+            className="btn-primary text-base"
           >
             전국 {venues.length}곳 한눈에 비교하기
           </Link>

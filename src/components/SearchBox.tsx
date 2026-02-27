@@ -34,20 +34,25 @@ export default function SearchBox() {
   return (
     <div ref={wrapperRef} className="relative w-full max-w-lg mx-auto">
       <label htmlFor="hero-search" className="sr-only">업소 검색</label>
-      <input
-        id="hero-search"
-        type="text"
-        placeholder="업소명으로 검색 (예: 보스턴, 미슐랭, 비스트...)"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onFocus={() => results.length > 0 && setOpen(true)}
-        className="w-full bg-white text-navy rounded-xl px-5 py-4 text-base placeholder-slate-400 border-0 focus:outline-none focus:ring-2 focus:ring-accent/50 shadow-lg"
-        autoComplete="off"
-      />
+      <div className="relative">
+        <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input
+          id="hero-search"
+          type="text"
+          placeholder="업소명으로 검색 (예: 보스턴, 미슐랭, 비스트...)"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => results.length > 0 && setOpen(true)}
+          className="w-full bg-white/95 backdrop-blur-sm text-navy rounded-xl pl-12 pr-5 py-4 text-base placeholder-slate-400 border-2 border-transparent focus:outline-none focus:border-accent/40 focus:bg-white shadow-xl shadow-black/10 transition-all"
+          autoComplete="off"
+        />
+      </div>
 
       {open && results.length > 0 && (
         <ul
-          className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-border overflow-hidden z-50 max-h-[400px] overflow-y-auto"
+          className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-border overflow-hidden z-50 max-h-[400px] overflow-y-auto animate-slide-down"
           role="listbox"
         >
           {results.map((r) => (
@@ -56,7 +61,7 @@ export default function SearchBox() {
                 href={venuePath(r.venue)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between px-5 py-3.5 hover:bg-purple-50 transition-colors border-b border-border/50 last:border-b-0 no-underline"
+                className="flex items-center justify-between px-5 py-3.5 hover:bg-surface-warm transition-colors border-b border-border/50 last:border-b-0 no-underline"
                 onClick={() => setOpen(false)}
               >
                 <div className="min-w-0">
@@ -77,7 +82,7 @@ export default function SearchBox() {
       )}
 
       {open && query.trim().length > 0 && results.length === 0 && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-border p-5 text-center z-50">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-border p-5 text-center z-50 animate-slide-down">
           <p className="text-text-muted text-base">검색 결과가 없습니다.</p>
         </div>
       )}

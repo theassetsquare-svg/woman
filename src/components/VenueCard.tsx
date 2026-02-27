@@ -23,9 +23,9 @@ export default function VenueCard({ venue }: { venue: Venue }) {
     >
       <div className="venue-card-body">
         {/* Row 1: Badge + Area */}
-        <div className="flex items-center gap-2 mb-1">
+        <div className="flex items-center gap-2.5 mb-1">
           <span className="venue-badge-open">영업중</span>
-          <span className="text-xs text-text-muted font-medium">
+          <span className="text-xs text-text-muted font-medium tracking-wide">
             {venue.area}
           </span>
         </div>

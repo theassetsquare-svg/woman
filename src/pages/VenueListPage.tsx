@@ -6,8 +6,8 @@ import RegionFilter from '../components/RegionFilter';
 
 export default function VenueListPage() {
   useOgMeta({
-    title: `호빠 추천 순위 — 전국 ${venues.length}곳 비교`,
-    description: `전국 호빠 ${venues.length}곳 — 서울, 부산, 수원, 대전, 광주, 창원 영업중 호스트바 비교`,
+    title: `전국 호빠 ${venues.length}곳 실시간 비교 — 30초 만에 내 취향 찾기`,
+    description: `강남·해운대·수원·대전 영업 확인된 ${venues.length}곳을 한 페이지에서 비교. 지역·분위기 필터로 나에게 딱 맞는 곳을 바로 찾아보세요`,
     image: '',
     url: '/venues',
   });

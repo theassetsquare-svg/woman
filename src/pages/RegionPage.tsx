@@ -9,21 +9,21 @@ export default function RegionPage() {
   const venueList = regionId ? getVenuesByRegion(regionId) : [];
 
   const regionAreas: Record<string, string> = {
-    gangnam: '역삼·강남 프리미엄 총정리',
-    geondae: '건대입구 완벽 가이드',
-    jangan: '장안동·동대문 총정리',
-    busan: '해운대·광안리 총정리',
-    gyeonggi: '수원 인계동 총정리',
-    daejeon: '둔산동·봉명동 총정리',
-    gwangju: '상무지구 대표',
-    changwon: '상남동 완벽 가이드',
+    gangnam: '안 가본 사람은 있어도 한 번만 간 사람은 없다',
+    geondae: '아는 사람만 가는 숨은 보석',
+    jangan: '프라이빗 끝판왕, 아는 사람만 안다',
+    busan: '해운대 밤바다보다 화려한 부산의 밤',
+    gyeonggi: '서울 안 부러운 수원의 반전 매력',
+    daejeon: '현지인만 아는 대전 숨겨진 핫플',
+    gwangju: '호남 대표, 여기만 가면 된다',
+    changwon: '경남 유일무이, 반드시 가봐야 할 곳',
   };
 
   useOgMeta(
     region
       ? {
           title: `${region.name}호빠 추천 TOP ${venueList.length} — ${regionAreas[region.id] ?? ''}`,
-          description: `${region.name} 영업중 호빠 ${venueList.length}곳 — 위치, 영업시간 비교`,
+          description: `${region.name} 호빠 ${venueList.length}곳 완전 분석 — 선수·분위기·시스템 비교하고 후회 없는 선택하세요`,
           image: '',
           url: `/${region.id}`,
         }

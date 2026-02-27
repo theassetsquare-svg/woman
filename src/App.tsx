@@ -27,6 +27,23 @@ function OldRegionRedirect() {
   return <Navigate to={`/${regionId}`} replace />;
 }
 
+/** Redirect old /seoul/* routes to new categories */
+const seoulRedirects: Record<string, string> = {
+  boston: '/gangnam/boston',
+  i: '/gangnam/i',
+  flirting: '/gangnam/flirting',
+  blackhole: '/gangnam/blackhole',
+  wclub: '/geondae/wclub',
+  bini: '/jangan/bini',
+};
+
+function OldSeoulRedirect() {
+  const { slug } = useParams<{ slug: string }>();
+  const target = slug ? seoulRedirects[slug] : undefined;
+  if (target) return <Navigate to={target} replace />;
+  return <Navigate to="/venues" replace />;
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -38,6 +55,8 @@ function App() {
           {/* Legacy redirects — static prefix beats dynamic */}
           <Route path="/venue/:id" element={<OldVenueRedirect />} />
           <Route path="/region/:regionId" element={<OldRegionRedirect />} />
+          <Route path="/seoul/:slug" element={<OldSeoulRedirect />} />
+          <Route path="/seoul" element={<Navigate to="/gangnam" replace />} />
           {/* New canonical routes */}
           <Route path="/:regionId" element={<RegionPage />} />
           <Route path="/:region/:slug" element={<VenueDetailPage />} />

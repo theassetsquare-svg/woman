@@ -7,54 +7,56 @@
     <language>ko</language>
     <lastBuildDate>Thu, 27 Feb 2026 00:00:00 +0900</lastBuildDate>
     <atom:link href="https://woman-5nj.pages.dev/rss.xml" rel="self" type="application/rss+xml"/>
-    <!-- Seoul -->
+    <!-- Gangnam -->
     <item>
       <title>강남호빠 보스턴 — 12년 전통이 증명한 퀄리티</title>
-      <link>https://woman-5nj.pages.dev/seoul/boston</link>
+      <link>https://woman-5nj.pages.dev/gangnam/boston</link>
       <description>12년 전통의 강남 대표 호빠. 정찰제 운영, 강남역 도보 5분.</description>
-      <guid isPermaLink="true">https://woman-5nj.pages.dev/seoul/boston</guid>
+      <guid isPermaLink="true">https://woman-5nj.pages.dev/gangnam/boston</guid>
     </item>
     <item>
       <title>강남호빠 아이(I) — 재방문율 업계 1위</title>
-      <link>https://woman-5nj.pages.dev/seoul/i</link>
+      <link>https://woman-5nj.pages.dev/gangnam/i</link>
       <description>강남 업계 하이엔드 재방문율 1등. 17년 경력 VIP 전문.</description>
-      <guid isPermaLink="true">https://woman-5nj.pages.dev/seoul/i</guid>
+      <guid isPermaLink="true">https://woman-5nj.pages.dev/gangnam/i</guid>
     </item>
     <item>
       <title>강남호빠 플러팅진혁 — 무한초이스 시스템의 원조</title>
-      <link>https://woman-5nj.pages.dev/seoul/flirting</link>
+      <link>https://woman-5nj.pages.dev/gangnam/flirting</link>
       <description>강남 1등 호빠 무한초이스 시스템.</description>
-      <guid isPermaLink="true">https://woman-5nj.pages.dev/seoul/flirting</guid>
-    </item>
-    <item>
-      <title>건대호빠 W클럽 — 건대 10년 생존의 이유</title>
-      <link>https://woman-5nj.pages.dev/seoul/wclub</link>
-      <description>10년간 건대에서 자리잡은 대표 호빠.</description>
-      <guid isPermaLink="true">https://woman-5nj.pages.dev/seoul/wclub</guid>
-    </item>
-    <item>
-      <title>종로호빠 원투쓰리 — 종로 콜 1위</title>
-      <link>https://woman-5nj.pages.dev/seoul/123</link>
-      <description>종로 콜 1위 호빠. 차분하고 클래식한 분위기.</description>
-      <guid isPermaLink="true">https://woman-5nj.pages.dev/seoul/123</guid>
-    </item>
-    <item>
-      <title>홍대호빠 37.2 — 홍대 유일 컨셉, 20대 특화</title>
-      <link>https://woman-5nj.pages.dev/seoul/372</link>
-      <description>홍대의 개성 넘치는 호빠. 독특한 컨셉, 20대 특화.</description>
-      <guid isPermaLink="true">https://woman-5nj.pages.dev/seoul/372</guid>
+      <guid isPermaLink="true">https://woman-5nj.pages.dev/gangnam/flirting</guid>
     </item>
     <item>
       <title>강남호빠 블랙홀 — 어게인 DNA 프리미엄</title>
-      <link>https://woman-5nj.pages.dev/seoul/blackhole</link>
+      <link>https://woman-5nj.pages.dev/gangnam/blackhole</link>
       <description>어게인팀 합류 강남 프리미엄 호빠. 역삼동.</description>
-      <guid isPermaLink="true">https://woman-5nj.pages.dev/seoul/blackhole</guid>
+      <guid isPermaLink="true">https://woman-5nj.pages.dev/gangnam/blackhole</guid>
     </item>
+    <!-- Geondae -->
+    <item>
+      <title>건대호빠 W클럽 — 건대 10년 생존의 이유</title>
+      <link>https://woman-5nj.pages.dev/geondae/wclub</link>
+      <description>10년간 건대에서 자리잡은 대표 호빠.</description>
+      <guid isPermaLink="true">https://woman-5nj.pages.dev/geondae/wclub</guid>
+    </item>
+    <!-- Jangan -->
     <item>
       <title>장안동호빠 빈이 — 10년 베테랑 운영</title>
-      <link>https://woman-5nj.pages.dev/seoul/bini</link>
+      <link>https://woman-5nj.pages.dev/jangan/bini</link>
       <description>장안동 10년 베테랑 운영 호빠.</description>
-      <guid isPermaLink="true">https://woman-5nj.pages.dev/seoul/bini</guid>
+      <guid isPermaLink="true">https://woman-5nj.pages.dev/jangan/bini</guid>
+    </item>
+    <item>
+      <title>장안동호빠 큐브 — 100명+ 출근 무제한 초이스</title>
+      <link>https://woman-5nj.pages.dev/jangan/cube</link>
+      <description>장안동 여성전용 클럽. 100명 이상 출근, 무제한 초이스 시스템.</description>
+      <guid isPermaLink="true">https://woman-5nj.pages.dev/jangan/cube</guid>
+    </item>
+    <item>
+      <title>장안동호빠 빵빵 — 장안동 프리미엄 선택지</title>
+      <link>https://woman-5nj.pages.dev/jangan/bbangbbang</link>
+      <description>장안동 프리미엄 호빠. 트렌디한 분위기와 퀄리티 선수진.</description>
+      <guid isPermaLink="true">https://woman-5nj.pages.dev/jangan/bbangbbang</guid>
     </item>
     <!-- Busan -->
     <item>

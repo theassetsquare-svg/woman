@@ -9,7 +9,9 @@ export default function RegionPage() {
   const venueList = regionId ? getVenuesByRegion(regionId) : [];
 
   const regionAreas: Record<string, string> = {
-    seoul: '강남·건대·종로 총정리',
+    gangnam: '역삼·강남 프리미엄 총정리',
+    geondae: '건대입구 완벽 가이드',
+    jangan: '장안동·동대문 총정리',
     busan: '해운대·광안리 총정리',
     gyeonggi: '수원 인계동 총정리',
     daejeon: '둔산동·봉명동 총정리',

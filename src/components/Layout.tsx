@@ -69,6 +69,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </p>
             </div>
           </div>
+          {/* 제휴문의 배너 */}
+          <div className="flex justify-center mb-10">
+            <img
+              src="/kakao-banner.svg"
+              alt="제휴문의 카카오톡 besta12"
+              className="w-full max-w-[420px] h-auto select-none"
+              draggable={false}
+            />
+          </div>
+
           <div className="border-t border-white/10 pt-6 text-center text-sm text-slate-600">
             &copy; 호빠 디렉토리. 본 사이트의 정보는 참고용이며, 정확한 정보는 각 업소에 직접 확인하시기 바랍니다.
           </div>

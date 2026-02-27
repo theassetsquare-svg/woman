@@ -59,7 +59,7 @@ export default function VenueListPage() {
           <p className="text-base mt-2">다른 키워드로 검색해 보세요.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="venue-grid">
           {filtered.map((v) => (
             <VenueCard key={v.id} venue={v} />
           ))}

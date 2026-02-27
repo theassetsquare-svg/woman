@@ -62,7 +62,7 @@ export default function RegionPage() {
           <p className="text-lg font-medium">이 지역에 등록된 업소가 없습니다.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="venue-grid">
           {venueList.map((v) => (
             <VenueCard key={v.id} venue={v} />
           ))}

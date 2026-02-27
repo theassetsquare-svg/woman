@@ -6,38 +6,52 @@ export default function VenueCard({ venue }: { venue: Venue }) {
   return (
     <Link
       to={`/venue/${venue.id}`}
-      className="block bg-white border border-border rounded-2xl p-6 hover:shadow-lg hover:border-accent/30 transition-all group"
+      className="venue-card group"
     >
-      {/* Header: Name + Badge */}
-      <div className="flex items-start justify-between mb-3">
-        <div>
-          <h3 className="text-lg font-bold text-navy group-hover:text-accent transition-colors">
-            {venue.name}
-          </h3>
-          <p className="text-[15px] text-text-muted mt-1">
-            {getRegionName(venue.region)} · {venue.area}
-          </p>
-        </div>
-        <span className="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full font-semibold whitespace-nowrap border border-emerald-200">
-          영업중
-        </span>
+      {/* Thumbnail */}
+      <div className="venue-card-thumb" aria-hidden="true">
+        <span className="text-3xl">{getRegionEmoji(venue.region)}</span>
+        <span className="text-[11px] font-bold text-white/80 mt-1">{venue.price}</span>
       </div>
 
-      {/* Hook: emotional 2-line max */}
-      <p className="text-[15px] text-text leading-relaxed mb-3 line-clamp-2 whitespace-pre-line font-medium">
-        {venue.card_hook}
-      </p>
+      {/* Text content */}
+      <div className="venue-card-body">
+        {/* Row 1: Badge + Region */}
+        <div className="flex items-center gap-2 mb-1">
+          <span className="venue-badge-open">영업중</span>
+          <span className="text-xs text-text-muted font-medium">
+            {getRegionName(venue.region)} · {venue.area}
+          </span>
+        </div>
 
-      {/* Value: practical 1-line */}
-      <p className="text-sm text-text-muted mb-4 truncate">
-        {venue.card_value}
-      </p>
+        {/* Row 2: Store name — 1 line, ellipsis */}
+        <h3 className="venue-card-name group-hover:text-accent transition-colors">
+          {venue.name}
+        </h3>
 
-      {/* Tags: compact 1-line */}
-      <div className="flex items-center justify-between pt-3 border-t border-border">
-        <span className="text-sm text-text-light truncate">{venue.card_tags}</span>
-        <span className="text-accent font-bold text-base whitespace-nowrap ml-3">{venue.price}</span>
+        {/* Row 3: Hook — 2 line clamp */}
+        <p className="venue-card-hook">
+          {venue.card_hook}
+        </p>
+
+        {/* Row 4: Value — 1 line muted */}
+        <p className="venue-card-value">
+          {venue.card_value}
+        </p>
+
+        {/* Row 5: Tags — 1 line, no wrap */}
+        <div className="venue-card-tags">
+          {venue.card_tags}
+        </div>
       </div>
     </Link>
   );
+}
+
+function getRegionEmoji(region: string): string {
+  const map: Record<string, string> = {
+    seoul: '🏙️', busan: '🌊', gyeonggi: '🏛️',
+    daejeon: '🔬', gwangju: '🎨', changwon: '🏭',
+  };
+  return map[region] ?? '📍';
 }

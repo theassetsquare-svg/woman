@@ -74,7 +74,7 @@ export default function VenueDetailPage() {
       {related.length > 0 && (
         <section>
           <h2 className="text-xl md:text-2xl mb-6">같은 지역 다른 호빠</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="venue-grid">
             {related.map((v) => (
               <VenueCard key={v.id} venue={v} />
             ))}

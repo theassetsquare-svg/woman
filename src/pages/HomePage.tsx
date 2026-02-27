@@ -67,9 +67,9 @@ export default function HomePage() {
           <div className="space-y-4">
             {[
               { num: '01', title: '아무 가게나 들어간다', desc: '검증 안 된 가게에 가면 바가지 확률 80%. 후기 0건인 곳은 피하세요.' },
-              { num: '02', title: '가격을 미리 안 물어본다', desc: 'TC(테이블차지)·주류비·봉사료 — 3가지를 전화로 꼭 확인하세요. 현장에서 물어보면 이미 늦습니다.' },
+              { num: '02', title: '전화 한 통 없이 그냥 간다', desc: '영업시간, 초이스 방식, 예약 가능 여부 — 전화로 미리 확인하세요. 현장에서 당황하는 건 항상 준비 안 한 사람입니다.' },
               { num: '03', title: '금요일 밤 11시에 간다', desc: '대기 30분은 기본. 평일 10시가 선수 선택권도 넓고 서비스도 2배 좋습니다.' },
-              { num: '04', title: '"싼 곳"만 찾는다', desc: 'TC 5만원 vs 15만원 — 가격 차이의 핵심은 선수 퀄리티입니다. 1인당 2만원 아끼려다 밤을 통째로 날리는 경우가 많습니다.' },
+              { num: '04', title: '선수 퀄리티를 안 따진다', desc: '같은 지역이라도 가게마다 선수 수준이 천차만별. 출근 인원, 초이스 횟수, 후기를 반드시 비교하세요.' },
               { num: '05', title: '혼자 가기 무섭다고 포기한다', desc: '실제로 첫 방문객의 40%가 1인 방문. 혼자 가면 오히려 실장이 더 신경 써줍니다.' },
             ].map((item) => (
               <div key={item.num} className="flex gap-4 items-start bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors">
@@ -107,7 +107,7 @@ export default function HomePage() {
             <p className="text-2xl mb-3" aria-hidden="true">📍</p>
             <h3 className="text-lg font-extrabold text-navy mb-2">강남 vs 장안동 vs 해운대</h3>
             <p className="text-text-muted text-sm leading-relaxed">
-              강남 = 최고급 선수 + 높은 가격, 장안동 = 가성비 + 프라이빗 룸,
+              강남 = 최고급 선수 + 하이엔드 분위기, 장안동 = 프라이빗 룸 + 편안함,
               해운대 = 관광지 분위기 + 파티형. 취향에 따라 지역부터 정하세요.
             </p>
           </div>
@@ -115,7 +115,7 @@ export default function HomePage() {
             <p className="text-2xl mb-3" aria-hidden="true">⚠️</p>
             <h3 className="text-lg font-extrabold text-navy mb-2">이런 가게는 무조건 피하세요</h3>
             <p className="text-text-muted text-sm leading-relaxed">
-              전화 시 가격을 안 알려주는 곳, 후기가 전혀 없는 곳, "일단 오시면 됩니다"만 반복하는 곳.
+              전화 시 조건을 안 알려주는 곳, 후기가 전혀 없는 곳, "일단 오시면 됩니다"만 반복하는 곳.
               이 3가지 중 하나라도 해당되면 다른 곳을 찾으세요.
             </p>
           </div>
@@ -180,23 +180,23 @@ export default function HomePage() {
         );
       })}
 
-      {/* Hooking Section 3 — 예산별 가이드 */}
+      {/* Hooking Section 3 — 지역별 특징 비교 */}
       <section className="max-w-6xl mx-auto px-5 md:px-8 py-10">
         <div className="bg-gradient-to-br from-navy via-[#1a2744] to-[#0c1a30] rounded-2xl p-8 md:p-10 border border-accent/20">
-          <p className="text-accent text-sm font-bold tracking-widest uppercase mb-2">예산별 완벽 가이드</p>
+          <p className="text-accent text-sm font-bold tracking-widest uppercase mb-2">지역별 완벽 비교</p>
           <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-6 leading-tight">
-            내 예산에 맞는 호빠는<br className="md:hidden" /> <span className="text-accent">어디일까?</span>
+            나에게 맞는 지역은<br className="md:hidden" /> <span className="text-accent">어디일까?</span>
           </h3>
           <div className="space-y-3">
             {[
-              { budget: '10만원 이하', tag: '가성비', desc: '장안동·창원 지역 추천. TC + 기본 주류 포함 세트로 부담 없이 즐길 수 있습니다. 첫 방문 테스트용으로 딱 좋습니다.', color: 'text-emerald-400' },
-              { budget: '10~20만원', tag: '가장 인기', desc: '수원·대전·부산 대부분의 가게가 이 구간. 양주 세트 + 무제한 초이스까지 포함되는 가격대입니다.', color: 'text-blue-400' },
-              { budget: '20~30만원', tag: '프리미엄', desc: '강남·해운대 인기 가게 기본 라인. 에이스급 선수 배정 확률이 확 올라가는 구간입니다.', color: 'text-purple-400' },
-              { budget: '30만원 이상', tag: 'VIP', desc: '강남 탑급 가게 풀서비스. 전담 실장 배정, 프라이빗 룸, 프리미엄 주류 — 특별한 날을 위한 선택.', color: 'text-amber-400' },
+              { area: '강남', tag: '하이엔드', desc: '업계 최정상급 선수진과 세련된 인테리어. 특별한 날, 최고의 경험을 원한다면 강남이 정답입니다.', color: 'text-purple-400' },
+              { area: '장안동', tag: '프라이빗', desc: '룸 중심 운영으로 프라이버시 확보. 조용하게 대화 나누며 편하게 즐기고 싶은 분에게 추천.', color: 'text-emerald-400' },
+              { area: '해운대·부산', tag: '파티형', desc: '관광지 특유의 개방적 분위기. 여행 중 특별한 밤을 보내고 싶을 때 최적의 선택지.', color: 'text-blue-400' },
+              { area: '수원·대전·광주', tag: '지역 대표', desc: '서울·부산까지 원정 갈 필요 없이, 동네에서 동일한 수준의 서비스. 접근성과 편의성이 강점.', color: 'text-amber-400' },
             ].map((item) => (
-              <div key={item.budget} className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-start bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors">
+              <div key={item.area} className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-start bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors">
                 <div className="shrink-0 flex items-center gap-2">
-                  <span className={`font-black text-base ${item.color}`}>{item.budget}</span>
+                  <span className={`font-black text-base ${item.color}`}>{item.area}</span>
                   <span className="text-[11px] bg-white/10 text-slate-300 px-2 py-0.5 rounded-full font-bold">{item.tag}</span>
                 </div>
                 <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>

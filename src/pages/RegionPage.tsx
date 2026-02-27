@@ -98,7 +98,7 @@ export default function RegionPage() {
       <div className="mt-14 bg-surface border border-border rounded-2xl p-7">
         <h3 className="text-lg font-bold text-navy mb-3">참고사항</h3>
         <ul className="text-base text-text-muted space-y-2 leading-relaxed">
-          <li>• 가격 및 영업시간은 변동될 수 있습니다.</li>
+          <li>• 영업시간 및 운영 조건은 변동될 수 있습니다.</li>
           <li>• 방문 전 반드시 전화로 영업 여부를 확인하세요.</li>
           <li>• 본 사이트는 정보 제공 목적이며, 업소와 직접적인 관련이 없습니다.</li>
         </ul>

@@ -248,7 +248,7 @@ export default function VenueDetailPage() {
       <section className="bg-navy rounded-2xl p-8 md:p-10 text-center mb-10">
         <h3 className="text-xl font-extrabold text-white mb-3">방문 전 확인하세요</h3>
         <p className="text-slate-400 text-[15px] mb-6 leading-relaxed">
-          가격 및 영업시간은 변동될 수 있습니다. 방문 전 전화로 확인하시기 바랍니다.
+          영업시간 및 운영 조건은 변동될 수 있습니다. 방문 전 전화로 확인하시기 바랍니다.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <a

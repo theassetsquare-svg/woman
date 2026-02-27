@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { regions, venues, getRegionCount, getVenuesByRegion } from '../data/venues';
 import VenueCard from '../components/VenueCard';
+import SearchBox from '../components/SearchBox';
 
 export default function HomePage() {
   return (
@@ -22,15 +23,24 @@ export default function HomePage() {
             <span className="text-white font-bold">{venues.length}개</span> 업소의
             위치, 가격, 영업시간 정보를 제공합니다.
           </p>
+          {/* Search Box */}
+          <div className="mb-8">
+            <SearchBox />
+          </div>
+
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               to="/venues"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-8 py-3.5 bg-accent hover:bg-accent-hover text-white font-bold rounded-xl transition-colors text-base shadow-lg shadow-accent/30"
             >
               전체 목록 보기
             </Link>
             <a
               href="#regions"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl transition-colors text-base border border-white/20"
             >
               지역별 보기
@@ -54,6 +64,8 @@ export default function HomePage() {
               <Link
                 key={r.id}
                 to={`/region/${r.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-surface border border-border rounded-2xl p-6 text-center hover:shadow-lg hover:border-accent/30 transition-all group"
               >
                 <div className="text-4xl mb-3" aria-hidden="true">{r.emoji}</div>
@@ -79,6 +91,8 @@ export default function HomePage() {
               </h2>
               <Link
                 to={`/region/${r.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[15px] text-accent hover:text-accent-hover font-semibold"
               >
                 전체보기 &rarr;

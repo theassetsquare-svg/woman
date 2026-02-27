@@ -12,7 +12,7 @@ export default function RegionPage() {
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 text-center">
         <p className="text-5xl mb-5" aria-hidden="true">😢</p>
         <h1 className="text-2xl mb-3">지역을 찾을 수 없습니다</h1>
-        <Link to="/venues" className="text-accent hover:text-accent-hover font-semibold text-base">
+        <Link to="/venues" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover font-semibold text-base">
           전체 목록으로 돌아가기
         </Link>
       </div>
@@ -23,7 +23,7 @@ export default function RegionPage() {
     <div className="max-w-6xl mx-auto px-5 md:px-8 py-12 md:py-16">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-[15px] text-text-muted mb-10" aria-label="경로">
-        <Link to="/" className="hover:text-navy transition-colors">홈</Link>
+        <Link to="/" target="_blank" rel="noopener noreferrer" className="hover:text-navy transition-colors">홈</Link>
         <span aria-hidden="true">/</span>
         <span className="text-navy font-medium">{getRegionName(region.id)}</span>
       </nav>
@@ -43,6 +43,8 @@ export default function RegionPage() {
           <Link
             key={r.id}
             to={`/region/${r.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className={`px-5 py-2.5 rounded-full text-[15px] font-semibold transition-all ${
               r.id === regionId
                 ? 'bg-accent text-white shadow-md shadow-accent/25'

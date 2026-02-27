@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Header */}
       <header className="bg-white/95 backdrop-blur-md border-b border-border sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5" aria-label="호빠 디렉토리 홈">
+          <Link to="/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5" aria-label="호빠 디렉토리 홈">
             <span className="text-2xl" aria-hidden="true">🍸</span>
             <span className="text-xl font-extrabold text-navy tracking-tight">
               호빠 디렉토리
@@ -44,7 +44,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <ul className="space-y-2.5">
                 {regions.map((r) => (
                   <li key={r.id}>
-                    <Link to={`/region/${r.id}`} className="text-[15px] text-slate-400 hover:text-white transition-colors">
+                    <Link to={`/region/${r.id}`} target="_blank" rel="noopener noreferrer" className="text-[15px] text-slate-400 hover:text-white transition-colors">
                       {r.name} ({getRegionCount(r.id)})
                     </Link>
                   </li>
@@ -81,6 +81,8 @@ function NavLink({ to, current, children }: { to: string; current: string; child
   return (
     <Link
       to={to}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`px-3 py-2 rounded-lg text-[15px] font-semibold transition-colors ${
         isActive
           ? 'text-accent bg-purple-50'
@@ -140,6 +142,8 @@ function MobileLink({ to, label, current, onClick }: { to: string; label: string
   return (
     <Link
       to={to}
+      target="_blank"
+      rel="noopener noreferrer"
       onClick={onClick}
       className={`px-4 py-2.5 rounded-lg text-base font-medium transition-colors ${
         isActive ? 'text-accent bg-purple-50' : 'text-text hover:bg-slate-50'

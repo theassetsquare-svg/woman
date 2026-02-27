@@ -6,6 +6,8 @@ export default function VenueCard({ venue }: { venue: Venue }) {
   return (
     <Link
       to={`/venue/${venue.id}`}
+      target="_blank"
+      rel="noopener noreferrer"
       className="venue-card group"
     >
       {/* Thumbnail */}

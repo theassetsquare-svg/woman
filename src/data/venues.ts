@@ -38,7 +38,7 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '0507-0094-1200',
     tags: ['강남', '프리미엄', '12년전통'],
-    card_hook: '강남 테헤란로, 12년째 같은 자리.\n한 번 온 손님이 다시 찾는 이유가 있습니다.',
+    card_hook: '테헤란로, 12년째 같은 자리.\n한 번 온 손님이 다시 찾는 이유가 있습니다.',
     card_value: '보스턴 — 강남역 도보 5분, 정찰제 운영',
     card_tags: '강남 · 12년전통 · 정찰제',
   },
@@ -69,7 +69,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['강남', '무한초이스', '인기'],
     card_hook: '강남대로 한복판, 무한초이스 시스템.\n선수 교체 눈치 볼 필요 없는 시스템.',
-    card_value: '플러팅진혁 — 강남 무한초이스 원조',
+    card_value: '플러팅진혁 — 무한초이스 원조',
     card_tags: '강남 · 무한초이스 · 자유교체',
   },
   {
@@ -101,7 +101,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['건대', '10년전통', '트렌디'],
     card_hook: '건대입구역 2번 출구, 10년 연속 생존.\n20대 후반 직장인 모임에 딱 맞는 에너지.',
-    card_value: 'W클럽 — 건대 도보 3분, 10년 운영',
+    card_value: 'W클럽 — 도보 3분, 10년 운영',
     card_tags: '건대 · 20대후반 · 활기찬밤',
   },
 
@@ -117,8 +117,8 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['장안동', '동대문', '베테랑'],
-    card_hook: '장안동 한복판, 10년 경력 실장이 직접 운영.\n서울 동북권에서 가장 검증된 선택지.',
-    card_value: '빈이 — 장안동, 베테랑 실장 직접 운영',
+    card_hook: '10년 경력 실장이 직접 운영.\n서울 동북권에서 가장 검증된 선택지.',
+    card_value: '빈이 — 베테랑 실장 직접 운영',
     card_tags: '장안동 · 베테랑운영 · 검증된서비스',
   },
   {
@@ -133,7 +133,7 @@ export const venues: Venue[] = [
     phone: '010-5157-9050',
     tags: ['장안동', '여성전용', '무한초이스', '대형'],
     card_hook: '장한평역 5번출구, 100명 이상 매일 출근.\n무제한 초이스 — 눈치 없이 마음껏 고르는 시스템.',
-    card_value: '큐브 — 장안동 대형, 무제한 초이스',
+    card_value: '큐브 — 대형, 무제한 초이스',
     card_tags: '장안동 · 100명출근 · 무한초이스',
   },
   {
@@ -147,8 +147,8 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['장안동', '동대문', '호스트바'],
-    card_hook: '장안동 골목 안, 소문으로 퍼지는 가게.\n편안하게 한 잔 하고 싶을 때 찾는 곳.',
-    card_value: '빵빵 — 장안동, 편안한 분위기',
+    card_hook: '소문으로만 퍼지는 가게.\n편안하게 한 잔 하고 싶을 때 찾는 곳.',
+    card_value: '빵빵 — 편안한 분위기',
     card_tags: '장안동 · 편안한분위기 · 추천',
   },
 
@@ -179,7 +179,7 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['해운대', '해변', '프리미엄'],
-    card_hook: '해운대 해변에서 걸어서 2분.\n파도 소리 들리는 거리에서 시작되는 밤.',
+    card_hook: '해변에서 걸어서 2분.\n파도 소리 들리는 거리에서 시작되는 밤.',
     card_value: '큐(Q) — 해변 도보 2분, 프리미엄',
     card_tags: '해운대 · 해변인접 · 프리미엄',
   },
@@ -194,7 +194,7 @@ export const venues: Venue[] = [
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
     tags: ['해운대', '이벤트바', '여성전용'],
-    card_hook: '해운대 여성전용 토킹바의 원조.\n첫 방문 부담 낮추고 싶을 때 정답.',
+    card_hook: '여성전용 토킹바의 원조.\n첫 방문 부담 낮추고 싶을 때 정답.',
     card_value: '다비드바 — 여성전용 토킹 이벤트바',
     card_tags: '해운대 · 부담없는 · 토킹이벤트',
   },
@@ -210,7 +210,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['수영구', '최대규모', '대형'],
     card_hook: '선수 30명 상시 대기, 부산 최대 규모.\n"초이스 폭이 좁다"는 불만과는 거리가 먼 곳.',
-    card_value: '아우라 — 수영구 광남로, 부산 최대 규모',
+    card_value: '아우라 — 광남로, 부산 최대 규모',
     card_tags: '수영구 · 30명대기 · 넓은초이스',
   },
   {
@@ -240,7 +240,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['연산동', '최다선수', '오래된전통'],
     card_hook: '연산동 터줏대감, 부산 최장수 운영 기록.\n오래 살아남은 가게 — 실력이 곧 증거다.',
-    card_value: '더블유(W) — 연산동, 오후 8시 오픈',
+    card_value: '더블유(W) — 오후 8시 오픈, 최장수 운영',
     card_tags: '연산동 · 최장수 · 선수다양',
   },
   {
@@ -255,7 +255,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['연제구', '부담없는', '무한음료'],
     card_hook: '무한 음료 포함, 부산에서 가장 부담 없는 선택.\n가볍게 한 잔 하고 싶은 금요일에.',
-    card_value: '더킹 — 연제구, 무한 음료 포함',
+    card_value: '더킹 — 무한 음료 포함',
     card_tags: '연제구 · 부담없는 · 무한음료',
   },
   {
@@ -270,7 +270,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['하단', '깨끗한시설', '프라이빗룸'],
     card_hook: '하단역 근처, 분리된 프라이빗 룸 완비.\n아는 사람 마주칠 걱정 없는 설계.',
-    card_value: '제이에스 — 하단동, 프라이빗 룸 완비',
+    card_value: '제이에스 — 프라이빗 룸 완비',
     card_tags: '하단 · 프라이빗룸 · 신축시설',
   },
   {
@@ -285,7 +285,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['해운대', '프리미엄', 'VIP'],
     card_hook: 'MD 지성 실장이 직접 큐레이션하는 밤.\n취향 말하면 3분 안에 맞춤 선수 배정.',
-    card_value: '미슐랭(지성) — 해운대, 맞춤 큐레이션',
+    card_value: '미슐랭(지성) — 맞춤 큐레이션',
     card_tags: '해운대 · MD직접관리 · 맞춤배정',
   },
 
@@ -302,7 +302,7 @@ export const venues: Venue[] = [
     phone: '010-8289-9196',
     tags: ['수원', '인계동', '럭셔리'],
     card_hook: '인계동 유흥가 한가운데, 새벽 8시까지 논스톱.\n서울 안 가도 되는 이유를 비스트가 증명한다.',
-    card_value: '비스트 — 수원 인계동, 12시간 영업',
+    card_value: '비스트 — 12시간 영업',
     card_tags: '수원 · 새벽8시까지 · 럭셔리인테리어',
   },
   {
@@ -317,7 +317,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['수원', '인계동', '신규오픈', '최대규모'],
     card_hook: '인계동 신축 최대 규모, 인테리어부터 다르다.\n"수원에 이런 데가?" 라는 반응이 후기의 절반.',
-    card_value: '메이드 — 수원 최대, 신축 프리미엄 시설',
+    card_value: '메이드 — 최대 규모, 신축 프리미엄 시설',
     card_tags: '수원 · 신축오픈 · 최대규모',
   },
   {
@@ -347,7 +347,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['수원', '인계동', '화려한'],
     card_hook: '인계동의 화려한 연출, 부담 없는 구성.\n화려한 조명 아래 편하게 즐기는 금요 밤.',
-    card_value: '라스베가스 — 인계동, 화려한 분위기',
+    card_value: '라스베가스 — 화려한 분위기',
     card_tags: '수원 · 화려한연출 · 부담없는',
   },
 
@@ -364,7 +364,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['둔산동', '대전1위', '프리미엄'],
     card_hook: '둔산동 중심, 대전에서 경쟁자 없는 독보적 1위.\n충청권 전역에서 일부러 원정 오는 단골이 많다.',
-    card_value: '이클립스 — 둔산동 중심가, 대전 유일 프리미엄',
+    card_value: '이클립스 — 중심가, 대전 유일 프리미엄',
     card_tags: '둔산동 · 대전1위 · 충청권대표',
   },
   {
@@ -379,7 +379,7 @@ export const venues: Venue[] = [
     phone: '010-2390-0472',
     tags: ['유성', '봉명동', '대전1등'],
     card_hook: '유성 봉명동, 대전 유흥의 중심축.\n카이스트·충남대 근처 — 젊은 에너지가 다르다.',
-    card_value: '톰바 — 봉명동, 전화 예약 필수',
+    card_value: '톰바 — 전화 예약 필수',
     card_tags: '유성 · 봉명동 · 젊은분위기',
   },
 
@@ -396,7 +396,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['상무지구', '광주대표'],
     card_hook: '상무지구 번영로, 광주 유일의 선택지.\n호남권에서 움직이지 않아도 되는 밤.',
-    card_value: 'W — 광주 상무지구, PM 9:30 오픈',
+    card_value: 'W — PM 9:30 오픈',
     card_tags: '상무지구 · 광주유일 · 호남권대표',
   },
 
@@ -413,7 +413,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['상남동', '창원1등', '부담없는', '1인TC'],
     card_hook: '1인 TC 시스템 — 혼자 와도 부담 없이 시작.\n둘이 와도 각자 편하게 즐기는 구조.',
-    card_value: '어벤져스 — 창원 상남동, 1인 TC 시스템',
+    card_value: '어벤져스 — 1인 TC 시스템',
     card_tags: '창원 · 1인TC · 부담없는시작',
   },
 ];

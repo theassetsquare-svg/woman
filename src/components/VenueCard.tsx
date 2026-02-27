@@ -1,9 +1,19 @@
 import { Link } from 'react-router-dom';
 import type { Venue } from '../data/venues';
-import { getRegionName } from '../data/venues';
 import { venuePath } from '../utils/slug';
 
 export default function VenueCard({ venue }: { venue: Venue }) {
+  // Remove area name from card_tags to avoid duplication
+  const cleanTags = venue.card_tags
+    .split(' · ')
+    .filter((t) => t !== venue.area && t !== venue.seoArea)
+    .join(' · ');
+
+  // Remove venue name prefix from card_value (name is already shown as h3)
+  const cleanValue = venue.card_value.includes(' — ')
+    ? venue.card_value.split(' — ')[1]
+    : venue.card_value;
+
   return (
     <Link
       to={venuePath(venue)}
@@ -11,22 +21,16 @@ export default function VenueCard({ venue }: { venue: Venue }) {
       rel="noopener noreferrer"
       className="venue-card group"
     >
-      {/* Thumbnail */}
-      <div className="venue-card-thumb" aria-hidden="true">
-        <span className="text-3xl">{getRegionEmoji(venue.region)}</span>
-      </div>
-
-      {/* Text content */}
       <div className="venue-card-body">
-        {/* Row 1: Badge + Region */}
+        {/* Row 1: Badge + Area */}
         <div className="flex items-center gap-2 mb-1">
           <span className="venue-badge-open">영업중</span>
           <span className="text-xs text-text-muted font-medium">
-            {getRegionName(venue.region)} · {venue.area}
+            {venue.area}
           </span>
         </div>
 
-        {/* Row 2: Store name — 1 line, ellipsis */}
+        {/* Row 2: Store name */}
         <h3 className="venue-card-name group-hover:text-accent transition-colors">
           {venue.name}
         </h3>
@@ -38,22 +42,14 @@ export default function VenueCard({ venue }: { venue: Venue }) {
 
         {/* Row 4: Value — 1 line muted */}
         <p className="venue-card-value">
-          {venue.card_value}
+          {cleanValue}
         </p>
 
-        {/* Row 5: Tags — 1 line, no wrap */}
+        {/* Row 5: Tags */}
         <div className="venue-card-tags">
-          {venue.card_tags}
+          {cleanTags}
         </div>
       </div>
     </Link>
   );
-}
-
-function getRegionEmoji(region: string): string {
-  const map: Record<string, string> = {
-    seoul: '🏙️', busan: '🌊', gyeonggi: '🏛️',
-    daejeon: '🔬', gwangju: '🎨', changwon: '🏭',
-  };
-  return map[region] ?? '📍';
 }

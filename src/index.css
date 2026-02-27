@@ -70,11 +70,9 @@
   }
 }
 
-/* ===== VenueCard: Horizontal layout ===== */
+/* ===== VenueCard: Text-only layout ===== */
 .venue-card {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
+  display: block;
   background: #fff;
   border: 1px solid var(--color-border);
   border-radius: 1rem;
@@ -88,25 +86,7 @@
   border-color: rgba(124, 58, 237, 0.3);
 }
 
-/* Thumbnail: left side */
-.venue-card-thumb {
-  flex-shrink: 0;
-  width: 100px;
-  min-height: 100px;
-  background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-light) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-}
-@media (min-width: 600px) {
-  .venue-card-thumb {
-    width: 110px;
-  }
-}
-
-/* Text body: right side */
+/* Text body */
 .venue-card-body {
   flex: 1;
   min-width: 0;

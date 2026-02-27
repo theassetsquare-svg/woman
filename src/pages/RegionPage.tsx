@@ -53,7 +53,7 @@ export default function RegionPage() {
 
       <div className="mb-10">
         <h1 className="mb-3">
-          {region.emoji} {region.name} 호빠
+          {region.name} 호빠
         </h1>
         <p className="text-text-muted text-base leading-relaxed max-w-xl">
           영업 확인된 {venueList.length}개 업소 정보를 확인하세요.
@@ -75,7 +75,7 @@ export default function RegionPage() {
             }`}
             aria-current={r.id === regionId ? 'page' : undefined}
           >
-            {r.emoji} {r.name}
+            {r.name}
           </Link>
         ))}
       </div>

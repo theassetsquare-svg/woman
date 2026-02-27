@@ -88,7 +88,6 @@ export default function HomePage() {
       <section className="max-w-6xl mx-auto px-5 md:px-8 py-6">
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-surface border border-border rounded-2xl p-7 hover:border-accent/30 transition-all">
-            <p className="text-2xl mb-3" aria-hidden="true">💡</p>
             <h3 className="text-lg font-extrabold text-navy mb-2">실장에게 이 한마디만 하세요</h3>
             <p className="text-text-muted text-sm leading-relaxed">
               "초이스 몇 번까지 되나요?" — 이 질문 하나로 가게 수준을 바로 파악할 수 있습니다.
@@ -96,7 +95,6 @@ export default function HomePage() {
             </p>
           </div>
           <div className="bg-surface border border-border rounded-2xl p-7 hover:border-accent/30 transition-all">
-            <p className="text-2xl mb-3" aria-hidden="true">🕐</p>
             <h3 className="text-lg font-extrabold text-navy mb-2">요일별 꿀타임이 다릅니다</h3>
             <p className="text-text-muted text-sm leading-relaxed">
               월~목 밤 10시 = 선수 선택권 최대, 금토 밤 9시 = 분위기 최고.
@@ -104,7 +102,6 @@ export default function HomePage() {
             </p>
           </div>
           <div className="bg-surface border border-border rounded-2xl p-7 hover:border-accent/30 transition-all">
-            <p className="text-2xl mb-3" aria-hidden="true">📍</p>
             <h3 className="text-lg font-extrabold text-navy mb-2">강남 vs 장안동 vs 해운대</h3>
             <p className="text-text-muted text-sm leading-relaxed">
               강남 = 최고급 선수 + 하이엔드 분위기, 장안동 = 프라이빗 룸 + 편안함,
@@ -112,7 +109,6 @@ export default function HomePage() {
             </p>
           </div>
           <div className="bg-surface border border-border rounded-2xl p-7 hover:border-accent/30 transition-all">
-            <p className="text-2xl mb-3" aria-hidden="true">⚠️</p>
             <h3 className="text-lg font-extrabold text-navy mb-2">이런 가게는 무조건 피하세요</h3>
             <p className="text-text-muted text-sm leading-relaxed">
               전화 시 조건을 안 알려주는 곳, 후기가 전혀 없는 곳, "일단 오시면 됩니다"만 반복하는 곳.
@@ -141,7 +137,6 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 className="bg-surface border border-border rounded-2xl p-6 text-center hover:shadow-lg hover:border-accent/30 transition-all group"
               >
-                <div className="text-4xl mb-3" aria-hidden="true">{r.emoji}</div>
                 <h3 className="text-base font-bold text-navy group-hover:text-accent transition-colors">
                   {r.name}
                 </h3>
@@ -160,7 +155,7 @@ export default function HomePage() {
           <section key={r.id} className="max-w-6xl mx-auto px-5 md:px-8 py-10">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-xl md:text-2xl">
-                {r.emoji} {r.name} 호빠
+                {r.name} 호빠
               </h2>
               <Link
                 to={`/${r.id}`}
@@ -209,7 +204,6 @@ export default function HomePage() {
       {/* Hooking Section 4 — CTA */}
       <section className="max-w-6xl mx-auto px-5 md:px-8 py-10 pb-16">
         <div className="bg-surface border-2 border-accent/30 rounded-2xl p-8 md:p-10 text-center">
-          <p className="text-4xl mb-4" aria-hidden="true">🔥</p>
           <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-3">
             지금 이 순간에도 자리가 빠지고 있습니다
           </h3>

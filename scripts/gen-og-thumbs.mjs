@@ -1,0 +1,79 @@
+/**
+ * Generates SVG OG thumbnail images for each venue.
+ * Output: public/og/{venue-id}.svg (1200x630 OG standard)
+ * Run: node scripts/gen-og-thumbs.mjs
+ */
+
+import { readFileSync, mkdirSync, writeFileSync } from 'fs';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const venuesPath = resolve(__dirname, '../src/data/venues.ts');
+const outDir = resolve(__dirname, '../public/og');
+const source = readFileSync(venuesPath, 'utf-8');
+
+mkdirSync(outDir, { recursive: true });
+
+// Extract venues
+const venueRegex = /\{\s*id:\s*'([^']+)',\s*name:\s*'([^']+)',\s*region:\s*'([^']+)',\s*area:\s*'([^']+)',[\s\S]*?price:\s*'([^']+)',[\s\S]*?\}/g;
+
+const regionNames = {
+  seoul: '서울', busan: '부산', gyeonggi: '경기/수원',
+  daejeon: '대전', gwangju: '광주', changwon: '창원',
+};
+
+const regionEmojis = {
+  seoul: '🏙️', busan: '🌊', gyeonggi: '🏛️',
+  daejeon: '🔬', gwangju: '🎨', changwon: '🏭',
+};
+
+let match;
+let count = 0;
+
+while ((match = venueRegex.exec(source)) !== null) {
+  const [, id, name, region, area, price] = match;
+  const regionName = regionNames[region] || region;
+  const emoji = regionEmojis[region] || '📍';
+
+  // Escape XML special chars
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7c3aed"/>
+      <stop offset="100%" style="stop-color:#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="6" fill="url(#accent)"/>
+  <!-- Emoji circle -->
+  <circle cx="600" cy="180" r="70" fill="rgba(124,58,237,0.15)" stroke="rgba(124,58,237,0.3)" stroke-width="2"/>
+  <text x="600" y="200" text-anchor="middle" font-size="56">${emoji}</text>
+  <!-- Store name -->
+  <text x="600" y="310" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="56" font-weight="800" fill="white" letter-spacing="-1">${esc(name)}</text>
+  <!-- Region + Area -->
+  <text x="600" y="365" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="28" fill="#94a3b8" font-weight="500">${esc(regionName)} · ${esc(area)}</text>
+  <!-- Price badge -->
+  <rect x="460" y="400" width="280" height="48" rx="24" fill="rgba(124,58,237,0.2)" stroke="rgba(124,58,237,0.4)" stroke-width="1.5"/>
+  <text x="600" y="432" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="22" fill="#a855f7" font-weight="700">${esc(price)}</text>
+  <!-- Status badge -->
+  <rect x="520" y="472" width="160" height="36" rx="18" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+  <text x="600" y="498" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="18" fill="#34d399" font-weight="700">영업중 ✓</text>
+  <!-- Bottom branding -->
+  <text x="600" y="580" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="20" fill="#475569" font-weight="600">🍸 호빠 디렉토리 — 2026</text>
+  <!-- Bottom accent bar -->
+  <rect x="0" y="624" width="1200" height="6" fill="url(#accent)"/>
+</svg>`;
+
+  writeFileSync(resolve(outDir, `${id}.svg`), svg);
+  count++;
+}
+
+console.log(`Generated ${count} OG thumbnails in public/og/`);

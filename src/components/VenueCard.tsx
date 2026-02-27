@@ -17,8 +17,6 @@ export default function VenueCard({ venue }: { venue: Venue }) {
   return (
     <Link
       to={venuePath(venue)}
-      target="_blank"
-      rel="noopener noreferrer"
       className="venue-card group"
     >
       <div className="venue-card-body">

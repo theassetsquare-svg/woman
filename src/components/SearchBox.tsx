@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { searchVenues, type SearchResult } from '../utils/searchIndex';
 import { getRegionName } from '../data/venues';
 import { venuePath } from '../utils/slug';
@@ -57,10 +58,8 @@ export default function SearchBox() {
         >
           {results.map((r) => (
             <li key={r.venue.id} role="option">
-              <a
-                href={venuePath(r.venue)}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to={venuePath(r.venue)}
                 className="flex items-center justify-between px-5 py-3.5 hover:bg-surface-warm transition-colors border-b border-border/50 last:border-b-0 no-underline"
                 onClick={() => setOpen(false)}
               >
@@ -75,7 +74,7 @@ export default function SearchBox() {
                 <span className="text-sm text-accent font-semibold whitespace-nowrap ml-4">
                   상세보기 &rarr;
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

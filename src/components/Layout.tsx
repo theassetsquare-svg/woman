@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Header */}
       <header className="site-header sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
-          <Link to="/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 group" aria-label="호빠 디렉토리 홈">
+          <Link to="/" className="flex items-center gap-2.5 group" aria-label="호빠 디렉토리 홈">
             <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center text-white text-sm font-black shadow-md shadow-accent/25 group-hover:shadow-accent/40 transition-shadow">
               H
             </span>
@@ -46,7 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <ul className="space-y-3">
                 {regions.map((r) => (
                   <li key={r.id}>
-                    <Link to={`/${r.id}`} target="_blank" rel="noopener noreferrer" className="text-[15px] text-slate-400 hover:text-white transition-colors">
+                    <Link to={`/${r.id}`} className="text-[15px] text-slate-400 hover:text-white transition-colors">
                       {r.name} <span className="text-slate-600">({getRegionCount(r.id)})</span>
                     </Link>
                   </li>
@@ -83,8 +83,6 @@ function NavLink({ to, current, children }: { to: string; current: string; child
   return (
     <Link
       to={to}
-      target="_blank"
-      rel="noopener noreferrer"
       className={`nav-link ${isActive ? 'nav-link--active' : ''}`}
     >
       {children}
@@ -140,8 +138,6 @@ function MobileLink({ to, label, current, onClick }: { to: string; label: string
   return (
     <Link
       to={to}
-      target="_blank"
-      rel="noopener noreferrer"
       onClick={onClick}
       className={`px-4 py-2.5 rounded-lg text-base font-medium transition-colors ${
         isActive ? 'text-accent bg-surface-warm' : 'text-text hover:bg-slate-50'

@@ -28,7 +28,7 @@ export default function VenueDetailPage() {
     return (
       <div className="max-w-[760px] mx-auto px-5 md:px-8 py-24 text-center">
         <h1 className="text-2xl mb-3">업소를 찾을 수 없습니다</h1>
-        <Link to="/venues" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover font-semibold text-base">
+        <Link to="/venues" className="text-accent hover:text-accent-hover font-semibold text-base">
           전체 목록으로 돌아가기
         </Link>
       </div>
@@ -89,9 +89,9 @@ export default function VenueDetailPage() {
     <div className="max-w-[760px] mx-auto px-5 md:px-8 py-12 md:py-16">
       {/* Breadcrumb */}
       <nav className="breadcrumb mb-8" aria-label="경로">
-        <Link to="/" target="_blank" rel="noopener noreferrer">홈</Link>
+        <Link to="/">홈</Link>
         <span aria-hidden="true">/</span>
-        <Link to={`/${venue.region}`} target="_blank" rel="noopener noreferrer">{getRegionName(venue.region)}</Link>
+        <Link to={`/${venue.region}`}>{getRegionName(venue.region)}</Link>
         <span aria-hidden="true">/</span>
         <span className="text-navy font-medium">{venue.name}</span>
       </nav>
@@ -138,8 +138,6 @@ export default function VenueDetailPage() {
           </a>
           <Link
             to="/venues"
-            target="_blank"
-            rel="noopener noreferrer"
             className="btn-outline"
           >
             다른 장소 둘러보기

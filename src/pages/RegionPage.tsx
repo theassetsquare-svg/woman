@@ -8,22 +8,48 @@ export default function RegionPage() {
   const region = regions.find((r) => r.id === regionId);
   const venueList = regionId ? getVenuesByRegion(regionId) : [];
 
-  const regionAreas: Record<string, string> = {
-    gangnam: '안 가본 사람은 있어도 한 번만 간 사람은 없다',
-    geondae: '아는 사람만 가는 숨은 보석',
-    jangan: '프라이빗 끝판왕, 아는 사람만 안다',
-    busan: '해운대 밤바다보다 화려한 부산의 밤',
-    gyeonggi: '서울 안 부러운 수원의 반전 매력',
-    daejeon: '현지인만 아는 대전 숨겨진 핫플',
-    gwangju: '호남 대표, 여기만 가면 된다',
-    changwon: '경남 유일무이, 반드시 가봐야 할 곳',
+  const regionHook: Record<string, { title: string; desc: string }> = {
+    gangnam: {
+      title: '강남호빠 어디가야 할지 모르겠다면? TOP 4 완벽 비교',
+      desc: '강남호빠 4곳 선수 퀄리티·분위기·시스템 완전 분석 — 처음이라도 실패 없이 고르는 법',
+    },
+    geondae: {
+      title: '건대호빠 아는 사람만 간다 — 검증된 TOP 1 솔직 비교',
+      desc: '건대호빠 아는 사람만 찾는 검증된 1곳 — 선수·분위기·시스템 솔직 분석',
+    },
+    jangan: {
+      title: '장안동호빠 프라이빗 끝판왕 — TOP 3 완벽 비교',
+      desc: '장안동호빠 3곳 프라이빗 완전 비교 — 선수·룸·시스템 분석으로 딱 맞는 곳 찾기',
+    },
+    busan: {
+      title: '부산호빠 해운대 밤바다보다 화려한 — TOP 10 총정리',
+      desc: '부산호빠 해운대·광안리 10곳 완전 비교 — 선수·분위기·시스템 분석으로 실패 없는 선택',
+    },
+    gyeonggi: {
+      title: '수원호빠 서울 안 부러운 반전 매력 — TOP 4 완벽 비교',
+      desc: '수원호빠 인계동 4곳 완전 비교 — 서울 안 가도 되는 이유, 선수·시스템·분위기 분석',
+    },
+    daejeon: {
+      title: '대전호빠 현지인만 아는 숨겨진 핫플 — TOP 2 솔직 비교',
+      desc: '대전호빠 둔산동·봉명동 2곳 완전 비교 — 현지인이 추천하는 선수·분위기·시스템 분석',
+    },
+    gwangju: {
+      title: '광주호빠 호남 대표 — 여기만 가면 된다',
+      desc: '광주호빠 호남권 대표 검증된 1곳 — 선수·분위기·시스템 솔직 분석',
+    },
+    changwon: {
+      title: '창원호빠 경남 유일무이 — 반드시 가봐야 할 곳',
+      desc: '창원호빠 경남 대표 검증된 1곳 — 선수·분위기·시스템 완전 분석',
+    },
   };
 
+  const hook = region ? regionHook[region.id] : null;
+
   useOgMeta(
-    region
+    region && hook
       ? {
-          title: `${region.name}호빠 추천 TOP ${venueList.length} — ${regionAreas[region.id] ?? ''}`,
-          description: `${region.name} 호빠 ${venueList.length}곳 완전 분석 — 선수·분위기·시스템 비교하고 후회 없는 선택하세요`,
+          title: hook.title,
+          description: hook.desc,
           image: '',
           url: `/${region.id}`,
         }

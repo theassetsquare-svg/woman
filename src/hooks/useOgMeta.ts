@@ -34,6 +34,7 @@ export function useOgMeta({ title, description, image, url }: OgMetaOptions) {
     const absUrl = `${BASE_URL}${url}`;
 
     document.title = `${title} | 호빠 디렉토리`;
+    setMeta('description', description);
     setMeta('og:title', `${title} | 호빠 디렉토리`);
     setMeta('og:description', description);
     setMeta('og:image', absImage);
@@ -47,6 +48,7 @@ export function useOgMeta({ title, description, image, url }: OgMetaOptions) {
     return () => {
       // Reset to defaults on unmount
       document.title = '호빠 추천 TOP 25 — 오늘 밤 어디 갈지 3초면 끝 | 호빠 디렉토리';
+      setMeta('description', '강남·해운대·수원·대전·광주·창원 검증 완료, 선수 퀄리티부터 초이스 시스템까지 한눈에 비교하고 바로 전화하세요');
       setMeta('og:title', '호빠 추천 TOP 25 — 오늘 밤 어디 갈지 3초면 끝');
       setMeta('og:description', '강남·해운대·수원·대전·광주·창원 검증 완료, 선수 퀄리티부터 초이스 시스템까지 한눈에 비교하고 바로 전화하세요');
       setMeta('og:image', '');

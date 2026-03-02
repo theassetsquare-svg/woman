@@ -319,11 +319,9 @@ function FaqItem({ q, a }: { q: string; a: string }) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {open && (
-        <div className="faq-answer">
-          <p className="text-text text-[15px] leading-relaxed whitespace-pre-line">{a}</p>
-        </div>
-      )}
+      <div className={`faq-answer ${open ? '' : 'hidden'}`}>
+        <p className="text-text text-[15px] leading-relaxed whitespace-pre-line">{a}</p>
+      </div>
     </div>
   );
 }

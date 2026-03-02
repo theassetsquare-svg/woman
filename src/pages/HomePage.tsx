@@ -6,8 +6,8 @@ import SearchBox from '../components/SearchBox';
 
 export default function HomePage() {
   useOgMeta({
-    title: '호빠 처음이면 이것만 보세요 — 전국 TOP 25 완벽 정리',
-    description: '바가지 걱정 없이 제대로 즐기는 법 — 서울·부산·수원·대전·광주·창원 영업중 호빠 25곳, 선수 퀄리티부터 시스템까지 직접 비교하고 고르세요',
+    title: '호빠 추천 TOP 25 — 오늘 밤 어디 갈지 3초면 끝',
+    description: '강남·해운대·수원·대전·광주·창원 검증 완료, 선수 퀄리티부터 초이스 시스템까지 한눈에 비교하고 바로 전화하세요',
     image: '',
     url: '',
   });

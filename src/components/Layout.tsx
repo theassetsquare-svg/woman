@@ -46,7 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <ul className="space-y-3">
                 {regions.map((r) => (
                   <li key={r.id}>
-                    <Link to={`/${r.id}`} className="text-[15px] text-slate-400 hover:text-white transition-colors">
+                    <Link to={`/${r.id}`} target="_blank" rel="noopener noreferrer" className="text-[15px] text-slate-400 hover:text-white transition-colors">
                       {r.name} <span className="text-slate-600">({getRegionCount(r.id)})</span>
                     </Link>
                   </li>
@@ -69,14 +69,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </p>
             </div>
           </div>
-          {/* 제휴문의 배너 */}
+          {/* 광고문의 배너 */}
           <div className="flex justify-center mb-10">
-            <img
-              src="/kakao-banner.svg"
-              alt="제휴문의 카카오톡 besta12"
-              className="w-full max-w-[420px] h-auto select-none"
-              draggable={false}
-            />
+            <a
+              href="https://open.kakao.com/o/s2Z2Z2Z"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full max-w-[480px] bg-[#FEE500] rounded-2xl px-8 py-5 text-center hover:brightness-95 transition"
+            >
+              <p className="text-[#3C1E1E] text-lg font-extrabold mb-1">광고문의</p>
+              <p className="text-[#3C1E1E]/70 text-sm font-bold">카카오톡 besta12</p>
+            </a>
           </div>
 
           <div className="border-t border-white/10 pt-6 text-center text-sm text-slate-600">

@@ -38,7 +38,6 @@ export default function VenueDetailPage() {
 
   const related = getVenuesByRegion(venue.region).filter((v) => v.id !== venue.id).slice(0, 3);
   const venueContent = getVenueContent(venue.id);
-  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.name + ' ' + getRegionName(venue.region))}`;
   const BASE = 'https://woman-5nj.pages.dev';
 
   // Inject BreadcrumbList + FAQPage JSON-LD
@@ -125,20 +124,10 @@ export default function VenueDetailPage() {
 
         {/* 4) CTA row */}
         <div className="flex flex-wrap gap-3 mb-8">
-          <a
-            href={mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            지도에서 보기
-          </a>
           <Link
             to="/venues"
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-outline"
           >
             다른 장소 둘러보기
@@ -251,23 +240,9 @@ export default function VenueDetailPage() {
           영업시간 및 운영 조건은 변동될 수 있습니다. 방문 전 전화로 확인하시기 바랍니다.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
-          <a
-            href={mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            지도에서 보기
-          </a>
           {venue.phone !== '별도문의' && (
             <a
               href={`tel:${venue.phone.replace(/-/g, '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
               className="btn-secondary"
             >
               전화하기

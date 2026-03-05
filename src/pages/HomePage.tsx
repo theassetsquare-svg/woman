@@ -39,6 +39,8 @@ export default function HomePage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               to="/venues"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary text-base"
             >
               전체 목록 보기
@@ -112,6 +114,8 @@ export default function HomePage() {
               <Link
                 key={r.id}
                 to={`/${r.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="region-card group"
               >
                 <h3 className="text-base font-bold text-navy group-hover:text-accent transition-colors">
@@ -136,6 +140,8 @@ export default function HomePage() {
               </h2>
               <Link
                 to={`/${r.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[15px] text-accent hover:text-accent-hover font-semibold transition-colors"
               >
                 전체보기 &rarr;
@@ -189,6 +195,8 @@ export default function HomePage() {
           </p>
           <Link
             to="/venues"
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-primary text-base"
           >
             전국 {venues.length}곳 한눈에 비교하기

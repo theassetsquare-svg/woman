@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook } from '../data/venues';
+import { getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
@@ -13,11 +13,12 @@ export default function VenueDetailPage() {
   // OG meta (must be called unconditionally)
   const venueLabel = venue ? getVenueLabel(venue) : '';
   const hook = venue ? getVenueHook(venue.id) : '';
+  const seoDesc = venue ? getVenueSeoDescription(venue.id) : '';
   useOgMeta(
     venue
       ? {
           title: `${venueLabel} — ${hook}`,
-          description: venue.description,
+          description: seoDesc || venue.description,
           image: `/og/${venue.id}.svg`,
           url: venuePath(venue),
         }

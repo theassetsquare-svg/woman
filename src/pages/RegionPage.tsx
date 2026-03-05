@@ -91,6 +91,8 @@ export default function RegionPage() {
           <Link
             key={r.id}
             to={`/${r.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className={`region-pill ${
               r.id === regionId
                 ? 'region-pill--active'

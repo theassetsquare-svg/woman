@@ -96,6 +96,8 @@ function NavLink({ to, current, children }: { to: string; current: string; child
   return (
     <Link
       to={to}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`nav-link ${isActive ? 'nav-link--active' : ''}`}
     >
       {children}
@@ -151,6 +153,8 @@ function MobileLink({ to, label, current, onClick }: { to: string; label: string
   return (
     <Link
       to={to}
+      target="_blank"
+      rel="noopener noreferrer"
       onClick={onClick}
       className={`px-4 py-2.5 rounded-lg text-base font-medium transition-colors ${
         isActive ? 'text-accent bg-surface-warm' : 'text-text hover:bg-slate-50'

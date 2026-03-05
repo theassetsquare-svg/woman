@@ -240,14 +240,6 @@ export default function VenueDetailPage() {
           영업시간 및 운영 조건은 변동될 수 있습니다. 방문 전 전화로 확인하시기 바랍니다.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
-          {venue.phone !== '별도문의' && (
-            <a
-              href={`tel:${venue.phone.replace(/-/g, '')}`}
-              className="btn-secondary"
-            >
-              전화하기
-            </a>
-          )}
         </div>
       </section>
 

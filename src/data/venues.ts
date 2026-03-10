@@ -108,7 +108,7 @@ export const venues: Venue[] = [
   // ===== 장안동 =====
   {
     id: 'jangan-bini',
-    name: '빈이',
+    name: '',
     region: 'jangan',
     area: '장안동',
     seoArea: '장안동',
@@ -118,7 +118,7 @@ export const venues: Venue[] = [
     phone: '별도문의',
     tags: ['장안동', '동대문', '베테랑'],
     card_hook: '10년 경력 실장이 직접 운영.\n서울 동북권에서 가장 검증된 선택지.',
-    card_value: '빈이 — 베테랑 실장 직접 운영',
+    card_value: '베테랑 실장 직접 운영',
     card_tags: '장안동 · 베테랑운영 · 검증된서비스',
   },
   {
@@ -419,7 +419,7 @@ export const venues: Venue[] = [
 ];
 
 export function getVenueLabel(venue: Venue): string {
-  return `${venue.seoArea}호빠 ${venue.name}`;
+  return `${venue.seoArea}호빠${venue.name ? ' ' + venue.name : ''}`;
 }
 
 const seoHooks: Record<string, string> = {

@@ -869,6 +869,19 @@ export function getVenueHook(venueId: string): string {
   return seoHooks[venueId] ?? '';
 }
 
+export function getSubKeywords(venue: Venue): string[] {
+  if (venue.category === 'night') {
+    return [`${venue.seoArea} 나이트`, `${venue.seoArea} 나이트클럽`, `${venue.seoArea} 나이트 추천`];
+  }
+  if (venue.category === 'club') {
+    return [`${venue.seoArea} 클럽`, `${venue.seoArea} 클럽 추천`];
+  }
+  if (venue.category === 'lounge') {
+    return [`${venue.seoArea} 라운지`, `${venue.seoArea} 라운지바`];
+  }
+  return [`${venue.seoArea}호빠`, `${venue.area} 호스트바`, `${venue.seoArea}호빠 추천`];
+}
+
 export function getVenuesByRegion(regionId: string): Venue[] {
   return venues.filter((v) => v.region === regionId && !v.category);
 }

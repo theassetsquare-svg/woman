@@ -125,7 +125,7 @@ export default function RegionPage() {
           {region.name} {isNightRegion ? '나이트·클럽' : '호빠'}
         </h1>
         <p className="text-text-muted text-base leading-relaxed max-w-xl">
-          영업 확인된 {venueList.length}개 업소 정보를 확인하세요.
+          {hook ? hook.desc : `영업 확인된 ${venueList.length}개 업소 정보를 확인하세요.`}
         </p>
       </div>
 

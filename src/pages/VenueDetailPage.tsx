@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription } from '../data/venues';
+import { getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription, getSubKeywords } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
@@ -38,6 +38,7 @@ export default function VenueDetailPage() {
 
   const related = getVenuesByRegion(venue.region).filter((v) => v.id !== venue.id).slice(0, 3);
   const venueContent = getVenueContent(venue.id);
+  const subKeywords = getSubKeywords(venue);
   const BASE = 'https://woman-5nj.pages.dev';
 
   // Inject BreadcrumbList + FAQPage JSON-LD
@@ -142,12 +143,12 @@ export default function VenueDetailPage() {
         {/* 4) CTA row */}
         <div className="flex flex-wrap gap-3 mb-8">
           <Link
-            to="/venues"
+            to={`/${venue.region}`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline"
           >
-            다른 장소 둘러보기
+            {subKeywords[0]} 더보기
           </Link>
         </div>
 
@@ -161,7 +162,7 @@ export default function VenueDetailPage() {
 
       {/* ===== DETAIL INFO ===== */}
       <section className="content-section">
-        <h2 className="text-xl md:text-2xl">상세 정보</h2>
+        <h2 className="text-xl md:text-2xl">{venueLabel} 상세 정보</h2>
 
         <p className="text-text text-base leading-relaxed mb-6">{venue.description}</p>
 
@@ -202,7 +203,7 @@ export default function VenueDetailPage() {
 
           {/* 2-Minute Intro */}
           <section className="content-section">
-            <h2 className="text-xl md:text-2xl">2분 소개</h2>
+            <h2 className="text-xl md:text-2xl">{subKeywords[0]} 이용 가이드</h2>
             <p className="text-text text-base leading-[1.85] whitespace-pre-line">{venueContent.intro}</p>
           </section>
 
@@ -233,7 +234,7 @@ export default function VenueDetailPage() {
 
           {/* FAQ */}
           <section className="content-section">
-            <h2 className="text-xl md:text-2xl">자주 묻는 질문</h2>
+            <h2 className="text-xl md:text-2xl">{venueLabel} 자주 묻는 질문</h2>
             <div className="space-y-3">
               {venueContent.faq.map((item, i) => (
                 <FaqItem key={i} q={item.q} a={item.a} />
@@ -252,7 +253,7 @@ export default function VenueDetailPage() {
 
       {/* ===== BOTTOM CTA ===== */}
       <section className="bottom-cta p-8 md:p-10 text-center mb-10">
-        <h3 className="text-xl font-extrabold text-white mb-3">방문 전 확인하세요</h3>
+        <h3 className="text-xl font-extrabold text-white mb-3">{subKeywords[0]} 방문 전 확인</h3>
         <p className="text-slate-400 text-[15px] mb-6 leading-relaxed">
           영업시간 및 운영 조건은 변동될 수 있습니다. 방문 전 전화로 확인하시기 바랍니다.
         </p>
@@ -264,7 +265,7 @@ export default function VenueDetailPage() {
       {related.length > 0 && (
         <section>
           <h2 className="text-xl md:text-2xl mb-6">
-            {venue.category ? '같은 카테고리' : '같은 지역 다른 호빠'}
+            {subKeywords[0]} 추천
           </h2>
           <div className="venue-grid">
             {related.map((v) => (

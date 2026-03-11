@@ -80,6 +80,23 @@ export default function VenueDetailPage() {
       scripts.push(s2);
     }
 
+    // LocalBusiness
+    const localBusiness: Record<string, unknown> = {
+      '@context': 'https://schema.org',
+      '@type': venue.category && ['night', 'club', 'lounge'].includes(venue.category) ? 'NightClub' : 'LocalBusiness',
+      name: venueLabel,
+      url: `${BASE}${venuePath(venue)}`,
+      image: `${BASE}/og/${venue.id}.svg`,
+    };
+    if (venue.phone) localBusiness.telephone = venue.phone;
+
+    const s3 = document.createElement('script');
+    s3.type = 'application/ld+json';
+    s3.dataset.dynamic = 'true';
+    s3.textContent = JSON.stringify(localBusiness);
+    document.head.appendChild(s3);
+    scripts.push(s3);
+
     return () => {
       scripts.forEach((s) => s.remove());
     };

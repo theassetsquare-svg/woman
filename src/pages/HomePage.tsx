@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
-import { regions, venues, getRegionCount, getVenuesByRegion } from '../data/venues';
+import { regions, venues, getRegionCount, getVenuesByRegion, getNightVenues } from '../data/venues';
 import { useOgMeta } from '../hooks/useOgMeta';
 import VenueCard from '../components/VenueCard';
 import SearchBox from '../components/SearchBox';
 
 export default function HomePage() {
+  const hobbaRegions = regions.filter((r) => getRegionCount(r.id) > 0);
+  const nightCount = getNightVenues().length;
+
   useOgMeta({
     title: '호빠 추천 TOP 25 — 오늘 밤 어디 갈지 3초면 끝',
     description: '강남·해운대·수원·대전·광주·창원 검증 완료, 선수 퀄리티부터 초이스 시스템까지 한눈에 비교하고 바로 전화하세요',
@@ -108,7 +111,7 @@ export default function HomePage() {
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {regions.map((r) => {
+          {hobbaRegions.map((r) => {
             const count = getRegionCount(r.id);
             return (
               <Link
@@ -128,8 +131,31 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Night/Club/Lounge CTA */}
+      {nightCount > 0 && (
+        <section className="max-w-6xl mx-auto px-5 md:px-8 py-10">
+          <div className="hooking-dark p-8 md:p-10 text-center">
+            <p className="text-accent-light text-sm font-bold tracking-[0.15em] uppercase mb-3">NEW CATEGORY</p>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-4">
+              나이트·클럽·라운지 <span className="text-accent-light">{nightCount}곳</span>
+            </h2>
+            <p className="text-slate-400 text-base mb-8 max-w-lg mx-auto leading-relaxed">
+              전국 나이트클럽, 클럽, 라운지 정보를 지역별로 한눈에 확인하세요.
+            </p>
+            <Link
+              to="/night"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary text-base"
+            >
+              나이트·클럽·라운지 보기
+            </Link>
+          </div>
+        </section>
+      )}
+
       {/* Featured by Region */}
-      {regions.map((r) => {
+      {hobbaRegions.map((r) => {
         const regionVenues = getVenuesByRegion(r.id);
         if (regionVenues.length === 0) return null;
         return (

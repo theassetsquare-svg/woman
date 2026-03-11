@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import VenueListPage from './pages/VenueListPage';
 import VenueDetailPage from './pages/VenueDetailPage';
 import RegionPage from './pages/RegionPage';
+import NightPage from './pages/NightPage';
 import { useCanonical } from './hooks/useCanonical';
 import { getVenueById } from './data/venues';
 import { venuePath } from './utils/slug';
@@ -52,6 +53,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/venues" element={<VenueListPage />} />
+          <Route path="/night" element={<NightPage />} />
           {/* Legacy redirects — static prefix beats dynamic */}
           <Route path="/venue/:id" element={<OldVenueRedirect />} />
           <Route path="/region/:regionId" element={<OldRegionRedirect />} />

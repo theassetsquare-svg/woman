@@ -102,9 +102,9 @@ export default function VenueDetailPage() {
         <div className="detail-hero-img mb-8">
           <img
             src={`/og/${venue.id}.svg`}
-            alt={`${venue.name} 썸네일`}
+            alt={venueLabel}
             width={1200}
-            height={630}
+            height={venue.category ? 1200 : 630}
             className="w-full h-auto block"
           />
         </div>
@@ -246,13 +246,40 @@ export default function VenueDetailPage() {
       {/* ===== RELATED ===== */}
       {related.length > 0 && (
         <section>
-          <h2 className="text-xl md:text-2xl mb-6">같은 지역 다른 호빠</h2>
+          <h2 className="text-xl md:text-2xl mb-6">
+            {venue.category ? '같은 카테고리' : '같은 지역 다른 호빠'}
+          </h2>
           <div className="venue-grid">
             {related.map((v) => (
               <VenueCard key={v.id} venue={v} />
             ))}
           </div>
         </section>
+      )}
+
+      {/* ===== FIXED PHONE BAR ===== */}
+      {venue.phone && venue.phone !== '별도문의' && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0f172a] to-[#1e293b] border-t-2 border-accent shadow-2xl">
+          <div className="max-w-[760px] mx-auto px-5 py-3 flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-white font-bold text-sm truncate">{venueLabel}</p>
+              {venue.contact && (
+                <p className="text-accent-light text-xs font-semibold">{venue.contact} 실장</p>
+              )}
+            </div>
+            <a
+              href={`tel:${venue.phone.replace(/-/g, '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-accent hover:bg-accent-hover text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors shrink-0"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              {venue.phone}
+            </a>
+          </div>
+        </div>
       )}
     </div>
   );

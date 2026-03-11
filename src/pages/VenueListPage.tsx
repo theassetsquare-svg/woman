@@ -6,7 +6,7 @@ import RegionFilter from '../components/RegionFilter';
 
 export default function VenueListPage() {
   useOgMeta({
-    title: `전국 호빠 ${venues.length}곳 한방에 비교 — 지역별 필터 검색`,
+    title: `전국 호빠 25곳 한방에 비교 — 지역별 필터 검색`,
     description: `강남부터 창원까지 영업 확인된 업소만 모았습니다. 분위기·선수·시스템 조건으로 내게 맞는 곳을 골라보세요`,
     image: '',
     url: '/venues',
@@ -15,8 +15,10 @@ export default function VenueListPage() {
   const [selectedRegion, setSelectedRegion] = useState('all');
   const [search, setSearch] = useState('');
 
+  const hobbaVenues = useMemo(() => venues.filter((v) => !v.category), []);
+
   const filtered = useMemo(() => {
-    return venues.filter((v) => {
+    return hobbaVenues.filter((v) => {
       const regionMatch = selectedRegion === 'all' || v.region === selectedRegion;
       const searchMatch =
         search === '' ||
@@ -26,7 +28,7 @@ export default function VenueListPage() {
         v.tags.some((t) => t.includes(search));
       return regionMatch && searchMatch;
     });
-  }, [selectedRegion, search]);
+  }, [selectedRegion, search, hobbaVenues]);
 
   return (
     <div className="max-w-6xl mx-auto px-5 md:px-8 py-12 md:py-16">

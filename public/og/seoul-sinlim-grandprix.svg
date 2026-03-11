@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7c3aed"/>
+      <stop offset="100%" style="stop-color:#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="6" fill="url(#accent)"/>
+  <!-- Category badge -->
+  <rect x="460" y="280" width="280" height="50" rx="25" fill="rgba(124,58,237,0.2)" stroke="#a78bfa" stroke-width="2"/>
+  <text x="600" y="314" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="24" fill="#a78bfa" font-weight="800">나이트</text>
+  <!-- Store name (keyword) -->
+  <text x="600" y="520" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="52" font-weight="900" fill="white" letter-spacing="-1">신림그랑프리나이트</text>
+  <text x="600" y="680" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="36" fill="#a78bfa" font-weight="700">태양 실장</text>
+  <text x="600" y="760" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="30" fill="#94a3b8" font-weight="600">010-4241-3748</text>
+  <!-- Bottom branding -->
+  <text x="600" y="1100" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="22" fill="#475569" font-weight="600">NIGHTLIFE DIRECTORY</text>
+  <rect x="0" y="1194" width="1200" height="6" fill="url(#accent)"/>
+</svg>

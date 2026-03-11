@@ -13,6 +13,8 @@ export interface Venue {
   card_value: string;
   card_tags: string;
   keyword?: string;
+  contact?: string;
+  category?: 'night' | 'club' | 'lounge';
 }
 
 export const regions = [
@@ -438,6 +440,8 @@ export const venues: Venue[] = [
     card_value: '물나이트 — 연산동 대표 나이트',
     card_tags: '연산동 · 나이트 · 따봉실장',
     keyword: '부산연산동물나이트',
+    contact: '따봉',
+    category: 'night',
   },
   {
     id: 'seongnam-shampoo',
@@ -454,6 +458,8 @@ export const venues: Venue[] = [
     card_value: '샴푸나이트 — 성남 대표',
     card_tags: '성남 · 나이트 · 박찬호실장',
     keyword: '성남샴푸나이트',
+    contact: '박찬호',
+    category: 'night',
   },
   {
     id: 'suwon-chancedom',
@@ -470,6 +476,8 @@ export const venues: Venue[] = [
     card_value: '찬스돔나이트 — 수원 대표',
     card_tags: '수원 · 나이트 · 강호동실장',
     keyword: '수원찬스돔나이트',
+    contact: '강호동',
+    category: 'night',
   },
   {
     id: 'seoul-suyu-shampoo',
@@ -486,6 +494,7 @@ export const venues: Venue[] = [
     card_value: '샴푸나이트 — 수유 대표',
     card_tags: '수유 · 나이트 · 강북',
     keyword: '수유샴푸나이트',
+    category: 'night',
   },
   {
     id: 'seoul-sinlim-grandprix',
@@ -502,6 +511,8 @@ export const venues: Venue[] = [
     card_value: '그랑프리나이트 — 신림 대표',
     card_tags: '신림 · 나이트 · 태양실장',
     keyword: '신림그랑프리나이트',
+    contact: '태양',
+    category: 'night',
   },
   {
     id: 'gangnam-h2o',
@@ -518,6 +529,8 @@ export const venues: Venue[] = [
     card_value: 'H2O나이트 — 청담 대표',
     card_tags: '청담 · 나이트 · 펩시맨실장',
     keyword: '청담h2o나이트',
+    contact: '펩시맨',
+    category: 'night',
   },
   {
     id: 'indeogwon-gukbingwan',
@@ -534,6 +547,7 @@ export const venues: Venue[] = [
     card_value: '국빈관나이트 — 인덕원 대표',
     card_tags: '인덕원 · 나이트 · 격조',
     keyword: '인덕원국빈관나이트',
+    category: 'night',
   },
   {
     id: 'paju-skydome',
@@ -550,6 +564,8 @@ export const venues: Venue[] = [
     card_value: '스카이돔나이트 — 파주 야당 대표',
     card_tags: '파주야당 · 나이트 · 막내실장',
     keyword: '파주야당스카이돔나이트',
+    contact: '막내',
+    category: 'night',
   },
   {
     id: 'ulsan-champion',
@@ -566,6 +582,8 @@ export const venues: Venue[] = [
     card_value: '챔피언나이트 — 울산 대표',
     card_tags: '울산 · 나이트 · 춘자실장',
     keyword: '울산챔피언나이트',
+    contact: '춘자',
+    category: 'night',
   },
   {
     id: 'ilsan-shampoo',
@@ -582,6 +600,7 @@ export const venues: Venue[] = [
     card_value: '샴푸나이트 — 일산 대표',
     card_tags: '일산 · 나이트 · 고양시',
     keyword: '일산샴푸나이트',
+    category: 'night',
   },
   {
     id: 'incheon-arabian',
@@ -598,6 +617,8 @@ export const venues: Venue[] = [
     card_value: '아라비안나이트 — 인천 대표',
     card_tags: '인천 · 나이트 · 라이타실장',
     keyword: '인천아라비안나이트',
+    contact: '라이타',
+    category: 'night',
   },
   {
     id: 'daejeon-seven',
@@ -614,6 +635,7 @@ export const venues: Venue[] = [
     card_value: '세븐나이트 — 대전 대표',
     card_tags: '대전 · 나이트 · 충청권대표',
     keyword: '대전세븐나이트',
+    category: 'night',
   },
   {
     id: 'seoul-sangbong-hankukgwan',
@@ -630,6 +652,7 @@ export const venues: Venue[] = [
     card_value: '한국관나이트 — 상봉동 대표',
     card_tags: '상봉동 · 나이트 · 전통',
     keyword: '상봉동한국관나이트',
+    category: 'night',
   },
 
   // ===== 클럽 =====
@@ -648,6 +671,7 @@ export const venues: Venue[] = [
     card_value: '레이스 — 강남 클럽 대표',
     card_tags: '강남 · 클럽 · EDM',
     keyword: '강남클럽 레이스',
+    category: 'club',
   },
   {
     id: 'gangnam-club-sound',
@@ -664,6 +688,7 @@ export const venues: Venue[] = [
     card_value: '사운드 — 강남 클럽',
     card_tags: '강남 · 클럽 · 프리미엄사운드',
     keyword: '강남클럽 사운드',
+    category: 'club',
   },
   {
     id: 'itaewon-waikiki',
@@ -680,6 +705,7 @@ export const venues: Venue[] = [
     card_value: '와이키키유토피아 — 이태원 클럽',
     card_tags: '이태원 · 클럽 · 글로벌감성',
     keyword: '이태원클럽 와이키키유토피아',
+    category: 'club',
   },
 
   // ===== 라운지 =====
@@ -698,6 +724,7 @@ export const venues: Venue[] = [
     card_value: '하입 — 강남 라운지',
     card_tags: '강남 · 라운지 · 프리미엄',
     keyword: '강남라운지 하입',
+    category: 'lounge',
   },
   {
     id: 'gangnam-lounge-color',
@@ -714,6 +741,7 @@ export const venues: Venue[] = [
     card_value: '컬러 — 강남 라운지',
     card_tags: '강남 · 라운지 · 트렌디',
     keyword: '강남라운지 컬러',
+    category: 'lounge',
   },
   {
     id: 'gangnam-lounge-arju',
@@ -730,6 +758,7 @@ export const venues: Venue[] = [
     card_value: '아르쥬 — 강남 라운지',
     card_tags: '강남 · 라운지 · 고급',
     keyword: '강남라운지 아르쥬',
+    category: 'lounge',
   },
 ];
 
@@ -841,7 +870,7 @@ export function getVenueHook(venueId: string): string {
 }
 
 export function getVenuesByRegion(regionId: string): Venue[] {
-  return venues.filter((v) => v.region === regionId);
+  return venues.filter((v) => v.region === regionId && !v.category);
 }
 
 export function getVenueById(id: string): Venue | undefined {
@@ -853,7 +882,22 @@ export function getRegionName(regionId: string): string {
 }
 
 export function getRegionCount(regionId: string): number {
-  return venues.filter((v) => v.region === regionId).length;
+  return venues.filter((v) => v.region === regionId && !v.category).length;
+}
+
+export function getNightVenues(): Venue[] {
+  return venues.filter((v) => !!v.category);
+}
+
+export function getNightVenuesByArea(): { area: string; venues: Venue[] }[] {
+  const nv = getNightVenues();
+  const map = new Map<string, Venue[]>();
+  for (const v of nv) {
+    const key = v.area;
+    if (!map.has(key)) map.set(key, []);
+    map.get(key)!.push(v);
+  }
+  return Array.from(map.entries()).map(([area, vens]) => ({ area, venues: vens }));
 }
 
 /**

@@ -40,6 +40,9 @@ export function useOgMeta({ title, description, image, url }: OgMetaOptions) {
     setMeta('og:image', absImage);
     setMeta('og:url', absUrl);
     setMeta('og:type', 'website');
+    setMeta('og:image:width', '1200');
+    setMeta('og:image:height', '1200');
+    setMeta('og:image:type', 'image/svg+xml');
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', `${title} | 호빠 디렉토리`);
     setMeta('twitter:description', description);

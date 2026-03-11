@@ -30,7 +30,8 @@ function setMeta(property: string, content: string) {
 
 export function useOgMeta({ title, description, image, url }: OgMetaOptions) {
   useEffect(() => {
-    const absImage = `${BASE_URL}${image}`;
+    const resolvedImage = image || '/og/default.svg';
+    const absImage = `${BASE_URL}${resolvedImage}`;
     const absUrl = `${BASE_URL}${url}`;
 
     document.title = `${title} | 호빠 디렉토리`;
@@ -54,12 +55,12 @@ export function useOgMeta({ title, description, image, url }: OgMetaOptions) {
       setMeta('description', '강남·해운대·수원·대전·광주·창원 검증 완료, 선수 퀄리티부터 초이스 시스템까지 한눈에 비교하고 바로 전화하세요');
       setMeta('og:title', '호빠 추천 TOP 25 — 오늘 밤 어디 갈지 3초면 끝');
       setMeta('og:description', '강남·해운대·수원·대전·광주·창원 검증 완료, 선수 퀄리티부터 초이스 시스템까지 한눈에 비교하고 바로 전화하세요');
-      setMeta('og:image', '');
+      setMeta('og:image', `${BASE_URL}/og/default.svg`);
       setMeta('og:url', BASE_URL);
       setMeta('twitter:card', 'summary');
       setMeta('twitter:title', '호빠 추천 TOP 25 — 오늘 밤 어디 갈지 3초면 끝');
       setMeta('twitter:description', '강남·해운대·수원·대전·광주·창원 검증 완료, 선수 퀄리티부터 초이스 시스템까지 한눈에 비교하고 바로 전화하세요');
-      setMeta('twitter:image', '');
+      setMeta('twitter:image', `${BASE_URL}/og/default.svg`);
     };
   }, [title, description, image, url]);
 }

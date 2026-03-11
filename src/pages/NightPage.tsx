@@ -1,10 +1,12 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getNightVenuesByArea, getVenueLabel } from '../data/venues';
+import { getNightVenuesByArea, getNightVenues, getVenueLabel } from '../data/venues';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 
 export default function NightPage() {
   const grouped = getNightVenuesByArea();
+  const allNightVenues = getNightVenues();
 
   useOgMeta({
     title: '전국 나이트·클럽·라운지 — 지역별 총정리',
@@ -12,6 +14,27 @@ export default function NightPage() {
     image: '',
     url: '/night',
   });
+
+  useEffect(() => {
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: '전국 나이트·클럽·라운지 목록',
+      numberOfItems: allNightVenues.length,
+      itemListElement: allNightVenues.map((v, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: v.name,
+        url: `https://woman-5nj.pages.dev${venuePath(v)}`,
+      })),
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.dataset.dynamic = 'true';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
+    return () => { script.remove(); };
+  }, [allNightVenues]);
 
   const categoryLabel = (cat?: string) => {
     if (cat === 'club') return '클럽';

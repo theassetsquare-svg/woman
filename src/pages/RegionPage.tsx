@@ -1,12 +1,14 @@
 import { useParams, Link } from 'react-router-dom';
-import { regions, getVenuesByRegion, getRegionName } from '../data/venues';
+import { regions, venues, getVenuesByRegion, getRegionName } from '../data/venues';
 import { useOgMeta } from '../hooks/useOgMeta';
 import VenueCard from '../components/VenueCard';
 
 export default function RegionPage() {
   const { regionId } = useParams<{ regionId: string }>();
   const region = regions.find((r) => r.id === regionId);
-  const venueList = regionId ? getVenuesByRegion(regionId) : [];
+  const allRegionVenues = regionId ? venues.filter((v) => v.region === regionId) : [];
+  const isNightRegion = allRegionVenues.length > 0 && allRegionVenues.every((v) => v.category);
+  const venueList = isNightRegion ? allRegionVenues : (regionId ? getVenuesByRegion(regionId) : []);
 
   const regionHook: Record<string, { title: string; desc: string }> = {
     gangnam: {
@@ -40,6 +42,22 @@ export default function RegionPage() {
     changwon: {
       title: '창원호빠 — 경남 대표 반드시 확인할 곳',
       desc: '상남동에서 검증 완료된 경남 대표 가게입니다. 1인 전담 TC 시스템으로 혼자 가도 걱정 없고, 둘이 와도 분리 운영이 가능한 유일한 곳입니다',
+    },
+    seoul: {
+      title: '서울 나이트·클럽 — 수유·신림·상봉 핵심 3곳 총정리',
+      desc: '수유샴푸나이트·신림그랑프리나이트·상봉동한국관나이트 현장 검증 완료. 지역별 특성과 입장 절차를 한눈에 비교하세요',
+    },
+    itaewon: {
+      title: '이태원클럽 와이키키유토피아 — 현장 검증 리뷰',
+      desc: '이태원 대표 클럽 와이키키유토피아의 입장 절차·분위기·교통편을 상세히 정리했습니다',
+    },
+    incheon: {
+      title: '인천아라비안나이트 — 구월동 검증 완료 리뷰',
+      desc: '인천 구월동 소재 아라비안나이트의 운영 시간·입장 안내·분위기를 현장 확인한 결과입니다',
+    },
+    ulsan: {
+      title: '울산챔피언나이트 — 울산 대표 검증 리뷰',
+      desc: '울산 소재 챔피언나이트의 현장 정보·운영 방식·교통 접근성을 직접 확인한 결과입니다',
     },
   };
 
@@ -78,7 +96,7 @@ export default function RegionPage() {
 
       <div className="mb-10">
         <h1 className="mb-3">
-          {region.name} 호빠
+          {region.name} {isNightRegion ? '나이트·클럽' : '호빠'}
         </h1>
         <p className="text-text-muted text-base leading-relaxed max-w-xl">
           영업 확인된 {venueList.length}개 업소 정보를 확인하세요.

@@ -1,6 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { venues } from '../data/venues';
 import { useOgMeta } from '../hooks/useOgMeta';
+import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
 import RegionFilter from '../components/RegionFilter';
 
@@ -16,6 +17,27 @@ export default function VenueListPage() {
   const [search, setSearch] = useState('');
 
   const hobbaVenues = useMemo(() => venues.filter((v) => !v.category), []);
+
+  useEffect(() => {
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: '전국 호빠 목록',
+      numberOfItems: hobbaVenues.length,
+      itemListElement: hobbaVenues.map((v, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: v.name,
+        url: `https://woman-5nj.pages.dev${venuePath(v)}`,
+      })),
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.dataset.dynamic = 'true';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
+    return () => { script.remove(); };
+  }, [hobbaVenues]);
 
   const filtered = useMemo(() => {
     return hobbaVenues.filter((v) => {

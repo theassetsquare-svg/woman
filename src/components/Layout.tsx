@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { regions, getRegionCount } from '../data/venues';
+import { regions, getRegionCount, getNightVenues } from '../data/venues';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -22,8 +22,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <nav className="hidden lg:flex items-center gap-0.5" aria-label="메인 네비게이션">
             <NavLink to="/" current={location.pathname}>홈</NavLink>
             <NavLink to="/venues" current={location.pathname}>전체 목록</NavLink>
+            <NavLink to="/night" current={location.pathname} highlight>나이트</NavLink>
             <span className="w-px h-5 bg-border mx-2" aria-hidden="true" />
-            {regions.map((r) => (
+            {regions.filter((r) => getRegionCount(r.id) > 0).map((r) => (
               <NavLink key={r.id} to={`/${r.id}`} current={location.pathname}>
                 {r.name}
               </NavLink>
@@ -40,14 +41,31 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Footer */}
       <footer className="site-footer text-white mt-20" role="contentinfo">
         <div className="max-w-6xl mx-auto px-5 md:px-8 py-16">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-10 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
             <div>
-              <h4 className="text-sm font-bold text-white/60 uppercase tracking-widest mb-5">지역별</h4>
+              <h4 className="text-sm font-bold text-white/60 uppercase tracking-widest mb-5">지역별 호빠</h4>
               <ul className="space-y-3">
-                {regions.map((r) => (
+                {regions.filter((r) => getRegionCount(r.id) > 0).map((r) => (
                   <li key={r.id}>
                     <Link to={`/${r.id}`} target="_blank" rel="noopener noreferrer" className="text-[15px] text-slate-400 hover:text-white transition-colors">
                       {r.name} <span className="text-slate-600">({getRegionCount(r.id)})</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-white/60 uppercase tracking-widest mb-5">나이트·클럽·라운지</h4>
+              <ul className="space-y-3">
+                <li>
+                  <Link to="/night" target="_blank" rel="noopener noreferrer" className="text-[15px] text-accent-light hover:text-white transition-colors font-semibold">
+                    전체 보기 ({getNightVenues().length}곳)
+                  </Link>
+                </li>
+                {getNightVenues().filter(v => v.category === 'night').slice(0, 5).map((v) => (
+                  <li key={v.id}>
+                    <Link to={`/${v.region}/${v.id.startsWith(v.region + '-') ? v.id.slice(v.region.length + 1) : v.id}`} target="_blank" rel="noopener noreferrer" className="text-[15px] text-slate-400 hover:text-white transition-colors">
+                      {v.keyword || v.name}
                     </Link>
                   </li>
                 ))}
@@ -64,8 +82,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h4 className="text-sm font-bold text-white/60 uppercase tracking-widest mb-5">호빠 디렉토리</h4>
               <p className="text-[15px] text-slate-400 leading-relaxed">
-                전국 호빠 정보를 한곳에서.<br />
-                영업 확인된 업소만 수록합니다.
+                전국 호빠·나이트·클럽·라운지<br />
+                정보를 한곳에서 확인하세요.
               </p>
             </div>
           </div>
@@ -91,14 +109,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-function NavLink({ to, current, children }: { to: string; current: string; children: React.ReactNode }) {
+function NavLink({ to, current, children, highlight }: { to: string; current: string; children: React.ReactNode; highlight?: boolean }) {
   const isActive = to === '/' ? current === '/' : current.startsWith(to);
   return (
     <Link
       to={to}
       target="_blank"
       rel="noopener noreferrer"
-      className={`nav-link ${isActive ? 'nav-link--active' : ''}`}
+      className={`nav-link ${isActive ? 'nav-link--active' : ''} ${highlight && !isActive ? 'text-accent font-bold' : ''}`}
     >
       {children}
     </Link>
@@ -132,8 +150,9 @@ function MobileMenu() {
         >
           <MobileLink to="/" label="홈" current={location.pathname} onClick={() => setOpen(false)} />
           <MobileLink to="/venues" label="전체 목록" current={location.pathname} onClick={() => setOpen(false)} />
+          <MobileLink to="/night" label="나이트·클럽·라운지" current={location.pathname} onClick={() => setOpen(false)} highlight />
           <div className="h-px bg-border my-2" />
-          {regions.map((r) => (
+          {regions.filter((r) => getRegionCount(r.id) > 0).map((r) => (
             <MobileLink
               key={r.id}
               to={`/${r.id}`}
@@ -148,7 +167,7 @@ function MobileMenu() {
   );
 }
 
-function MobileLink({ to, label, current, onClick }: { to: string; label: string; current: string; onClick: () => void }) {
+function MobileLink({ to, label, current, onClick, highlight }: { to: string; label: string; current: string; onClick: () => void; highlight?: boolean }) {
   const isActive = to === '/' ? current === '/' : current.startsWith(to);
   return (
     <Link
@@ -157,7 +176,7 @@ function MobileLink({ to, label, current, onClick }: { to: string; label: string
       rel="noopener noreferrer"
       onClick={onClick}
       className={`px-4 py-2.5 rounded-lg text-base font-medium transition-colors ${
-        isActive ? 'text-accent bg-surface-warm' : 'text-text hover:bg-slate-50'
+        isActive ? 'text-accent bg-surface-warm' : highlight ? 'text-accent font-bold' : 'text-text hover:bg-slate-50'
       }`}
     >
       {label}

@@ -1,7 +1,10 @@
 import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import { regions, venues, getVenuesByRegion, getRegionName } from '../data/venues';
 import { useOgMeta } from '../hooks/useOgMeta';
 import VenueCard from '../components/VenueCard';
+
+const BASE = 'https://woman-5nj.pages.dev';
 
 export default function RegionPage() {
   const { regionId } = useParams<{ regionId: string }>();
@@ -73,6 +76,29 @@ export default function RegionPage() {
         }
       : { title: '지역을 찾을 수 없습니다', description: '', image: '', url: '' }
   );
+
+  // Inject BreadcrumbList JSON-LD
+  useEffect(() => {
+    if (!region) return;
+
+    const breadcrumb = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '홈', item: BASE },
+        { '@type': 'ListItem', position: 2, name: getRegionName(region.id), item: `${BASE}/${region.id}` },
+      ],
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.dataset.dynamic = 'true';
+    script.textContent = JSON.stringify(breadcrumb);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, [region]);
 
   if (!region) {
     return (

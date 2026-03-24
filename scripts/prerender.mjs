@@ -255,6 +255,42 @@ for (const cp of categoryPages) {
   count++;
 }
 
+// Magazine, Ranking, Events, Map pages
+{
+  writePage('/magazine', generateHTML({
+    title: `매거진 — 밤문화 가이드 & 비교 분석 | ${SITE_NAME}`,
+    description: '강남 vs 홍대 비교, 나이트 초보 가이드, 룸과 요정 차이까지. 현장 기반 밤문화 매거진.',
+    canonical: `${BASE}/magazine`,
+    h1: '매거진',
+    introText: '현장 경험을 바탕으로 정리한 밤문화 가이드. 비교, 분석, 초보 안내까지.',
+  }));
+  count++;
+  writePage('/ranking', generateHTML({
+    title: `인기 랭킹 TOP 20 — 전국 나이트·클럽·라운지 | ${SITE_NAME}`,
+    description: '전국 나이트, 클럽, 라운지, 룸, 요정 인기 랭킹 TOP 20. 실장 연결 가능 업소 우선 표시.',
+    canonical: `${BASE}/ranking`,
+    h1: '인기 랭킹 TOP 20',
+    introText: '실장 연결 가능 업소를 우선으로, 전국 인기 업소를 한눈에.',
+  }));
+  count++;
+  writePage('/events', generateHTML({
+    title: `이벤트 캘린더 — 전국 밤문화 일정 | ${SITE_NAME}`,
+    description: '금요 나이트 피크타임, 토요 클럽 DJ 파티, 평일 이벤트까지. 전국 밤문화 일정을 한눈에.',
+    canonical: `${BASE}/events`,
+    h1: '이벤트 캘린더',
+    introText: '전국 밤문화 주요 일정을 한눈에 확인하세요.',
+  }));
+  count++;
+  writePage('/map', generateHTML({
+    title: `지역별 업소 찾기 — 전국 나이트·클럽·라운지 | ${SITE_NAME}`,
+    description: '지역을 선택하면 해당 지역의 나이트, 클럽, 라운지, 룸, 요정 업소를 한눈에 확인할 수 있습니다.',
+    canonical: `${BASE}/map`,
+    h1: '지역별 업소 찾기',
+    introText: '지역을 선택하면 해당 지역의 업소를 확인할 수 있습니다.',
+  }));
+  count++;
+}
+
 // Venue detail pages
 for (const v of venues) {
   const hook = getHook(v.id);

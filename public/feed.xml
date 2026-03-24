@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>여성이 편안한 밤문화 — 나이트 가이드</title>
+    <link>https://woman-5nj.pages.dev</link>
+    <description>전국 나이트·클럽·라운지·룸·요정·호빠 103곳 현장 검증 정보</description>
+    <language>ko</language>
+    <atom:link href="https://woman-5nj.pages.dev/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>강남 vs 홍대 — 처음 간다면 어디?</title>
+      <link>https://woman-5nj.pages.dev/magazine</link>
+      <description>강남과 홍대, 분위기부터 입장 방식까지 전부 다릅니다. 첫 방문자를 위한 비교 가이드.</description>
+    </item>
+    <item>
+      <title>나이트 처음이면 이것만 알면 된다</title>
+      <link>https://woman-5nj.pages.dev/magazine</link>
+      <description>입장부터 퇴장까지, 처음 가는 사람이 꼭 알아야 할 5가지.</description>
+    </item>
+    <item>
+      <title>프라이빗하게 즐기고 싶다면 — 룸과 요정 비교</title>
+      <link>https://woman-5nj.pages.dev/magazine</link>
+      <description>룸과 요정, 뭐가 다른지 한눈에 비교. 목적에 맞는 선택법.</description>
+    </item>
+  </channel>
+</rss>

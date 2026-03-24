@@ -9,6 +9,10 @@ import CommunityPage from './pages/CommunityPage';
 import GuidelinesPage from './pages/GuidelinesPage';
 import QuizPage from './pages/QuizPage';
 import SafetyPage from './pages/SafetyPage';
+import MagazinePage from './pages/MagazinePage';
+import RankingPage from './pages/RankingPage';
+import EventsPage from './pages/EventsPage';
+import MapPage from './pages/MapPage';
 import { useCanonical } from './hooks/useCanonical';
 import { getVenueById } from './data/venues';
 import { venuePath } from './utils/slug';
@@ -41,6 +45,10 @@ function App() {
           <Route path="/hoppa" element={<CategoryPage />} />
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/safety" element={<SafetyPage />} />
+          <Route path="/magazine" element={<MagazinePage />} />
+          <Route path="/ranking" element={<RankingPage />} />
+          <Route path="/events" element={<EventsPage />} />
+          <Route path="/map" element={<MapPage />} />
           <Route path="/community" element={<CommunityPage />} />
           <Route path="/community/guidelines" element={<GuidelinesPage />} />
           <Route path="/venue/:id" element={<OldVenueRedirect />} />

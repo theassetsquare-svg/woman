@@ -215,6 +215,26 @@ for (const cp of categoryPages) {
   count++;
 }
 
+// Quiz + Safety pages
+{
+  writePage('/quiz', generateHTML({
+    title: `밤문화 MBTI — 나에게 맞는 곳은 어디? | ${SITE_NAME}`,
+    description: '10개 질문으로 알아보는 나의 밤문화 유형. 결과에 맞는 업소 추천까지.',
+    canonical: `${BASE}/quiz`,
+    h1: '밤문화 MBTI',
+    introText: '10개 질문으로 알아보는 나의 밤문화 유형.',
+  }));
+  count++;
+  writePage('/safety', generateHTML({
+    title: `안전 가이드 — 음주 계산기·긴급 연락처 | ${SITE_NAME}`,
+    description: '즐거운 밤을 위한 안전 가이드. 음주 계산기, 긴급 연락처, 대리운전 번호까지.',
+    canonical: `${BASE}/safety`,
+    h1: '안전 가이드',
+    introText: '즐거운 밤도 안전이 먼저.',
+  }));
+  count++;
+}
+
 // Community pages
 {
   writePage('/community', generateHTML({

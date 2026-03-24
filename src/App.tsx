@@ -7,6 +7,8 @@ import RegionPage from './pages/RegionPage';
 import CategoryPage from './pages/CategoryPage';
 import CommunityPage from './pages/CommunityPage';
 import GuidelinesPage from './pages/GuidelinesPage';
+import QuizPage from './pages/QuizPage';
+import SafetyPage from './pages/SafetyPage';
 import { useCanonical } from './hooks/useCanonical';
 import { getVenueById } from './data/venues';
 import { venuePath } from './utils/slug';
@@ -37,6 +39,8 @@ function App() {
           <Route path="/rooms" element={<CategoryPage />} />
           <Route path="/yojeong" element={<CategoryPage />} />
           <Route path="/hoppa" element={<CategoryPage />} />
+          <Route path="/quiz" element={<QuizPage />} />
+          <Route path="/safety" element={<SafetyPage />} />
           <Route path="/community" element={<CommunityPage />} />
           <Route path="/community/guidelines" element={<GuidelinesPage />} />
           <Route path="/venue/:id" element={<OldVenueRedirect />} />

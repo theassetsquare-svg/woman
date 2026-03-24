@@ -10,8 +10,8 @@ export default function HomePage() {
   const contactVenues = getContactVenues();
 
   useOgMeta({
-    title: '나이트·클럽·라운지 TOP 19 — 금요일 밤 어디 갈지 3초면 끝',
-    description: '강남·부산·수원·신림·인천·대전·울산 현장 검증 완료. 실장 연락처부터 분위기까지 한눈에 비교하세요',
+    title: '나이트·클럽·라운지·룸·요정·호빠 TOP 103 — 금요일 밤 어디 갈지 3초면 끝',
+    description: '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 한눈에 비교하세요',
     image: '',
     url: '',
   });

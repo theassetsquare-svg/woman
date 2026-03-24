@@ -1,11 +1,11 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription, getSubKeywords, getMainLink } from '../data/venues';
+import { venues, getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription, getSubKeywords, getMainLink } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
-import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner } from '../components/HookingWidgets';
+import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner, FomoCounter, ExploreProgress, AutoplayNext } from '../components/HookingWidgets';
 
 const MAIN = getMainLink();
 const BASE = 'https://woman-5nj.pages.dev';
@@ -151,6 +151,12 @@ export default function VenueDetailPage() {
             {venue.card_hook}
           </p>
         </div>
+
+        {/* FOMO + 자이가르닉 */}
+        <div className="flex items-center justify-between mt-4">
+          <FomoCounter />
+          <ExploreProgress current={venues.indexOf(venue) + 1} total={venues.length} />
+        </div>
       </section>
 
       {/* Detail Info */}
@@ -202,11 +208,38 @@ export default function VenueDetailPage() {
             <p className="text-[#1e293b] text-sm leading-[1.85] whitespace-pre-line">{venueContent.intro}</p>
           </section>
 
+          {/* 본문 이미지 1 — intro 아래 */}
+          <div className="my-4">
+            <img
+              src={`/og/${venue.id}.svg`}
+              alt={`${venueLabel} 현장 분위기`}
+              width={480}
+              height={270}
+              loading="lazy"
+              className="content-img"
+            />
+            <p className="content-img-caption">{venueLabel} 현장 분위기</p>
+          </div>
+
           {/* Sections (show first 3, then hooking, then rest) */}
           {venueContent.sections.slice(0, 3).map((sec, i) => (
             <section key={i} className="content-section">
               <h3 className="text-base font-bold text-[#111111]">{sec.title}</h3>
               <p className="text-[#1e293b] text-sm leading-[1.85] whitespace-pre-line">{sec.body}</p>
+              {/* 2번째 섹션 뒤 이미지 삽입 */}
+              {i === 1 && (
+                <div className="my-4">
+                  <img
+                    src={`/og/${venue.id}.svg`}
+                    alt={`${venueLabel} 내부 공간`}
+                    width={480}
+                    height={270}
+                    loading="lazy"
+                    className="content-img"
+                  />
+                  <p className="content-img-caption">{venueLabel} 내부 공간</p>
+                </div>
+              )}
             </section>
           ))}
 
@@ -230,6 +263,19 @@ export default function VenueDetailPage() {
               <p className="text-[#1e293b] text-sm leading-[1.85] whitespace-pre-line">{sec.body}</p>
             </section>
           ))}
+
+          {/* 본문 이미지 3 — 나머지 섹션 후 */}
+          <div className="my-4">
+            <img
+              src={`/og/${venue.id}.svg`}
+              alt={`${venueLabel} 위치 안내`}
+              width={480}
+              height={270}
+              loading="lazy"
+              className="content-img"
+            />
+            <p className="content-img-caption">{venueLabel} 위치 및 접근성 안내</p>
+          </div>
 
           {/* Quick Plan */}
           <section className="content-section">
@@ -296,6 +342,11 @@ export default function VenueDetailPage() {
           </a>
         )}
       </section>
+
+      {/* [오토플레이] 5초 후 다음 글 자동 이동 */}
+      {related.length > 0 && (
+        <AutoplayNext venue={related[0]} />
+      )}
 
       {/* Related */}
       {related.length > 0 && (

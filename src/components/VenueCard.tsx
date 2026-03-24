@@ -15,12 +15,24 @@ export default function VenueCard({ venue }: { venue: Venue }) {
       rel="noopener noreferrer"
       className="venue-card group"
     >
+      {/* Thumbnail */}
+      <div className="venue-card-thumb">
+        <img
+          src={`/og/${venue.id}.svg`}
+          alt={label}
+          width={480}
+          height={270}
+          loading="lazy"
+          className="w-full h-full object-cover"
+        />
+        <span className="venue-card-thumb-badge" data-cat={venue.category}>
+          {catLabel(venue.category)}
+        </span>
+      </div>
+
       <div className="venue-card-body">
-        {/* Row 1: Category + Area */}
+        {/* Row 1: Area + Contact */}
         <div className="flex items-center gap-2 mb-1">
-          <span className="venue-badge-night" data-cat={venue.category}>
-            {catLabel(venue.category)}
-          </span>
           <span className="text-[13px] text-[#475569] font-semibold">
             {venue.area}
           </span>

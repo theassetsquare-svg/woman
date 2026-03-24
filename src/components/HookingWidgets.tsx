@@ -1,5 +1,8 @@
-import { useState, useEffect } from 'react';
-import { getMainLink } from '../data/venues';
+import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import type { Venue } from '../data/venues';
+import { getMainLink, getVenueLabel } from '../data/venues';
+import { venuePath } from '../utils/slug';
 
 const MAIN = getMainLink();
 
@@ -311,6 +314,94 @@ export function Top10Hook({ items }: { items: { rank: number; name: string }[] }
       >
         <p className="font-bold text-sm">4위~10위 전체 보기 → 밤키</p>
       </a>
+    </div>
+  );
+}
+
+/**
+ * FOMO — "N명이 보고 있습니다"
+ */
+export function FomoCounter() {
+  const [count, setCount] = useState(() => 200 + Math.floor(Math.random() * 180));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount((prev) => {
+        const delta = Math.floor(Math.random() * 7) - 3;
+        return Math.max(150, Math.min(450, prev + delta));
+      });
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <span className="fomo-counter">
+      <span className="fomo-dot" />
+      {count}명이 보고 있습니다
+    </span>
+  );
+}
+
+/**
+ * 자이가르닉 — "N/총 탐색 진행률"
+ */
+export function ExploreProgress({ current, total }: { current: number; total: number }) {
+  const pct = Math.round((current / total) * 100);
+  return (
+    <div className="explore-progress">
+      <p className="text-xs font-bold text-[#111111]">
+        {current}/{total} 탐색 중
+      </p>
+      <div className="explore-progress-bar">
+        <div className="explore-progress-fill" style={{ width: `${pct}%` }} />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 오토플레이 — 글 읽고 후 다음 업소로 자동 이동 안내
+ */
+export function AutoplayNext({ venue }: { venue: Venue }) {
+  const [seconds, setSeconds] = useState(8);
+  const [cancelled, setCancelled] = useState(false);
+
+  const cancel = useCallback(() => setCancelled(true), []);
+
+  useEffect(() => {
+    if (cancelled) return;
+    if (seconds <= 0) return;
+    const timer = setTimeout(() => setSeconds((s) => s - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [seconds, cancelled]);
+
+  if (cancelled) return null;
+
+  return (
+    <div className="autoplay-next">
+      <p className="text-sm font-bold text-[#111111] mb-2">
+        {seconds > 0 ? (
+          <>다음 업소로 {seconds}초 후 이동</>
+        ) : (
+          <>지금 바로 확인해 보세요</>
+        )}
+      </p>
+      <Link
+        to={venuePath(venue)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-accent font-bold text-sm hover:text-accent-hover"
+      >
+        {getVenueLabel(venue)} 보러 가기 →
+      </Link>
+      {seconds > 0 && (
+        <button
+          onClick={cancel}
+          className="block mx-auto mt-2 text-xs text-[#64748b] hover:text-[#111111]"
+        >
+          취소
+        </button>
+      )}
     </div>
   );
 }

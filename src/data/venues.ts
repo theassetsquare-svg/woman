@@ -1905,12 +1905,12 @@ const seoHooks: Record<string, string> = {
   'uijeongbu-hankukgwan-night': '경기 북부 중심도시, 오래 사랑받는 전통 무대',
   'suwon-chancedom-night': '돔 천장 아래 울리는 사운드, 강호동이 만드는 파티',
   'suwon-korea-night': '역 인근 접근성, 정통 분위기를 유지하는 믿을 만한 곳',
-  'osan-hobak-night': '오산·화성 일대 대표, 주말 만석이 일상인 무대',
+  'osan-hobak-night': '화성 일대까지 소문난 대표 무대, 주말 만석이 일상',
   'seongnam-gukbingwan-night': '구도심 격조 있는 공간, 인테리어와 서비스의 품격',
   'indeogwon-gukbingwan-night': '도보권 접근성, 격조와 편의를 동시에 갖춘 공간',
   'seongnam-shampoo-night': '박찬호 실장 직영, 매주 다른 이벤트로 채우는 밤',
   'bundang-pongpong-night': '신도시 핵심 상권, 세련된 인테리어의 프리미엄',
-  'pyeongtaek-hobak-night': '평택·안성 일대 대표, 국제적 분위기가 독특한 무대',
+  'pyeongtaek-hobak-night': '안성까지 소문난 국제적 분위기, 미군기지 인근 독특한 무대',
   // 나이트 인천/부천/안산
   'incheon-arabian-night': '이국적 콘셉트 인테리어, 현실과 분리되는 밤',
   'bucheon-merit-night': '서울·인천 중간 거점, 최대 규모로 접근성 겸비',
@@ -1936,13 +1936,13 @@ const seoHooks: Record<string, string> = {
   // 나이트 부산/울산
   'busan-yeonsan-mul-night': '따봉 실장이 직접 관리하는 현장, 한번 오면 단골 된다',
   'busan-asiad-night': '스포츠 타운 인근 대형 무대, 강력 사운드의 위력',
-  'busan-mul-night': '부산진구 워터 콘셉트, 독특한 시각 연출의 체험',
+  'busan-mul-night': '따봉 실장 관리, 워터 콘셉트 시각 연출의 독특한 체험',
   'ulsan-newworld-night': '최신 시설 리뉴얼, 남구 번화가에서 새롭게 주목받는 곳',
   'ulsan-champion-night': '현지인 9명이 추천, 춘자 실장이 지켜온 전통의 무대',
   // 나이트 광주/제주
-  'gwangju-sangmu-night': '상무지구 핵심 상권, 가장 세련된 밤의 트렌드',
+  'gwangju-sangmu-night': '핵심 상권 한가운데, 가장 세련된 밤의 트렌드',
   'gwangju-totobam-night': '파격 심야 이벤트, 한번 빠지면 매주 찾는 중독성',
-  'gwangju-cheomdan-empa-night': '첨단지구 신흥 무대, 최신 설비와 빠른 성장세',
+  'gwangju-cheomdan-empa-night': '신흥 무대에서 빠르게 성장, 최신 설비의 저력',
   'gwangju-mgm-night': '원도심 터줏대감, 매주 라이브 공연이 펼쳐지는 무대',
   'gwangju-all-night': '대학가 인근 새벽 열기, 가장 오래 불이 켜진 무대',
   'jeju-night': '섬의 밤을 가장 뜨겁게 즐기는 방법, 관광객도 현지인도 함께',
@@ -1955,7 +1955,7 @@ const seoHooks: Record<string, string> = {
   'gangnam-club-utopia': '초대형 LED와 레이저쇼, 눈과 귀를 동시에 압도',
   'gangnam-club-laputa': '하우스 뮤직 특화, 감성적 몰입의 밤을 선사',
   'gangnam-club-face': '엄격한 입장 기준이 곧 품질 보증, 프리미엄 경험',
-  'gangnam-club-bamnbam': '새벽 타임 특별 DJ 셋, 밤이 깊을수록 오르는 분위기',
+  'gangnam-club-bamnbam': '새벽 타임 특별 DJ 셋, 깊어질수록 오르는 분위기',
   'gangnam-club-arte': '아트 갤러리 콘셉트, 벽면 작품과 파티가 공존',
   // 클럽 압구정
   'apgujeong-club-hype': '신사동, 소파석에서 DJ 셋을 감상하는 새로운 방식',
@@ -1964,38 +1964,38 @@ const seoHooks: Record<string, string> = {
   'apgujeong-club-debridge': '브릿지로 연결된 듀얼 홀, 두 장르를 넘나드는 즐거움',
   'apgujeong-club-candyman': '달콤한 칵테일과 팝 뮤직, 가볍게 즐기는 파티',
   'apgujeong-club-muin': '셀프 주문 테크 시스템, 대기 없는 차세대 경험',
-  'apgujeong-code-lounge': '클럽과 라운지 경계를 허문 하이브리드 공간',
+  'apgujeong-code-lounge': '두 장르의 경계를 허문 하이브리드 공간',
   // 클럽 청담
   'cheongdam-club-arju': '입장 기준이 곧 품질 보증, 예약 필수 프리미엄',
   // 클럽 이태원
   'itaewon-club-utopia': '글로벌 파티, 음악이 언어를 대신하는 공간',
   'itaewon-club-maid': '콘셉트 스태프와 테마 인테리어, 이색 경험의 정수',
-  'itaewon-club-prism': '무지개빛 프리즘 조명, 시각적 황홀감의 파티',
-  'itaewon-gaepan-pocha': '포차에서 갑자기 파티로, 반전 쾌감의 현장',
+  'itaewon-club-prism': '무지개빛 조명 연출, 시각적 황홀감의 파티',
+  'itaewon-gaepan-pocha': '시작은 안주 한 접시, 끝은 댄스 파티로 반전 쾌감',
   // 클럽 홍대
   'hongdae-club-bermuda': '한번 들어가면 빠져나올 수 없는 EDM 성지',
   'hongdae-club-pacific': '오션 콘셉트, 파도처럼 밀려오는 베이스라인',
   'hongdae-club-maid': '코스프레 테마 파티의 원조, 개성이 곧 입장권',
   'hongdae-club-dokkaebi': '전통을 현대적으로 재해석한 한국적 감성의 파티',
   // 클럽 기타서울
-  'nowon-cheongchun-pocha': '포차 감성과 클럽 에너지, 동시에 느끼는 복합 공간',
+  'nowon-cheongchun-pocha': '안주와 DJ가 공존하는 복합 공간, 동시에 즐기는 쾌감',
   'yongsan-dragon-city': '호텔 내 프리미엄 파티, 숙박과 나이트라이프 원스톱',
   'seoul-banyantree': '남산 뷰 루프탑, 야경을 배경으로 펼쳐지는 최고급 밤',
   // 클럽 경기/인천
-  'ilsan-club-cj': '라페스타 핵심 상권, 경기 서북부 클럽 씬의 중심축',
-  'uijeongbu-arena': '아레나급 사운드, 경기 북부 클러버들의 성지',
+  'ilsan-club-cj': '라페스타 핵심 상권, 경기 서북부 파티 씬의 중심축',
+  'uijeongbu-arena': '압도적 사운드 규모, 경기 북부 클러버들의 성지',
   'yongin-sageori-byeolbam': '별빛 인테리어, 분위기로 승부하는 유일한 곳',
   'bucheon-club-paragon': '역 인근 프리미엄 음향과 VIP석, 한 단계 위의 경험',
   'incheon-paradise-city': '영종도 복합리조트, 카지노와 파티를 동시에 즐기는 곳',
   // 클럽 충청
-  'cheongju-club-supermoon': '달빛 콘셉트 조명, 충북 유일 대형 클럽의 몽환',
+  'cheongju-club-supermoon': '달빛 콘셉트 조명, 충북 유일 대형 파티 공간의 몽환',
   'daejeon-seoltang-club': '달콤한 콘셉트 속 강력 EDM, 대학가 젊은 열기',
   // 라운지
   'apgujeong-lounge-dm': '프라이빗 소규모 모임 최적화, 고급 주류와 조용한 대화',
   'apgujeong-idiot-lounge': '파격 네이밍 뒤 하이엔드 품격, 반전 매력의 공간',
   // 호빠
   'gangnam-hoppa-royal': '최상급 호스트진이 대기하는 핵심 상권의 프리미엄',
-  'busan-hoppa-star': '서면 상권 대표, 스타급 라인업으로 화려한 밤',
+  'busan-hoppa-star': '서면 상권 대표, 최상급 라인업으로 화려한 밤',
   'jangan-hoppa-bbangbbang': '넉넉한 규모, 다양한 선택지가 있는 자유로운 공간',
   'geondae-hoppa-w': '대학가 감성, 부담 없이 가볍게 시작하는 트렌디한 밤',
 };

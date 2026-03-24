@@ -52,15 +52,15 @@ export function useOgMeta({ title, description, image, url }: OgMetaOptions) {
     setMeta('twitter:image', absImage);
 
     return () => {
-      document.title = `나이트·클럽·라운지 TOP 19 — ${SITE_NAME} 가이드`;
-      setMeta('description', '강남·부산·수원·신림·인천·대전·울산 나이트클럽·클럽·라운지 19곳 현장 검증 완료');
-      setMeta('og:title', `나이트·클럽·라운지 TOP 19 — ${SITE_NAME} 가이드`);
-      setMeta('og:description', '강남·부산·수원·신림·인천·대전·울산 나이트클럽·클럽·라운지 19곳 현장 검증 완료');
+      document.title = `전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103 — ${SITE_NAME}`;
+      setMeta('description', '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 한눈에 비교하세요');
+      setMeta('og:title', `전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103 — ${SITE_NAME}`);
+      setMeta('og:description', '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 한눈에 비교하세요');
       setMeta('og:image', `${BASE_URL}/og/default.svg`);
       setMeta('og:url', BASE_URL);
       setMeta('twitter:card', 'summary_large_image');
-      setMeta('twitter:title', `나이트·클럽·라운지 TOP 19 — ${SITE_NAME} 가이드`);
-      setMeta('twitter:description', '강남·부산·수원·신림·인천·대전·울산 나이트클럽·클럽·라운지 19곳 현장 검증 완료');
+      setMeta('twitter:title', `전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103 — ${SITE_NAME}`);
+      setMeta('twitter:description', '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 한눈에 비교하세요');
       setMeta('twitter:image', `${BASE_URL}/og/default.svg`);
     };
   }, [title, description, image, url]);

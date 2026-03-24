@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { regions, getRegionCount, getMainLink, venues } from '../data/venues';
+import { EngagementOverlay, PointsBadge } from './EngagementEngine';
 
 const MAIN = getMainLink();
 
@@ -41,7 +42,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               나이트 가이드
             </span>
           </Link>
-          <MobileMenu />
+          <div className="flex items-center gap-2">
+            <PointsBadge />
+            <MobileMenu />
+          </div>
         </div>
 
         {/* 카테고리 탭 */}
@@ -50,6 +54,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Main — 하단 네비 여백 확보 */}
       <main className="flex-1 pb-16" role="main">{children}</main>
+
+      {/* 중독 엔진 글로벌 오버레이 */}
+      <EngagementOverlay />
 
       {/* [후킹8] 푸터 직전 대형 CTA */}
       <section className="px-4 py-8">

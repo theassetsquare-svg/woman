@@ -1152,6 +1152,19 @@
   border-color: #F9A8D4;
 }
 
+/* ===== ENGAGEMENT ENGINE ===== */
+.engagement-card {
+  background: #fff;
+  border: 2px solid var(--color-rosegold);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+}
+.engagement-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 4px 16px rgba(232, 180, 184, 0.2);
+}
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
   width: 6px;

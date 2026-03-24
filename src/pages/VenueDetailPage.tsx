@@ -6,6 +6,7 @@ import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
 import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner, FomoCounter, ExploreProgress, AutoplayNext } from '../components/HookingWidgets';
+import { useTrackVisit } from '../components/EngagementEngine';
 
 const MAIN = getMainLink();
 const BASE = 'https://woman-5nj.pages.dev';
@@ -38,6 +39,9 @@ export default function VenueDetailPage() {
       </div>
     );
   }
+
+  // 방문 트래킹 (포인트 +5, 탐험 진행률 업데이트)
+  useTrackVisit(venue.id);
 
   const related = getVenuesByRegion(venue.region).filter((v) => v.id !== venue.id).slice(0, 3);
   const sameCat = venues.filter((v) => v.category === venue.category && v.id !== venue.id && v.region !== venue.region).slice(0, 3);

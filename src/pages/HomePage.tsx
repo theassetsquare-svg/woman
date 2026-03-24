@@ -6,6 +6,7 @@ import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
 import SearchBox from '../components/SearchBox';
 import { SlideUpCTA, ScrollBanner, Top10Hook, TodayRecommendHook, FullCompareHook } from '../components/HookingWidgets';
+import { EngagementSidebar, EndlessFeed } from '../components/EngagementEngine';
 
 export default function HomePage() {
   const activeRegions = regions.filter((r) => getRegionCount(r.id) > 0);
@@ -232,6 +233,16 @@ export default function HomePage() {
           </section>
         );
       })}
+
+      {/* 중독 엔진 — 스트릭+미션+운세+진행률 */}
+      <section className="px-4 py-6">
+        <EngagementSidebar />
+      </section>
+
+      {/* 끝없는 탐험 피드 (틱톡식 무한스크롤) */}
+      <section className="px-4 py-6">
+        <EndlessFeed />
+      </section>
 
       {/* CTA */}
       <section className="px-4 py-6 pb-10">

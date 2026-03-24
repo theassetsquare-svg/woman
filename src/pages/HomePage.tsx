@@ -161,13 +161,13 @@ export default function HomePage() {
         <FullCompareHook />
       </section>
 
-      {/* Region Venue Previews */}
+      {/* Region Venue Previews — 가로 스와이프 */}
       {activeRegions.map((r) => {
         const regionVenues = getVenuesByRegion(r.id);
         if (regionVenues.length === 0) return null;
         return (
-          <section key={r.id} className="px-4 py-6">
-            <div className="flex items-center justify-between mb-4">
+          <section key={r.id} className="py-6">
+            <div className="flex items-center justify-between mb-4 px-4">
               <h2 className="text-lg">
                 {r.name}
               </h2>
@@ -180,9 +180,11 @@ export default function HomePage() {
                 전체보기 →
               </Link>
             </div>
-            <div className="venue-grid">
-              {regionVenues.slice(0, 2).map((v) => (
-                <VenueCard key={v.id} venue={v} />
+            <div className="flex gap-4 overflow-x-auto scrollbar-hide px-4 snap-x snap-mandatory">
+              {regionVenues.map((v) => (
+                <div key={v.id} className="shrink-0 w-[280px] snap-start">
+                  <VenueCard venue={v} />
+                </div>
               ))}
             </div>
           </section>

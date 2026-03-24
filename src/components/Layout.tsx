@@ -1,14 +1,25 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { regions, getRegionCount, getMainLink } from '../data/venues';
+import { regions, getRegionCount, getMainLink, venues } from '../data/venues';
 
 const MAIN = getMainLink();
+
+const categories = [
+  { id: 'night', label: '나이트', filter: (v: typeof venues[0]) => v.category === 'night' },
+  { id: 'club', label: '클럽', filter: (v: typeof venues[0]) => v.category === 'club' },
+  { id: 'lounge', label: '라운지', filter: (v: typeof venues[0]) => v.category === 'lounge' },
+] as const;
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const year = new Date().getFullYear();
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
+      {/* 19세 안내 — 팝업 아님, 텍스트 배너 */}
+      <div className="bg-[#F5F5F5] text-center py-1.5 text-xs text-[#555555] font-medium">
+        본 사이트는 만 19세 이상 이용 가능합니다.
+      </div>
+
       {/* [후킹1] 상단 고정 배너 — 메인 유입 */}
       <a
         href={MAIN}
@@ -32,10 +43,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Link>
           <MobileMenu />
         </div>
+
+        {/* 카테고리 탭 */}
+        <CategoryTabs />
       </header>
 
-      {/* Main */}
-      <main className="flex-1" role="main">{children}</main>
+      {/* Main — 하단 네비 여백 확보 */}
+      <main className="flex-1 pb-16" role="main">{children}</main>
 
       {/* [후킹8] 푸터 직전 대형 CTA */}
       <section className="px-4 py-8">
@@ -58,8 +72,26 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </section>
 
       {/* Footer */}
-      <footer className="site-footer text-white" role="contentinfo">
+      <footer className="site-footer text-white pb-16" role="contentinfo">
         <div className="px-4 py-12">
+          {/* 카테고리 링크 */}
+          <div className="mb-8">
+            <h4 className="text-xs font-bold text-white/50 uppercase tracking-widest mb-4">카테고리</h4>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => (
+                <Link
+                  key={cat.id}
+                  to="/venues"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-slate-400 hover:text-white transition-colors bg-white/5 px-3 py-1.5 rounded-lg"
+                >
+                  {cat.label} ({venues.filter(cat.filter).length})
+                </Link>
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 gap-8 mb-10">
             <div>
               <h4 className="text-xs font-bold text-white/50 uppercase tracking-widest mb-4">지역별</h4>
@@ -103,7 +135,84 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+
+      {/* MobileNav 하단 고정 */}
+      <MobileNav />
     </div>
+  );
+}
+
+function CategoryTabs() {
+  const location = useLocation();
+  const isVenues = location.pathname === '/venues';
+
+  return (
+    <div className="category-tabs flex gap-1 px-4 pb-2 overflow-x-auto scrollbar-hide">
+      <Link
+        to="/venues"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`cat-tab shrink-0 ${isVenues ? 'cat-tab--active' : ''}`}
+      >
+        전체
+      </Link>
+      {categories.map((cat) => (
+        <Link
+          key={cat.id}
+          to="/venues"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cat-tab shrink-0"
+        >
+          {cat.label}
+        </Link>
+      ))}
+      {regions.filter((r) => getRegionCount(r.id) > 0).map((r) => (
+        <Link
+          key={r.id}
+          to={`/${r.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`cat-tab shrink-0 ${location.pathname === `/${r.id}` ? 'cat-tab--active' : ''}`}
+        >
+          {r.name}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function MobileNav() {
+  const location = useLocation();
+
+  const tabs = [
+    { to: '/', label: '홈', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+    { to: '/venues', label: '전체', icon: 'M4 6h16M4 10h16M4 14h16M4 18h16' },
+    { to: '/gangnam', label: '강남', icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z' },
+    { to: '/busan', label: '부산', icon: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064' },
+    { to: '/gyeonggi', label: '경기', icon: 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7' },
+  ];
+
+  return (
+    <nav className="mobile-bottom-nav" aria-label="하단 네비게이션">
+      {tabs.map((tab) => {
+        const isActive = tab.to === '/' ? location.pathname === '/' : location.pathname.startsWith(tab.to);
+        return (
+          <Link
+            key={tab.to}
+            to={tab.to}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`mobile-bottom-tab ${isActive ? 'mobile-bottom-tab--active' : ''}`}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
+            </svg>
+            <span className="text-[10px] font-semibold mt-0.5">{tab.label}</span>
+          </Link>
+        );
+      })}
+    </nav>
   );
 }
 

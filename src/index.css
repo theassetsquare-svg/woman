@@ -1133,6 +1133,25 @@
 }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 
+/* ===== HOPPA THEME (여성 친화) ===== */
+.hoppa-theme {
+  background: linear-gradient(180deg, #FFF1F2 0%, #FFFFFF 200px);
+}
+.hoppa-theme .venue-card {
+  border-color: #F9A8D4;
+}
+.hoppa-theme .venue-card:hover {
+  border-color: #EC4899;
+  box-shadow: 0 12px 40px rgba(236, 72, 153, 0.15);
+}
+.hoppa-theme .region-pill--active {
+  background: linear-gradient(135deg, #EC4899, #DB2777);
+}
+.hoppa-theme .info-box {
+  background: #FFF1F2;
+  border-color: #F9A8D4;
+}
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
   width: 6px;

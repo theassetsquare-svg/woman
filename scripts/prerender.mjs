@@ -191,6 +191,30 @@ for (const regionId of regions) {
   count++;
 }
 
+// Category pages
+const categoryPages = [
+  { path: '/clubs', label: '클럽', key: 'club' },
+  { path: '/nights', label: '나이트', key: 'night' },
+  { path: '/lounges', label: '라운지', key: 'lounge' },
+  { path: '/rooms', label: '룸', key: 'room' },
+  { path: '/yojeong', label: '요정', key: 'yojeong' },
+  { path: '/hoppa', label: '호빠', key: 'hoppa' },
+];
+
+for (const cp of categoryPages) {
+  const catVenues = venues.filter(v => v.category === cp.key);
+  const title = `${cp.label} ${catVenues.length}곳 — 전체보기 | ${SITE_NAME}`;
+  const desc = `전국 ${cp.label} ${catVenues.length}곳 현장 검증 완료. 분위기·실장·입장 정보 한눈에.`;
+  writePage(cp.path, generateHTML({
+    title, description: desc,
+    canonical: `${BASE}${cp.path}`,
+    ogImage: `${BASE}/og/category-${cp.key}.svg`,
+    h1: `${cp.label} 전체보기`,
+    introText: desc,
+  }));
+  count++;
+}
+
 // Venue detail pages
 for (const v of venues) {
   const hook = getHook(v.id);

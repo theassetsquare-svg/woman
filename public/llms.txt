@@ -1,80 +1,138 @@
-# 호빠 디렉토리 — 전국 호스트바 정보
+# 여성이 편안한 밤문화 — 나이트 가이드
+> 전국 나이트·클럽·라운지·룸·요정·호빠 103곳 현장 검증 정보
 
-> 영업 확인된 전국 호빠(호스트바) 25곳의 위치, 영업시간, 상세 리뷰 정보를 제공하는 디렉토리 사이트입니다.
+## 사이트 정보
+- URL: https://woman-5nj.pages.dev
+- 카테고리: 클럽, 나이트, 라운지, 룸, 요정, 호빠
+- 총 업소: 103곳
+- 지역: 강남, 압구정, 청담, 홍대, 이태원, 부산, 대구, 광주, 대전, 인천, 수원, 울산 등 전국
 
-## Sitemap
-- https://woman-5nj.pages.dev/sitemap.xml
+## 주요 페이지
+- 메인: https://woman-5nj.pages.dev
+- 전체 업소: https://woman-5nj.pages.dev/venues
+- 클럽: https://woman-5nj.pages.dev/clubs
+- 나이트: https://woman-5nj.pages.dev/nights
+- 라운지: https://woman-5nj.pages.dev/lounges
+- 룸: https://woman-5nj.pages.dev/rooms
+- 요정: https://woman-5nj.pages.dev/yojeong
+- 호빠: https://woman-5nj.pages.dev/hoppa
+- 퀴즈: https://woman-5nj.pages.dev/quiz
+- 안전 가이드: https://woman-5nj.pages.dev/safety
+- 커뮤니티: https://woman-5nj.pages.dev/community
+- 매거진: https://woman-5nj.pages.dev/magazine
+- 랭킹: https://woman-5nj.pages.dev/ranking
 
-## RSS Feed
-- https://woman-5nj.pages.dev/rss.xml
+## 등록 업소 전체 목록
+일산룸
+해운대고구려
+일산명월관요정
+청담H2O나이트
+강남줄리아나나이트
+신림그랑프리나이트
+상봉동한국관나이트
+수유샴푸나이트
+독산국빈관나이트
+답십리돈텔마마나이트
+강서나이트
+영등포터미널나이트
+노원호박나이트
+노원스타나이트
+길동찬스나이트
+일산샴푸나이트
+일산물나이트
+파주야당스카이돔나이트
+화정한국관나이트
+김포호박나이트
+김포썸나이트
+구리호박나이트
+의정부한국관나이트
+수원찬스돔나이트
+수원코리아나이트
+오산호박나이트
+성남국빈관나이트
+인덕원국빈관나이트
+성남샴푸나이트
+분당퐁퐁나이트
+평택호박나이트
+인천아라비안나이트
+부천메리트나이트
+부천고래나이트
+안산히트나이트
+안산돈텔마마나이트
+천안스타돔나이트
+천안코리아나이트
+대전세븐나이트
+대전원나이트
+대전봉명나이트
+대전한국관나이트
+청주돈텔마마나이트
+청주호박나이트
+서산호박나이트
+대구한국관나이트
+대구호박나이트
+대구바밤바나이트
+대구토토가나이트
+구미호박나이트
+부산연산동물나이트
+부산아시아드나이트
+부산물나이트
+울산뉴월드나이트
+울산챔피언나이트
+광주상무나이트
+광주토토밤나이트
+광주첨단엠파나이트
+광주MGM나이트
+광주올나이트
+제주나이트
+강남클럽 레이스
+강남클럽 사운드
+강남클럽 Jack
+강남클럽 피크
+강남클럽 미로
+강남클럽 유토피아
+강남클럽 라퓨타
+강남클럽 페이스
+강남클럽 밤앤밤
+강남클럽 아르떼
+압구정클럽 하입
+압구정클럽 인트로
+압구정클럽 컬러
+압구정클럽 디브릿지
+압구정클럽 캔디맨
+압구정클럽 무인
+압구정코드라운지
+청담클럽 아르쥬
+이태원클럽 유토피아
+이태원클럽 메이드
+이태원클럽 프리즘
+이태원개판포차
+홍대클럽 버뮤다
+홍대클럽 퍼시픽
+홍대클럽 메이드
+홍대클럽 도깨비
+노원청춘포차
+용산드래곤시티
+서울반얀트리
+일산클럽 CJ
+의정부아레나
+용인사거리별밤
+부천클럽 파라곤
+인천파라다이스씨티
+청주클럽 슈퍼문
+대전설탕클럽
+압구정라운지 디엠
+압구정이디엇라운지
+강남호빠 로얄
+부산호빠 스타
+장안동호빠 빵빵
+건대호빠 W
 
-## Key Pages
+## FAQ
+Q: 이 사이트는 무엇인가요?
+A: 전국 나이트클럽, 클럽, 라운지, 룸, 요정, 호빠 103곳의 현장 검증 정보를 제공합니다.
 
-### 홈
-- https://woman-5nj.pages.dev
+Q: 업소 정보는 정확한가요?
+A: 영업 확인된 업소만 수록하며, 정확한 정보는 방문 전 각 업소에 직접 확인을 권장합니다.
 
-### 전체 목록
-- https://woman-5nj.pages.dev/venues
-
-### 지역별 페이지
-- https://woman-5nj.pages.dev/gangnam (강남 4곳)
-- https://woman-5nj.pages.dev/geondae (건대 1곳)
-- https://woman-5nj.pages.dev/jangan (장안동 3곳)
-- https://woman-5nj.pages.dev/busan (부산 9곳)
-- https://woman-5nj.pages.dev/gyeonggi (경기/수원 4곳)
-- https://woman-5nj.pages.dev/daejeon (대전 2곳)
-- https://woman-5nj.pages.dev/gwangju (광주 1곳)
-- https://woman-5nj.pages.dev/changwon (창원 1곳)
-
-### 강남 호빠
-- https://woman-5nj.pages.dev/gangnam/boston (강남호빠 보스턴)
-- https://woman-5nj.pages.dev/gangnam/i (강남호빠 아이(I))
-- https://woman-5nj.pages.dev/gangnam/flirting (강남호빠 플러팅진혁)
-- https://woman-5nj.pages.dev/gangnam/blackhole (강남호빠 블랙홀)
-
-### 건대 호빠
-- https://woman-5nj.pages.dev/geondae/wclub (건대호빠 W클럽)
-
-### 장안동 호빠
-- https://woman-5nj.pages.dev/jangan/bini (장안동호빠 빈이)
-- https://woman-5nj.pages.dev/jangan/cube (장안동호빠 큐브)
-- https://woman-5nj.pages.dev/jangan/bbangbbang (장안동호빠 빵빵)
-
-### 부산 호빠
-- https://woman-5nj.pages.dev/busan/michelin (해운대호빠 미슐랭)
-- https://woman-5nj.pages.dev/busan/q (해운대호빠 큐(Q))
-- https://woman-5nj.pages.dev/busan/david (해운대호빠 다비드바)
-- https://woman-5nj.pages.dev/busan/aura (부산호빠 아우라)
-- https://woman-5nj.pages.dev/busan/menz (부산호빠 맨즈)
-- https://woman-5nj.pages.dev/busan/w (부산호빠 더블유(W))
-- https://woman-5nj.pages.dev/busan/theking (부산호빠 더킹)
-- https://woman-5nj.pages.dev/busan/js (부산호빠 제이에스(JS))
-- https://woman-5nj.pages.dev/busan/michelin-jisung (해운대호빠 미슐랭(지성))
-
-### 경기/수원 호빠
-- https://woman-5nj.pages.dev/gyeonggi/suwon-beast (수원호빠 비스트)
-- https://woman-5nj.pages.dev/gyeonggi/suwon-maid (수원호빠 메이드)
-- https://woman-5nj.pages.dev/gyeonggi/suwon-play (수원호빠 플레이 가라오케)
-- https://woman-5nj.pages.dev/gyeonggi/suwon-lasvegas (수원호빠 라스베가스)
-
-### 대전 호빠
-- https://woman-5nj.pages.dev/daejeon/eclipse (대전호빠 이클립스)
-- https://woman-5nj.pages.dev/daejeon/tombar (대전호빠 톰바)
-
-### 광주 호빠
-- https://woman-5nj.pages.dev/gwangju/w (광주호빠 W)
-
-### 창원 호빠
-- https://woman-5nj.pages.dev/changwon/avengers (창원호빠 어벤져스)
-
-## Content Structure per Venue Page
-Each venue detail page contains:
-1. **한눈에 보기 (AI Summary)** — 8 bullet-point facts
-2. **2분 소개** — narrative introduction
-3. **스토리 본문** — 7 themed sections (atmosphere, budget, timing, tips, directions, who it's for, safety)
-4. **30초 플랜** — decision summary with 3 scenarios
-5. **자주 묻는 질문 (FAQ)** — 10+ Q&A pairs
-6. **결론** — closing recommendation
-
-## Optional
-- llms-full.txt: not available
+Q: 예약은 어떻게 하나요?
+A: 각 업소 상세페이지의 전화번호로 직접 문의하세요.

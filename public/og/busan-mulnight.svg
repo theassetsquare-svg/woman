@@ -1,24 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a"/>
-      <stop offset="100%" style="stop-color:#1e293b"/>
+      <stop offset="0%" style="stop-color:#1C1917"/>
+      <stop offset="100%" style="stop-color:#292524"/>
     </linearGradient>
     <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#7c3aed"/>
-      <stop offset="100%" style="stop-color:#a855f7"/>
+      <stop offset="0%" style="stop-color:#DB2777"/>
+      <stop offset="100%" style="stop-color:#E8B4B8"/>
     </linearGradient>
   </defs>
-  <rect width="1200" height="1200" fill="url(#bg)"/>
-  <rect x="0" y="0" width="1200" height="6" fill="url(#accent)"/>
-  <!-- Category badge -->
-  <rect x="460" y="280" width="280" height="50" rx="25" fill="rgba(124,58,237,0.2)" stroke="#a78bfa" stroke-width="2"/>
-  <text x="600" y="314" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="24" fill="#a78bfa" font-weight="800">나이트</text>
-  <!-- Store name (keyword) -->
-  <text x="600" y="520" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="52" font-weight="900" fill="white" letter-spacing="-1">부산연산동물나이트</text>
-  <text x="600" y="680" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="36" fill="#a78bfa" font-weight="700">따봉 실장</text>
-  <text x="600" y="760" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="30" fill="#94a3b8" font-weight="600">010-7942-9076</text>
-  <!-- Bottom branding -->
-  <text x="600" y="1100" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="22" fill="#475569" font-weight="600">NIGHTLIFE DIRECTORY</text>
-  <rect x="0" y="1194" width="1200" height="6" fill="url(#accent)"/>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+  <rect x="0" y="626" width="1200" height="4" fill="url(#accent)"/>
+  <rect x="552" y="160" width="136" height="40" rx="20" fill="rgba(232,180,184,0.15)" stroke="#F472B6" stroke-width="2"/>
+  <text x="600" y="188" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="20" fill="#F472B6" font-weight="800">나이트</text>
+  <text x="600" y="310" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="52" font-weight="900" fill="white" letter-spacing="-1">부산연산동물나이트</text>
+  <text x="600" y="390" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="28" fill="#E8B4B8" font-weight="700">따봉 실장</text>
+  <text x="600" y="430" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="24" fill="#94a3b8" font-weight="600">010-7942-9076</text>
+  <text x="600" y="560" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="20" fill="#64748b" font-weight="600">여성이 편안한 밤문화</text>
 </svg>

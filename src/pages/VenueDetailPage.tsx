@@ -1,16 +1,19 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription, getSubKeywords } from '../data/venues';
+import { getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription, getSubKeywords, getMainLink } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
+import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner } from '../components/HookingWidgets';
+
+const MAIN = getMainLink();
+const BASE = 'https://woman-5nj.pages.dev';
 
 export default function VenueDetailPage() {
   const { region, slug } = useParams<{ region: string; slug: string }>();
   const venue = region && slug ? getVenueByRegionSlug(region, slug) : undefined;
 
-  // OG meta (must be called unconditionally)
   const venueLabel = venue ? getVenueLabel(venue) : '';
   const hook = venue ? getVenueHook(venue.id) : '';
   const seoDesc = venue ? getVenueSeoDescription(venue.id) : '';
@@ -27,8 +30,8 @@ export default function VenueDetailPage() {
 
   if (!venue) {
     return (
-      <div className="max-w-[760px] mx-auto px-5 md:px-8 py-24 text-center">
-        <h1 className="text-2xl mb-3">업소를 찾을 수 없습니다</h1>
+      <div className="px-4 py-24 text-center">
+        <h1 className="text-xl mb-3">업소를 찾을 수 없습니다</h1>
         <Link to="/venues" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover font-semibold text-base">
           전체 목록으로 돌아가기
         </Link>
@@ -39,20 +42,18 @@ export default function VenueDetailPage() {
   const related = getVenuesByRegion(venue.region).filter((v) => v.id !== venue.id).slice(0, 3);
   const venueContent = getVenueContent(venue.id);
   const subKeywords = getSubKeywords(venue);
-  const BASE = 'https://woman-5nj.pages.dev';
 
-  // Inject BreadcrumbList + FAQPage JSON-LD
+  // JSON-LD
   useEffect(() => {
     const scripts: HTMLScriptElement[] = [];
 
-    // BreadcrumbList
     const breadcrumb = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: '홈', item: BASE },
         { '@type': 'ListItem', position: 2, name: getRegionName(venue.region), item: `${BASE}/${venue.region}` },
-        { '@type': 'ListItem', position: 3, name: venue.name, item: `${BASE}${venuePath(venue)}` },
+        { '@type': 'ListItem', position: 3, name: venueLabel, item: `${BASE}${venuePath(venue)}` },
       ],
     };
     const s1 = document.createElement('script');
@@ -62,7 +63,6 @@ export default function VenueDetailPage() {
     document.head.appendChild(s1);
     scripts.push(s1);
 
-    // FAQPage (if content has FAQ)
     if (venueContent && venueContent.faq.length > 0) {
       const faqSchema = {
         '@context': 'https://schema.org',
@@ -81,16 +81,15 @@ export default function VenueDetailPage() {
       scripts.push(s2);
     }
 
-    // LocalBusiness
     const localBusiness: Record<string, unknown> = {
       '@context': 'https://schema.org',
-      '@type': venue.category && ['night', 'club', 'lounge'].includes(venue.category) ? 'NightClub' : 'LocalBusiness',
+      '@type': 'NightClub',
       name: venueLabel,
       url: `${BASE}${venuePath(venue)}`,
       image: `${BASE}/og/${venue.id}.svg`,
+      address: venue.address,
     };
-    if (venue.phone) localBusiness.telephone = venue.phone;
-
+    if (venue.phone && venue.phone !== '별도문의') localBusiness.telephone = venue.phone;
     const s3 = document.createElement('script');
     s3.type = 'application/ld+json';
     s3.dataset.dynamic = 'true';
@@ -98,75 +97,68 @@ export default function VenueDetailPage() {
     document.head.appendChild(s3);
     scripts.push(s3);
 
-    return () => {
-      scripts.forEach((s) => s.remove());
-    };
+    return () => { scripts.forEach((s) => s.remove()); };
   }, [venue, venueContent]);
 
+  const catLabel = venue.category === 'club' ? '클럽' : venue.category === 'lounge' ? '라운지' : '나이트';
+
   return (
-    <div className="max-w-[760px] mx-auto px-5 md:px-8 py-12 md:py-16">
+    <div className="px-4 py-8">
       {/* Breadcrumb */}
-      <nav className="breadcrumb mb-8" aria-label="경로">
+      <nav className="breadcrumb mb-6" aria-label="경로">
         <Link to="/" target="_blank" rel="noopener noreferrer">홈</Link>
         <span aria-hidden="true">/</span>
         <Link to={`/${venue.region}`} target="_blank" rel="noopener noreferrer">{getRegionName(venue.region)}</Link>
         <span aria-hidden="true">/</span>
-        <span className="text-navy font-medium">{venue.name}</span>
+        <span className="text-[#111111] font-medium">{venue.name}</span>
       </nav>
 
-      {/* ===== HERO SECTION ===== */}
-      <section className="mb-10 animate-fade-in-up">
-        {/* 1) Thumbnail image */}
-        <div className="detail-hero-img mb-8">
+      {/* Hero */}
+      <section className="mb-8 animate-fade-in-up">
+        <div className="detail-hero-img mb-6">
           <img
             src={`/og/${venue.id}.svg`}
             alt={venueLabel}
             width={1200}
-            height={venue.category ? 1200 : 630}
+            height={630}
             className="w-full h-auto block"
+            loading="lazy"
           />
         </div>
 
-        {/* 2) H1 = Store name */}
-        <h1 className="text-3xl md:text-[2.5rem] leading-tight mb-4">{venueLabel}</h1>
-
-        {/* 3) Quick meta row */}
-        <div className="flex flex-wrap items-center gap-3 mb-6">
-          <span className="venue-badge-open text-sm px-4 py-1">
-            영업중
-          </span>
-          <span className="text-text-muted text-[15px] font-medium">
-            {getRegionName(venue.region)} · {venue.area}
-          </span>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="venue-badge-night" data-cat={venue.category}>{catLabel}</span>
+          <span className="venue-badge-open text-sm px-3 py-0.5">영업중</span>
         </div>
 
-        {/* 4) CTA row */}
-        <div className="flex flex-wrap gap-3 mb-8">
-          <Link
-            to={`/${venue.region}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-outline"
-          >
-            {subKeywords[0]} 더보기
-          </Link>
+        <h1 className="text-2xl leading-tight mb-3">{venueLabel}</h1>
+
+        <p className="text-sm text-[#475569] mb-4">
+          {getRegionName(venue.region)} · {venue.area}
+        </p>
+
+        <div className="flex flex-wrap gap-2 mb-6">
+          {venue.contact && (
+            <span className="text-sm font-bold text-accent bg-surface-warm px-3 py-1.5 rounded-xl border border-rosegold">
+              {venue.contact} 실장
+            </span>
+          )}
+          <ShareButton venueName={venueLabel} />
         </div>
 
-        {/* 5) Intro value hook */}
         <div className="info-box">
-          <p className="text-base text-navy leading-relaxed font-medium whitespace-pre-line">
+          <p className="text-sm text-[#111111] leading-relaxed font-medium whitespace-pre-line">
             {venue.card_hook}
           </p>
         </div>
       </section>
 
-      {/* ===== DETAIL INFO ===== */}
+      {/* Detail Info */}
       <section className="content-section">
-        <h2 className="text-xl md:text-2xl">{venueLabel} 상세 정보</h2>
+        <h2 className="text-lg">{venueLabel} 상세 정보</h2>
+        <p className="text-[#1e293b] text-sm leading-relaxed mb-4">{venue.description}</p>
 
-        <p className="text-text text-base leading-relaxed mb-6">{venue.description}</p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+        <div className="space-y-2 mb-4">
           <InfoRow label="주소" value={venue.address} />
           <InfoRow label="영업시간" value={venue.hours} />
           <InfoRow label="연락처" value={venue.phone} />
@@ -174,24 +166,27 @@ export default function VenueDetailPage() {
 
         <div className="flex flex-wrap gap-2">
           {venue.tags.map((tag) => (
-            <span key={tag} className="detail-tag">
+            <span key={tag} className="detail-tag text-xs">
               #{tag}
             </span>
           ))}
         </div>
       </section>
 
-      {/* ===== CONTENT ENGINE ===== */}
+      {/* [후킹2] 중간 끊기 */}
+      <MidBreakHook />
+
+      {/* Content Engine */}
       {venueContent && (
         <>
-          {/* AI Summary */}
+          {/* Summary */}
           <section className="content-section">
-            <h2 className="text-xl md:text-2xl">한눈에 보기</h2>
+            <h2 className="text-lg">한눈에 보기</h2>
             <div className="summary-box">
-              <ul className="space-y-3">
+              <ul className="space-y-2.5">
                 {venueContent.summary.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-base text-text leading-relaxed">
-                    <span className="w-6 h-6 rounded-full bg-accent/10 text-accent text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-[#1e293b] leading-relaxed">
+                    <span className="w-5 h-5 rounded-full bg-accent/10 text-accent text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
                       {i + 1}
                     </span>
                     <span>{item}</span>
@@ -201,71 +196,112 @@ export default function VenueDetailPage() {
             </div>
           </section>
 
-          {/* 2-Minute Intro */}
+          {/* Intro */}
           <section className="content-section">
-            <h2 className="text-xl md:text-2xl">{subKeywords[0]} 이용 가이드</h2>
-            <p className="text-text text-base leading-[1.85] whitespace-pre-line">{venueContent.intro}</p>
+            <h2 className="text-lg">{subKeywords[0]} 이용 가이드</h2>
+            <p className="text-[#1e293b] text-sm leading-[1.85] whitespace-pre-line">{venueContent.intro}</p>
           </section>
 
-          {/* Story Body Sections */}
-          {venueContent.sections.map((sec, i) => (
+          {/* Sections (show first 3, then hooking, then rest) */}
+          {venueContent.sections.slice(0, 3).map((sec, i) => (
             <section key={i} className="content-section">
-              <h3 className="text-lg md:text-xl font-bold text-navy">{sec.title}</h3>
-              <p className="text-text text-base leading-[1.85] whitespace-pre-line">{sec.body}</p>
+              <h3 className="text-base font-bold text-[#111111]">{sec.title}</h3>
+              <p className="text-[#1e293b] text-sm leading-[1.85] whitespace-pre-line">{sec.body}</p>
+            </section>
+          ))}
+
+          {/* [후킹9] 블러 잠금 — 리뷰 평점 */}
+          <BlurLockSection>
+            <div className="space-y-2">
+              <p className="text-sm font-bold">방문자 리뷰 평점</p>
+              <p className="text-2xl font-black">★★★★☆ 4.2점</p>
+              <p className="text-sm text-[#475569]">"분위기가 좋고 사운드가 압도적" — 최근 리뷰 중</p>
+              <p className="text-sm text-[#475569]">"실장이 친절해서 다시 방문" — 단골 리뷰</p>
+            </div>
+          </BlurLockSection>
+
+          {/* [후킹3] 비슷한 업소 추천 → 메인 */}
+          <SimilarHook />
+
+          {/* Remaining sections */}
+          {venueContent.sections.slice(3).map((sec, i) => (
+            <section key={i + 3} className="content-section">
+              <h3 className="text-base font-bold text-[#111111]">{sec.title}</h3>
+              <p className="text-[#1e293b] text-sm leading-[1.85] whitespace-pre-line">{sec.body}</p>
             </section>
           ))}
 
           {/* Quick Plan */}
           <section className="content-section">
-            <h2 className="text-xl md:text-2xl">30초 플랜</h2>
+            <h2 className="text-lg">30초 플랜</h2>
             <div className="quickplan-box">
-              <p className="text-navy font-bold text-base mb-4">{venueContent.quickPlan.decision}</p>
-              <div className="space-y-2 mb-4">
+              <p className="text-[#111111] font-bold text-sm mb-3">{venueContent.quickPlan.decision}</p>
+              <div className="space-y-2 mb-3">
                 {venueContent.quickPlan.scenarios.map((s, i) => (
-                  <div key={i} className="flex items-start gap-3 text-base text-text leading-relaxed">
+                  <div key={i} className="flex items-start gap-2.5 text-sm text-[#1e293b] leading-relaxed">
                     <span className="text-accent font-bold mt-0.5 shrink-0">▸</span>
                     <span>{s}</span>
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-text-muted font-medium border-t border-accent/15 pt-3">{venueContent.quickPlan.costNote}</p>
+              <p className="text-xs text-[#475569] font-medium border-t border-rosegold pt-3">{venueContent.quickPlan.costNote}</p>
             </div>
           </section>
 
+          {/* [후킹4] AI 추천 */}
+          <AIRecommendHook />
+
+          {/* [후킹11] 비교 기능 */}
+          <CompareHook />
+
           {/* FAQ */}
           <section className="content-section">
-            <h2 className="text-xl md:text-2xl">{venueLabel} 자주 묻는 질문</h2>
-            <div className="space-y-3">
+            <h2 className="text-lg">{venueLabel} 자주 묻는 질문</h2>
+            <div className="space-y-2.5">
               {venueContent.faq.map((item, i) => (
                 <FaqItem key={i} q={item.q} a={item.a} />
               ))}
             </div>
           </section>
 
+          {/* [후킹14] 리뷰 작성 */}
+          <WriteReviewHook />
+
+          {/* [후킹15] 쿠폰 */}
+          <CouponHook />
+
           {/* Conclusion */}
           <section className="content-section">
             <div className="conclusion-box">
-              <p className="text-white text-base leading-[1.85] whitespace-pre-line relative">{venueContent.conclusion}</p>
+              <p className="text-[#111111] text-sm leading-[1.85] whitespace-pre-line relative">{venueContent.conclusion}</p>
             </div>
           </section>
         </>
       )}
 
-      {/* ===== BOTTOM CTA ===== */}
-      <section className="bottom-cta p-8 md:p-10 text-center mb-10">
-        <h3 className="text-xl font-extrabold text-white mb-3">{subKeywords[0]} 방문 전 확인</h3>
-        <p className="text-slate-400 text-[15px] mb-6 leading-relaxed">
-          영업시간 및 운영 조건은 변동될 수 있습니다. 방문 전 전화로 확인하시기 바랍니다.
+      {/* Bottom CTA */}
+      <section className="bottom-cta p-6 text-center mb-8">
+        <h3 className="text-base font-extrabold text-[#111111] mb-2">{subKeywords[0]} 방문 전 확인</h3>
+        <p className="text-[#475569] text-xs mb-4 leading-relaxed">
+          영업시간 및 운영 조건은 변동될 수 있습니다. 방문 전 전화로 확인하세요.
         </p>
-        <div className="flex flex-wrap justify-center gap-3">
-        </div>
+        {venue.phone && venue.phone !== '별도문의' && (
+          <a
+            href={`tel:${venue.phone.replace(/-/g, '')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary text-sm"
+          >
+            {venue.contact ? `${venue.contact} 실장에게 전화` : '전화하기'} — {venue.phone}
+          </a>
+        )}
       </section>
 
-      {/* ===== RELATED ===== */}
+      {/* Related */}
       {related.length > 0 && (
-        <section>
-          <h2 className="text-xl md:text-2xl mb-6">
-            {subKeywords[0]} 추천
+        <section className="mb-8">
+          <h2 className="text-lg mb-4">
+            {getRegionName(venue.region)} 다른 업소
           </h2>
           <div className="venue-grid">
             {related.map((v) => (
@@ -275,30 +311,47 @@ export default function VenueDetailPage() {
         </section>
       )}
 
-      {/* ===== FIXED PHONE BAR ===== */}
+      {/* [후킹5] 전체 비교 → 메인 */}
+      <a
+        href={MAIN}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="footer-mega-cta block mb-8"
+      >
+        <p className="text-lg font-black mb-1">103개 전체 업소 실시간 순위</p>
+        <p className="text-sm opacity-80">AI추천+리뷰 → 밤키 바로가기</p>
+      </a>
+
+      {/* Fixed phone bar */}
       {venue.phone && venue.phone !== '별도문의' && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0f172a] to-[#1e293b] border-t-2 border-accent shadow-2xl">
-          <div className="max-w-[760px] mx-auto px-5 py-3 flex items-center justify-between gap-4">
-            <div className="min-w-0">
-              <p className="text-white font-bold text-sm truncate">{venueLabel}</p>
-              {venue.contact && (
-                <p className="text-accent-light text-xs font-semibold">{venue.contact} 실장</p>
-              )}
+        <div className="fixed bottom-0 left-0 right-0 z-50 max-w-[480px] mx-auto">
+          <div className="bg-gradient-to-r from-accent to-accent-hover shadow-2xl">
+            <div className="px-4 py-3 flex items-center justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-white font-bold text-sm truncate">{venueLabel}</p>
+                {venue.contact && (
+                  <p className="text-rosegold text-xs font-semibold">{venue.contact} 실장</p>
+                )}
+              </div>
+              <a
+                href={`tel:${venue.phone.replace(/-/g, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 bg-white text-accent font-bold text-sm px-4 py-2.5 rounded-xl shrink-0"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                전화
+              </a>
             </div>
-            <a
-              href={`tel:${venue.phone.replace(/-/g, '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-accent hover:bg-accent-hover text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors shrink-0"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-              {venue.phone}
-            </a>
           </div>
         </div>
       )}
+
+      {/* Floating widgets */}
+      <SlideUpCTA />
+      <ScrollBanner />
     </div>
   );
 }
@@ -307,10 +360,8 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="detail-info-card flex items-start gap-3">
       <div className="min-w-0">
-        <span className="text-xs text-text-muted font-semibold uppercase tracking-wider block mb-1">{label}</span>
-        <span className="text-[15px] font-semibold text-navy block truncate">
-          {value}
-        </span>
+        <span className="text-[10px] text-[#475569] font-semibold uppercase tracking-wider block mb-0.5">{label}</span>
+        <span className="text-sm font-semibold text-[#111111] block truncate">{value}</span>
       </div>
     </div>
   );
@@ -321,9 +372,9 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   return (
     <div className="faq-item">
       <button onClick={() => setOpen(!open)}>
-        <span className="text-base font-semibold text-navy">{q}</span>
+        <span className="text-sm font-semibold text-[#111111]">{q}</span>
         <svg
-          className={`w-5 h-5 text-text-muted shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 text-[#475569] shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -333,7 +384,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         </svg>
       </button>
       <div className={`faq-answer ${open ? '' : 'hidden'}`}>
-        <p className="text-text text-[15px] leading-relaxed whitespace-pre-line">{a}</p>
+        <p className="text-[#1e293b] text-sm leading-relaxed whitespace-pre-line">{a}</p>
       </div>
     </div>
   );

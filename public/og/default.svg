@@ -1,5 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#0f172a"/>
-  <text x="600" y="280" text-anchor="middle" fill="#f8fafc" font-size="64" font-family="sans-serif" font-weight="bold">호빠 디렉토리</text>
-  <text x="600" y="370" text-anchor="middle" fill="#94a3b8" font-size="32" font-family="sans-serif">전국 검증 완료 업소 총정리</text>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1C1917"/>
+      <stop offset="100%" style="stop-color:#292524"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#DB2777"/>
+      <stop offset="100%" style="stop-color:#E8B4B8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+  <rect x="0" y="626" width="1200" height="4" fill="url(#accent)"/>
+  <text x="600" y="260" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="56" font-weight="900" fill="white" letter-spacing="-1">나이트 · 클럽 · 라운지</text>
+  <text x="600" y="340" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="36" fill="#E8B4B8" font-weight="700">TOP 19</text>
+  <text x="600" y="420" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="24" fill="#94a3b8" font-weight="600">현장 검증 · 실장 연락처 · 분위기 비교</text>
+  <text x="600" y="540" text-anchor="middle" font-family="'Pretendard',sans-serif" font-size="22" fill="#64748b" font-weight="600">여성이 편안한 밤문화</text>
 </svg>

@@ -1,68 +1,51 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { regions, venues, getVenuesByRegion, getRegionName } from '../data/venues';
+import { regions, getVenuesByRegion, getRegionName, getRegionCount, getMainLink } from '../data/venues';
 import { useOgMeta } from '../hooks/useOgMeta';
 import VenueCard from '../components/VenueCard';
 
 const BASE = 'https://woman-5nj.pages.dev';
+const MAIN = getMainLink();
+
+const regionHook: Record<string, { title: string; desc: string }> = {
+  gangnam: {
+    title: '강남 클럽·라운지·나이트 TOP 6 — 금요 밤 필수 코스',
+    desc: '청담H2O나이트부터 아르쥬, 레이스, 사운드, 하입, 컬러까지. 강남권 핵심 6곳의 분위기·입장·예약 정보를 한눈에 비교합니다.',
+  },
+  busan: {
+    title: '부산연산동물나이트 — 따봉 실장 현장 검증 리뷰',
+    desc: '부산 연산동 대표 나이트클럽. 따봉 실장이 직접 운영하는 현장의 사운드·분위기·입장 안내를 상세히 정리했습니다.',
+  },
+  gyeonggi: {
+    title: '경기 나이트 TOP 5 — 성남·수원·파주·인덕원·일산 총정리',
+    desc: '성남샴푸나이트, 수원찬스돔나이트, 파주야당스카이돔나이트, 인덕원국빈관나이트, 일산샴푸나이트 현장 검증 완료.',
+  },
+  seoul: {
+    title: '서울 나이트 TOP 3 — 수유·신림·상봉 핵심 정리',
+    desc: '수유샴푸나이트, 신림그랑프리나이트, 상봉동한국관나이트 현장 검증. 지역별 분위기와 입장 절차를 비교하세요.',
+  },
+  ulsan: {
+    title: '울산챔피언나이트 — 춘자 실장 10년 직영 검증 리뷰',
+    desc: '울산 현지인 10명 중 9명이 추천하는 대표 나이트. 춘자 실장 직영 현장의 모든 정보를 정리했습니다.',
+  },
+  incheon: {
+    title: '인천아라비안나이트 — 이국적 콘셉트 현장 검증',
+    desc: '인천 남동구 이국적 콘셉트 나이트클럽. 아라비안 테마 인테리어와 분위기를 현장에서 직접 확인한 결과입니다.',
+  },
+  daejeon: {
+    title: '대전세븐나이트 — 충청권 전역에서 모이는 대표 나이트',
+    desc: '대전 서구 중심 세븐나이트. 세종·천안·청주에서도 원정 방문하는 이유를 사운드와 운영력으로 정리했습니다.',
+  },
+  itaewon: {
+    title: '이태원클럽 와이키키유토피아 — 글로벌 파티 현장 검증',
+    desc: '이태원 메인 스트리트, 한국인과 외국인이 어울리는 글로벌 파티 공간. 입장·분위기·교통편을 상세히 정리했습니다.',
+  },
+};
 
 export default function RegionPage() {
   const { regionId } = useParams<{ regionId: string }>();
   const region = regions.find((r) => r.id === regionId);
-  const allRegionVenues = regionId ? venues.filter((v) => v.region === regionId) : [];
-  const isNightRegion = allRegionVenues.length > 0 && allRegionVenues.every((v) => v.category);
-  const venueList = isNightRegion ? allRegionVenues : (regionId ? getVenuesByRegion(regionId) : []);
-
-  const regionHook: Record<string, { title: string; desc: string }> = {
-    gangnam: {
-      title: '강남호빠 TOP 4 — 실패 없는 선택법 공개',
-      desc: '역삼·테헤란로에서 검증된 4곳을 선수 수준·초이스 방식·영업시간까지 낱낱이 비교합니다. 정찰제부터 완전예약제까지 특성별로 골라보세요',
-    },
-    geondae: {
-      title: '건대호빠 — 단골이 입 다무는 검증된 1곳',
-      desc: '건대입구역 도보 3분 거리, 10년 생존한 이유를 선수·분위기·시스템으로 직접 확인하세요. 성수·광진 직장인 모임에 딱 맞는 에너지가 있습니다',
-    },
-    jangan: {
-      title: '장안동호빠 TOP 3 — 프라이빗 끝판왕 대결',
-      desc: '동대문구에서 검증 완료된 3곳, 룸 구조·선수진·초이스 횟수까지 전격 해부합니다. 100명 출근 대형부터 편안한 소규모까지 비교 가이드 제공',
-    },
-    busan: {
-      title: '부산호빠 TOP 10 — 해운대부터 하단까지 총정리',
-      desc: '해운대·광안리·연산동·수영구 10곳을 전수 조사했습니다. 지역별 에이스 선수 위치와 분위기·시스템 차이를 한눈에 비교할 수 있습니다',
-    },
-    gyeonggi: {
-      title: '수원호빠 TOP 4 — 인계동 서울급 반전 매력',
-      desc: '인계동 검증된 4곳을 현장 확인했습니다. 새벽 8시까지 논스톱 영업하는 곳부터 신축 시설로 압도하는 곳까지 특징별 비교 가이드를 확인하세요',
-    },
-    daejeon: {
-      title: '대전호빠 TOP 2 — 현지인만 아는 숨은 곳',
-      desc: '둔산동·봉명동에서 검증 완료된 2곳입니다. 충청권 대표 가게의 선수·분위기·시스템을 밀착 취재한 결과를 정리했습니다. 전화 예약 후 방문 권장',
-    },
-    gwangju: {
-      title: '광주호빠 — 호남권 유일무이 이 한 곳이면 끝',
-      desc: '상무지구 번영로에서 검증 완료된 광주 유일의 가게입니다. 다른 곳 알아볼 필요 없는 이유를 선수·시스템·접근성까지 직접 확인하세요',
-    },
-    changwon: {
-      title: '창원호빠 — 경남 대표 반드시 확인할 곳',
-      desc: '상남동에서 검증 완료된 경남 대표 가게입니다. 1인 전담 TC 시스템으로 혼자 가도 걱정 없고, 둘이 와도 분리 운영이 가능한 유일한 곳입니다',
-    },
-    seoul: {
-      title: '서울 나이트·클럽 — 수유·신림·상봉 핵심 3곳 총정리',
-      desc: '수유샴푸나이트·신림그랑프리나이트·상봉동한국관나이트 현장 검증 완료. 지역별 특성과 입장 절차를 한눈에 비교하세요',
-    },
-    itaewon: {
-      title: '이태원클럽 와이키키유토피아 — 현장 검증 리뷰',
-      desc: '이태원 대표 클럽 와이키키유토피아의 입장 절차·분위기·교통편을 상세히 정리했습니다',
-    },
-    incheon: {
-      title: '인천아라비안나이트 — 구월동 검증 완료 리뷰',
-      desc: '인천 구월동 소재 아라비안나이트의 운영 시간·입장 안내·분위기를 현장 확인한 결과입니다',
-    },
-    ulsan: {
-      title: '울산챔피언나이트 — 울산 대표 검증 리뷰',
-      desc: '울산 소재 챔피언나이트의 현장 정보·운영 방식·교통 접근성을 직접 확인한 결과입니다',
-    },
-  };
+  const venueList = regionId ? getVenuesByRegion(regionId) : [];
 
   const hook = region ? regionHook[region.id] : null;
 
@@ -77,10 +60,8 @@ export default function RegionPage() {
       : { title: '지역을 찾을 수 없습니다', description: '', image: '', url: '' }
   );
 
-  // Inject BreadcrumbList JSON-LD
   useEffect(() => {
     if (!region) return;
-
     const breadcrumb = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
@@ -94,17 +75,14 @@ export default function RegionPage() {
     script.dataset.dynamic = 'true';
     script.textContent = JSON.stringify(breadcrumb);
     document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
+    return () => { document.head.removeChild(script); };
   }, [region]);
 
   if (!region) {
     return (
-      <div className="max-w-6xl mx-auto px-5 md:px-8 py-24 text-center">
-        <h1 className="text-2xl mb-3">지역을 찾을 수 없습니다</h1>
-        <Link to="/venues" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover font-semibold text-base">
+      <div className="px-4 py-24 text-center">
+        <h1 className="text-xl mb-3">지역을 찾을 수 없습니다</h1>
+        <Link to="/venues" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover font-semibold text-sm">
           전체 목록으로 돌아가기
         </Link>
       </div>
@@ -112,36 +90,30 @@ export default function RegionPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-5 md:px-8 py-12 md:py-16">
+    <div className="px-4 py-8">
       {/* Breadcrumb */}
-      <nav className="breadcrumb mb-10" aria-label="경로">
+      <nav className="breadcrumb mb-8" aria-label="경로">
         <Link to="/" target="_blank" rel="noopener noreferrer">홈</Link>
         <span aria-hidden="true">/</span>
-        <span className="text-navy font-medium">{getRegionName(region.id)}</span>
+        <span className="text-[#111111] font-medium">{getRegionName(region.id)}</span>
       </nav>
 
-      <div className="mb-10">
-        <h1 className="mb-3">
-          {region.name} {isNightRegion ? '나이트·클럽' : '호빠'}
-        </h1>
-        <p className="text-text-muted text-base leading-relaxed max-w-xl">
-          {hook ? hook.desc : `영업 확인된 ${venueList.length}개 업소 정보를 확인하세요.`}
+      <div className="mb-8">
+        <h1 className="mb-2">{region.name} 나이트·클럽</h1>
+        <p className="text-[#475569] text-sm leading-relaxed">
+          {hook ? hook.desc : `검증된 ${venueList.length}곳 정보를 확인하세요.`}
         </p>
       </div>
 
-      {/* Region Nav */}
-      <div className="flex flex-wrap gap-2.5 mb-10" role="group" aria-label="지역 선택">
-        {regions.map((r) => (
+      {/* Region pills */}
+      <div className="flex flex-wrap gap-2 mb-8">
+        {regions.filter((r) => getRegionCount(r.id) > 0).map((r) => (
           <Link
             key={r.id}
             to={`/${r.id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className={`region-pill ${
-              r.id === regionId
-                ? 'region-pill--active'
-                : 'region-pill--inactive'
-            }`}
+            className={`region-pill text-sm ${r.id === regionId ? 'region-pill--active' : 'region-pill--inactive'}`}
             aria-current={r.id === regionId ? 'page' : undefined}
           >
             {r.name}
@@ -149,10 +121,10 @@ export default function RegionPage() {
         ))}
       </div>
 
-      {/* Venue List */}
+      {/* Venues */}
       {venueList.length === 0 ? (
-        <div className="text-center py-24 text-text-muted">
-          <p className="text-lg font-medium">이 지역에 등록된 업소가 없습니다.</p>
+        <div className="text-center py-20 text-[#475569]">
+          <p className="text-base font-medium">이 지역에 등록된 업소가 없습니다.</p>
         </div>
       ) : (
         <div className="venue-grid">
@@ -162,13 +134,23 @@ export default function RegionPage() {
         </div>
       )}
 
-      {/* Info */}
-      <div className="note-box mt-14">
-        <h3 className="text-lg font-bold text-navy mb-3">참고사항</h3>
-        <ul className="text-base text-text-muted space-y-2 leading-relaxed">
+      {/* 메인 유입 CTA */}
+      <a
+        href={MAIN}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="footer-mega-cta block mt-10"
+      >
+        <p className="text-lg font-black mb-1">103개 전체 업소 비교+랭킹</p>
+        <p className="text-sm opacity-80">밤키에서 확인 →</p>
+      </a>
+
+      {/* Note */}
+      <div className="note-box mt-10">
+        <h3 className="text-base font-bold text-[#111111] mb-2">참고사항</h3>
+        <ul className="text-sm text-[#475569] space-y-1.5 leading-relaxed">
           <li>영업시간 및 운영 조건은 변동될 수 있습니다.</li>
           <li>방문 전 반드시 전화로 영업 여부를 확인하세요.</li>
-          <li>본 사이트는 정보 제공 목적이며, 업소와 직접적인 관련이 없습니다.</li>
         </ul>
       </div>
     </div>

@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 
 const BASE_URL = 'https://woman-5nj.pages.dev';
+const SITE_NAME = '여성이 편안한 밤문화';
 
 interface OgMetaOptions {
   title: string;
   description: string;
-  image: string; // path like /og/seoul-boston.svg
-  url: string;   // path like /venue/seoul-boston
+  image: string;
+  url: string;
 }
 
 function setMeta(property: string, content: string) {
@@ -34,32 +35,32 @@ export function useOgMeta({ title, description, image, url }: OgMetaOptions) {
     const absImage = `${BASE_URL}${resolvedImage}`;
     const absUrl = `${BASE_URL}${url}`;
 
-    document.title = `${title} | 호빠 디렉토리`;
+    document.title = `${title} | ${SITE_NAME}`;
     setMeta('description', description);
-    setMeta('og:title', `${title} | 호빠 디렉토리`);
+    setMeta('og:title', `${title} | ${SITE_NAME}`);
     setMeta('og:description', description);
     setMeta('og:image', absImage);
     setMeta('og:url', absUrl);
     setMeta('og:type', 'website');
+    setMeta('og:site_name', SITE_NAME);
     setMeta('og:image:width', '1200');
-    setMeta('og:image:height', '1200');
+    setMeta('og:image:height', '630');
     setMeta('og:image:type', 'image/svg+xml');
     setMeta('twitter:card', 'summary_large_image');
-    setMeta('twitter:title', `${title} | 호빠 디렉토리`);
+    setMeta('twitter:title', `${title} | ${SITE_NAME}`);
     setMeta('twitter:description', description);
     setMeta('twitter:image', absImage);
 
     return () => {
-      // Reset to defaults on unmount
-      document.title = '호빠 추천 TOP 25 — 오늘 밤 어디 갈지 3초면 끝 | 호빠 디렉토리';
-      setMeta('description', '강남·해운대·수원·대전·광주·창원 검증 완료, 선수 퀄리티부터 초이스 시스템까지 한눈에 비교하고 바로 전화하세요');
-      setMeta('og:title', '호빠 추천 TOP 25 — 오늘 밤 어디 갈지 3초면 끝');
-      setMeta('og:description', '강남·해운대·수원·대전·광주·창원 검증 완료, 선수 퀄리티부터 초이스 시스템까지 한눈에 비교하고 바로 전화하세요');
+      document.title = `나이트·클럽·라운지 TOP 19 — ${SITE_NAME} 가이드`;
+      setMeta('description', '강남·부산·수원·신림·인천·대전·울산 나이트클럽·클럽·라운지 19곳 현장 검증 완료');
+      setMeta('og:title', `나이트·클럽·라운지 TOP 19 — ${SITE_NAME} 가이드`);
+      setMeta('og:description', '강남·부산·수원·신림·인천·대전·울산 나이트클럽·클럽·라운지 19곳 현장 검증 완료');
       setMeta('og:image', `${BASE_URL}/og/default.svg`);
       setMeta('og:url', BASE_URL);
-      setMeta('twitter:card', 'summary');
-      setMeta('twitter:title', '호빠 추천 TOP 25 — 오늘 밤 어디 갈지 3초면 끝');
-      setMeta('twitter:description', '강남·해운대·수원·대전·광주·창원 검증 완료, 선수 퀄리티부터 초이스 시스템까지 한눈에 비교하고 바로 전화하세요');
+      setMeta('twitter:card', 'summary_large_image');
+      setMeta('twitter:title', `나이트·클럽·라운지 TOP 19 — ${SITE_NAME} 가이드`);
+      setMeta('twitter:description', '강남·부산·수원·신림·인천·대전·울산 나이트클럽·클럽·라운지 19곳 현장 검증 완료');
       setMeta('twitter:image', `${BASE_URL}/og/default.svg`);
     };
   }, [title, description, image, url]);

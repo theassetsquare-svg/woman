@@ -1,14 +1,13 @@
 /**
  * Post-build prerender script.
- * Generates route-specific HTML files so crawlers (especially Naver)
- * see correct meta tags and content without JS rendering.
+ * Generates route-specific HTML files for crawlers.
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 
 const BASE = 'https://woman-5nj.pages.dev';
+const SITE_NAME = '여성이 편안한 밤문화';
 const template = readFileSync('dist/index.html', 'utf8');
 const venuesSrc = readFileSync('src/data/venues.ts', 'utf8');
-const contentSrc = readFileSync('src/data/venueContent.ts', 'utf8');
 
 // ====== Parse venue data ======
 function parseVenues() {
@@ -17,15 +16,14 @@ function parseVenues() {
   let m;
   while ((m = re.exec(venuesSrc)) !== null) {
     const id = m[1], name = m[2], region = m[3], area = m[4], seoArea = m[5];
-    // Check if it has keyword (night/club/lounge)
     const idx = venuesSrc.indexOf(`id: '${id}'`);
     const chunk = venuesSrc.slice(idx, idx + 800);
     const kwMatch = chunk.match(/keyword:\s*'([^']*)'/);
     const catMatch = chunk.match(/category:\s*'([^']*)'/);
     const phoneMatch = chunk.match(/phone:\s*'([^']*)'/);
 
-    const keyword = kwMatch ? kwMatch[1] : (seoArea + '호빠' + (name ? ' ' + name : ''));
-    const category = catMatch ? catMatch[1] : null;
+    const keyword = kwMatch ? kwMatch[1] : (seoArea + '나이트 ' + name);
+    const category = catMatch ? catMatch[1] : 'night';
     const phone = phoneMatch ? phoneMatch[1] : '';
 
     const prefix = region + '-';
@@ -38,9 +36,6 @@ function parseVenues() {
 }
 
 function getHook(venueId) {
-  const m = venuesSrc.match(new RegExp(`'${venueId}':\\s*'([^']*)'`, 'g'));
-  if (!m) return '';
-  // Find in seoHooks section
   const hookStart = venuesSrc.indexOf('const seoHooks');
   const hookEnd = venuesSrc.indexOf('const seoDescriptions');
   const hookSection = venuesSrc.slice(hookStart, hookEnd);
@@ -55,41 +50,24 @@ function getDesc(venueId) {
   return dm ? dm[1] : '';
 }
 
-function getIntro(venueId) {
-  const blockStart = contentSrc.indexOf(`'${venueId}'`);
-  if (blockStart === -1) return '';
-  const chunk = contentSrc.slice(blockStart, blockStart + 2000);
-  const im = chunk.match(/intro:\s*`([^`]*)`/);
-  return im ? im[1].replace(/\n/g, ' ').slice(0, 200) : '';
-}
-
 function getRegionName(regionId) {
   const rm = venuesSrc.match(new RegExp(`id:\\s*'${regionId}',\\s*name:\\s*'([^']*)'`));
   return rm ? rm[1] : regionId;
 }
 
-// ====== HTML generator ======
 function generateHTML(opts) {
   const { title, description, canonical, ogImage, h1, introText, jsonLd } = opts;
-
   let html = template;
 
-  // Replace title
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${escHtml(title)}</title>`);
-
-  // Replace meta description
   html = html.replace(
     /<meta name="description" content="[^"]*"/,
     `<meta name="description" content="${escAttr(description)}"`
   );
-
-  // Replace canonical
   html = html.replace(
     /<link rel="canonical" href="[^"]*"/,
     `<link rel="canonical" href="${escAttr(canonical)}"`
   );
-
-  // Replace OG tags
   html = html.replace(
     /<meta property="og:title" content="[^"]*"/,
     `<meta property="og:title" content="${escAttr(title)}"`
@@ -108,8 +86,6 @@ function generateHTML(opts) {
       `<meta property="og:image" content="${escAttr(ogImage)}"`
     );
   }
-
-  // Replace Twitter tags
   html = html.replace(
     /<meta name="twitter:title" content="[^"]*"/,
     `<meta name="twitter:title" content="${escAttr(title)}"`
@@ -123,26 +99,17 @@ function generateHTML(opts) {
       /<meta name="twitter:image" content="[^"]*"/,
       `<meta name="twitter:image" content="${escAttr(ogImage)}"`
     );
-    html = html.replace(
-      /<meta name="twitter:card" content="[^"]*"/,
-      `<meta name="twitter:card" content="summary_large_image"`
-    );
   }
-
-  // Add route-specific JSON-LD before </head>
   if (jsonLd) {
     const ldScripts = jsonLd.map(ld =>
       `<script type="application/ld+json">${JSON.stringify(ld)}</script>`
     ).join('\n    ');
     html = html.replace('</head>', `    ${ldScripts}\n  </head>`);
   }
-
-  // Add noscript content inside #root
   if (h1 && introText) {
     const noscript = `<noscript><h1>${escHtml(h1)}</h1><p>${escHtml(introText)}</p></noscript>`;
     html = html.replace('<div id="root"></div>', `<div id="root">${noscript}</div>`);
   }
-
   return html;
 }
 
@@ -160,7 +127,7 @@ const venues = parseVenues();
 const regions = [...new Set(venues.map(v => v.region))];
 let count = 0;
 
-// --- Home page (update dist/index.html with og:image) ---
+// Home
 {
   let html = template;
   html = html.replace(
@@ -175,52 +142,34 @@ let count = 0;
   count++;
 }
 
-// --- /venues ---
+// /venues
 {
-  const title = '전국 호빠 25곳 한방에 비교 — 지역별 필터 검색 | 호빠 디렉토리';
-  const desc = '강남부터 창원까지 영업 확인된 업소만 모았습니다. 분위기·선수·시스템 조건으로 내게 맞는 곳을 골라보세요';
+  const title = `전국 나이트·클럽·라운지 ${venues.length}곳 — 지역별 필터 검색 | ${SITE_NAME}`;
+  const desc = '강남부터 울산까지 현장 검증된 업소만 모았습니다. 분위기·실장·카테고리별로 골라보세요';
   writePage('/venues', generateHTML({
     title, description: desc,
     canonical: `${BASE}/venues`,
-    h1: '전체 호빠 목록',
+    h1: '전체 업소 목록',
     introText: desc,
   }));
   count++;
 }
 
-// --- /night ---
-{
-  const title = '전국 나이트·클럽·라운지 — 지역별 총정리 | 호빠 디렉토리';
-  const desc = '부산·강남·수원·대전·인천·울산 나이트클럽, 클럽, 라운지 정보를 한눈에 비교하세요';
-  writePage('/night', generateHTML({
-    title, description: desc,
-    canonical: `${BASE}/night`,
-    h1: '전국 나이트·클럽·라운지',
-    introText: desc,
-  }));
-  count++;
-}
-
-// --- Region pages ---
-// Region hook data (extracted from RegionPage.tsx regionHook)
+// Region pages
 const regionMeta = {
-  gangnam: { title: '강남호빠 TOP 4 — 실패 없는 선택법 공개', desc: '역삼·테헤란로에서 검증된 4곳을 선수 수준·초이스 방식·영업시간까지 낱낱이 비교합니다' },
-  geondae: { title: '건대호빠 TOP 1 — 10년 생존 비결', desc: '건대입구역 3분 거리, 동서울 유일 장수 가게의 모든 것을 공개합니다' },
-  jangan: { title: '장안동호빠 TOP 3 — 100명 출근 무한초이스', desc: '장안동·장한평·답십리 3곳을 선수 인원·초이스 방식·분위기까지 비교합니다' },
-  busan: { title: '부산호빠 TOP 10 — 해운대부터 하단까지 총정리', desc: '해운대·광안리·연산동·수영구 10곳을 전수 조사했습니다' },
-  gyeonggi: { title: '수원호빠 TOP 4 — 인계동 서울급 반전 매력', desc: '인계동 유흥가에서 검증된 4곳을 시설·영업시간·시스템까지 비교합니다' },
-  daejeon: { title: '대전호빠 TOP 2 — 둔산동·봉명동 완전 정복', desc: '충청권에서 검증된 2곳을 선수진·분위기·접근성까지 비교합니다' },
-  gwangju: { title: '광주호빠 TOP 1 — 호남 유일 검증 선택지', desc: '상무지구에서 검증된 단 한 곳, 모든 정보를 공개합니다' },
-  changwon: { title: '창원호빠 TOP 1 — 경남 대표 TC 시스템', desc: '상남동에서 1인 전담 TC 시스템으로 운영하는 곳의 모든 것을 공개합니다' },
-  seoul: { title: '서울 나이트 — 수유·신림·상봉 총정리', desc: '서울 지역 나이트클럽 정보를 한눈에 비교하세요' },
-  itaewon: { title: '이태원 클럽 — 글로벌 파티 명소', desc: '이태원 클럽 정보를 확인하세요' },
-  incheon: { title: '인천 나이트 — 아라비안나이트 총정리', desc: '인천 지역 나이트클럽 정보를 한눈에 비교하세요' },
-  ulsan: { title: '울산 나이트 — 챔피언나이트 총정리', desc: '울산 지역 나이트클럽 정보를 한눈에 비교하세요' },
+  gangnam: { title: '강남 클럽·라운지·나이트 TOP 6 — 금요 밤 필수 코스', desc: '청담H2O나이트부터 아르쥬, 레이스, 사운드, 하입, 컬러까지 강남권 핵심 6곳 비교' },
+  busan: { title: '부산연산동물나이트 — 따봉 실장 현장 검증', desc: '부산 연산동 대표 나이트클럽의 사운드·분위기·입장 안내를 상세히 정리' },
+  gyeonggi: { title: '경기 나이트 TOP 5 — 성남·수원·파주·인덕원·일산', desc: '경기도 주요 나이트클럽 5곳 현장 검증 완료' },
+  seoul: { title: '서울 나이트 TOP 3 — 수유·신림·상봉', desc: '서울 지역 나이트클럽 핵심 3곳 비교' },
+  ulsan: { title: '울산챔피언나이트 — 춘자 실장 10년 직영', desc: '울산 대표 나이트클럽 현장 검증 리뷰' },
+  incheon: { title: '인천아라비안나이트 — 이국적 콘셉트 검증', desc: '인천 남동구 아라비안 테마 나이트클럽 현장 리뷰' },
+  daejeon: { title: '대전세븐나이트 — 충청권 대표 나이트', desc: '대전 서구 세븐나이트 현장 검증 리뷰' },
+  itaewon: { title: '이태원클럽 와이키키유토피아 — 글로벌 파티', desc: '이태원 대표 글로벌 파티 클럽 현장 검증' },
 };
 
 for (const regionId of regions) {
-  const meta = regionMeta[regionId] || { title: `${getRegionName(regionId)} 호빠`, desc: `${getRegionName(regionId)} 지역 정보` };
-  const fullTitle = `${meta.title} | 호빠 디렉토리`;
+  const meta = regionMeta[regionId] || { title: `${getRegionName(regionId)} 나이트·클럽`, desc: `${getRegionName(regionId)} 지역 정보` };
+  const fullTitle = `${meta.title} | ${SITE_NAME}`;
 
   const breadcrumb = {
     '@context': 'https://schema.org',
@@ -235,19 +184,18 @@ for (const regionId of regions) {
     title: fullTitle,
     description: meta.desc,
     canonical: `${BASE}/${regionId}`,
-    h1: `${getRegionName(regionId)} 호빠`,
+    h1: `${getRegionName(regionId)} 나이트·클럽`,
     introText: meta.desc,
     jsonLd: [breadcrumb],
   }));
   count++;
 }
 
-// --- Venue detail pages ---
+// Venue detail pages
 for (const v of venues) {
   const hook = getHook(v.id);
   const desc = getDesc(v.id);
-  const intro = getIntro(v.id);
-  const title = `${v.keyword}${hook ? ' — ' + hook : ''} | 호빠 디렉토리`;
+  const title = `${v.keyword}${hook ? ' — ' + hook : ''} | ${SITE_NAME}`;
 
   const breadcrumb = {
     '@context': 'https://schema.org',
@@ -255,26 +203,26 @@ for (const v of venues) {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: '홈', item: BASE },
       { '@type': 'ListItem', position: 2, name: getRegionName(v.region), item: `${BASE}/${v.region}` },
-      { '@type': 'ListItem', position: 3, name: v.name || v.keyword, item: `${BASE}${v.path}` },
+      { '@type': 'ListItem', position: 3, name: v.keyword, item: `${BASE}${v.path}` },
     ],
   };
 
   const localBusiness = {
     '@context': 'https://schema.org',
-    '@type': v.category ? 'NightClub' : 'LocalBusiness',
+    '@type': 'NightClub',
     name: v.keyword,
     url: `${BASE}${v.path}`,
     image: `${BASE}/og/${v.id}.svg`,
   };
-  if (v.phone) localBusiness.telephone = v.phone;
+  if (v.phone && v.phone !== '별도문의') localBusiness.telephone = v.phone;
 
   writePage(v.path, generateHTML({
     title,
-    description: desc || intro,
+    description: desc,
     canonical: `${BASE}${v.path}`,
     ogImage: `${BASE}/og/${v.id}.svg`,
     h1: v.keyword,
-    introText: intro || desc,
+    introText: desc,
     jsonLd: [breadcrumb, localBusiness],
   }));
   count++;

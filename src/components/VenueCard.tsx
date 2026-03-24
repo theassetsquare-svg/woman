@@ -1,18 +1,12 @@
 import { Link } from 'react-router-dom';
 import type { Venue } from '../data/venues';
+import { getVenueLabel } from '../data/venues';
 import { venuePath } from '../utils/slug';
 
-export default function VenueCard({ venue }: { venue: Venue }) {
-  // Remove area name from card_tags to avoid duplication
-  const cleanTags = venue.card_tags
-    .split(' · ')
-    .filter((t) => t !== venue.area && t !== venue.seoArea)
-    .join(' · ');
+const catLabel = (c?: string) => c === 'club' ? '클럽' : c === 'lounge' ? '라운지' : '나이트';
 
-  // Remove venue name prefix from card_value (name is already shown as h3)
-  const cleanValue = venue.card_value.includes(' — ')
-    ? venue.card_value.split(' — ')[1]
-    : venue.card_value;
+export default function VenueCard({ venue }: { venue: Venue }) {
+  const label = getVenueLabel(venue);
 
   return (
     <Link
@@ -22,32 +16,39 @@ export default function VenueCard({ venue }: { venue: Venue }) {
       className="venue-card group"
     >
       <div className="venue-card-body">
-        {/* Row 1: Badge + Area */}
-        <div className="flex items-center gap-2.5 mb-1">
-          <span className="venue-badge-open">영업중</span>
+        {/* Row 1: Category + Area */}
+        <div className="flex items-center gap-2 mb-1">
+          <span className="venue-badge-night" data-cat={venue.category}>
+            {catLabel(venue.category)}
+          </span>
           <span className="text-[13px] text-[#475569] font-semibold">
             {venue.area}
           </span>
+          {venue.contact && (
+            <span className="text-[11px] text-accent font-bold bg-surface-warm px-2 py-0.5 rounded-full">
+              {venue.contact} 실장
+            </span>
+          )}
         </div>
 
-        {/* Row 2: Store name */}
+        {/* Row 2: Keyword name */}
         <h3 className="venue-card-name group-hover:text-accent transition-colors">
-          {venue.name}
+          {label}
         </h3>
 
-        {/* Row 3: Hook — 2 line clamp */}
+        {/* Row 3: Hook */}
         <p className="venue-card-hook">
           {venue.card_hook}
         </p>
 
-        {/* Row 4: Value — 1 line muted */}
+        {/* Row 4: Value */}
         <p className="venue-card-value">
-          {cleanValue}
+          {venue.card_value}
         </p>
 
         {/* Row 5: Tags */}
         <div className="venue-card-tags">
-          {cleanTags}
+          {venue.card_tags}
         </div>
       </div>
     </Link>

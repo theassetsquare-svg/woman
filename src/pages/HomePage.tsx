@@ -31,7 +31,7 @@ export default function HomePage() {
           <p className="text-base text-[#475569] mb-3 leading-relaxed animate-fade-in">
             강남 · 부산 · 수원 · 인천 · 대전 · 울산
           </p>
-          <p className="text-sm text-[#64748b] mb-8 leading-relaxed">
+          <p className="text-sm text-[#555555] mb-8 leading-relaxed">
             현장 검증된{' '}
             <span className="text-[#111111] font-bold">{venues.length}곳</span>의
             분위기·실장·입장 정보를 비교하세요.
@@ -70,7 +70,7 @@ export default function HomePage() {
               <div key={v.id} className="hooking-item">
                 <div className="shrink-0 flex flex-col items-center gap-0.5">
                   <span className="text-accent font-black text-sm">{v.contact}</span>
-                  <span className="text-[10px] text-[#64748b]">실장</span>
+                  <span className="text-[10px] text-[#555555]">실장</span>
                 </div>
                 <div className="min-w-0 flex-1">
                   <Link

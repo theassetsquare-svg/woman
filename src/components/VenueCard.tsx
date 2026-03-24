@@ -7,6 +7,8 @@ const catLabel = (c?: string) => c === 'club' ? '클럽' : c === 'lounge' ? '라
 
 export default function VenueCard({ venue }: { venue: Venue }) {
   const label = getVenueLabel(venue);
+  // 가게이름에 이미 지역이 포함되어 있으면 중복 표시 안 함
+  const areaInName = label.includes(venue.area);
 
   return (
     <Link
@@ -31,11 +33,13 @@ export default function VenueCard({ venue }: { venue: Venue }) {
       </div>
 
       <div className="venue-card-body">
-        {/* Row 1: Area + Contact */}
+        {/* Row 1: Contact (지역은 이름에 이미 포함 시 생략) */}
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-[13px] text-[#475569] font-semibold">
-            {venue.area}
-          </span>
+          {!areaInName && (
+            <span className="text-[13px] text-[#333333] font-semibold">
+              {venue.area}
+            </span>
+          )}
           {venue.contact && (
             <span className="text-[11px] text-accent font-bold bg-surface-warm px-2 py-0.5 rounded-full">
               {venue.contact} 실장

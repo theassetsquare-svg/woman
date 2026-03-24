@@ -397,7 +397,7 @@ export function AutoplayNext({ venue }: { venue: Venue }) {
       {seconds > 0 && (
         <button
           onClick={cancel}
-          className="block mx-auto mt-2 text-xs text-[#64748b] hover:text-[#111111]"
+          className="block mx-auto mt-2 text-xs text-[#555555] hover:text-[#111111]"
         >
           취소
         </button>

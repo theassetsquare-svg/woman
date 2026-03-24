@@ -243,13 +243,12 @@ export default function VenueDetailPage() {
             </section>
           ))}
 
-          {/* [후킹9] 블러 잠금 — 리뷰 평점 */}
+          {/* [후킹9] 블러 잠금 — 전체 리뷰 확인은 메인에서 */}
           <BlurLockSection>
             <div className="space-y-2">
-              <p className="text-sm font-bold">방문자 리뷰 평점</p>
-              <p className="text-2xl font-black">★★★★☆ 4.2점</p>
-              <p className="text-sm text-[#475569]">"분위기가 좋고 사운드가 압도적" — 최근 리뷰 중</p>
-              <p className="text-sm text-[#475569]">"실장이 친절해서 다시 방문" — 단골 리뷰</p>
+              <p className="text-sm font-bold text-[#111111]">방문자 리뷰 모아보기</p>
+              <p className="text-base font-bold text-[#111111]">실제 방문 후기와 평점을 한눈에</p>
+              <p className="text-sm text-[#333333]">분위기 · 사운드 · 서비스 · 접근성 항목별 리뷰</p>
             </div>
           </BlurLockSection>
 

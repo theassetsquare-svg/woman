@@ -522,6 +522,24 @@
   transform: scaleX(1);
 }
 
+/* ===== PREMIUM SECTION ===== */
+.premium-section {
+  background: linear-gradient(135deg, #FFF8DC, #FFFACD, #FFF8DC);
+  border: 2px solid #DAA520;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 20px rgba(218, 165, 32, 0.15);
+}
+.premium-card {
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid #DAA520;
+  transition: all 0.3s ease;
+}
+.premium-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(218, 165, 32, 0.2);
+  border-color: #B8860B;
+}
+
 /* ===== HOOKING CARD (rose warm) ===== */
 .hooking-warm {
   background: linear-gradient(135deg, #FFF1F2, #FCE7F3, #FFF1F2);

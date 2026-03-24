@@ -130,6 +130,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
+          {/* 광고문의 — 모든 페이지 필수 */}
+          <div className="text-center py-4 mb-4">
+            <p className="text-base font-bold text-rosegold">광고문의 카톡 besta12</p>
+          </div>
+
           <div className="border-t border-white/10 pt-5 text-center text-xs text-slate-600">
             &copy; {year} 여성이 편안한 밤문화. 정보는 참고용이며, 정확한 정보는 각 업소에 직접 확인하시기 바랍니다.
           </div>

@@ -166,7 +166,7 @@ export default function VenueDetailPage() {
 
       {/* Detail Info */}
       <section className="content-section">
-        <h2 className="text-lg">{venueLabel} 상세 정보</h2>
+        <h2 className="text-lg">상세 정보</h2>
         <p className="text-[#1e293b] text-sm leading-relaxed mb-4">{venue.description}</p>
 
         <div className="space-y-2 mb-4">
@@ -217,13 +217,13 @@ export default function VenueDetailPage() {
           <div className="my-4">
             <img
               src={`/og/${venue.id}.svg`}
-              alt={`${venueLabel} 현장 분위기`}
+              alt="현장 분위기"
               width={480}
               height={270}
               loading="lazy"
               className="content-img"
             />
-            <p className="content-img-caption">{venueLabel} 현장 분위기</p>
+            <p className="content-img-caption">현장 분위기</p>
           </div>
 
           {/* Sections (show first 3, then hooking, then rest) */}
@@ -236,13 +236,13 @@ export default function VenueDetailPage() {
                 <div className="my-4">
                   <img
                     src={`/og/${venue.id}.svg`}
-                    alt={`${venueLabel} 내부 공간`}
+                    alt="내부 공간"
                     width={480}
                     height={270}
                     loading="lazy"
                     className="content-img"
                   />
-                  <p className="content-img-caption">{venueLabel} 내부 공간</p>
+                  <p className="content-img-caption">내부 공간</p>
                 </div>
               )}
             </section>
@@ -272,13 +272,13 @@ export default function VenueDetailPage() {
           <div className="my-4">
             <img
               src={`/og/${venue.id}.svg`}
-              alt={`${venueLabel} 위치 안내`}
+              alt="위치 및 접근성"
               width={480}
               height={270}
               loading="lazy"
               className="content-img"
             />
-            <p className="content-img-caption">{venueLabel} 위치 및 접근성 안내</p>
+            <p className="content-img-caption">위치 및 접근성 안내</p>
           </div>
 
           {/* Quick Plan */}
@@ -306,7 +306,7 @@ export default function VenueDetailPage() {
 
           {/* FAQ */}
           <section className="content-section">
-            <h2 className="text-lg">{venueLabel} 자주 묻는 질문</h2>
+            <h2 className="text-lg">자주 묻는 질문</h2>
             <div className="space-y-2.5">
               {venueContent.faq.map((item, i) => (
                 <FaqItem key={i} q={item.q} a={item.a} />

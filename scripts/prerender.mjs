@@ -215,6 +215,26 @@ for (const cp of categoryPages) {
   count++;
 }
 
+// Community pages
+{
+  writePage('/community', generateHTML({
+    title: `커뮤니티 — 밤문화 후기·팁·파티모집 | ${SITE_NAME}`,
+    description: '전국 밤문화 솔직 후기, 꿀팁, 파티 모집. 진짜 경험한 사람들의 이야기.',
+    canonical: `${BASE}/community`,
+    h1: '커뮤니티',
+    introText: '밤문화 후기, 꿀팁, 파티 모집까지. 진짜 경험한 사람들의 이야기.',
+  }));
+  count++;
+  writePage('/community/guidelines', generateHTML({
+    title: `커뮤니티 가이드라인 — 건강한 밤문화 이야기 | ${SITE_NAME}`,
+    description: '서로 존중하는 커뮤니티를 위한 가이드라인.',
+    canonical: `${BASE}/community/guidelines`,
+    h1: '커뮤니티 가이드라인',
+    introText: '서로 존중하는 커뮤니티를 위한 가이드라인.',
+  }));
+  count++;
+}
+
 // Venue detail pages
 for (const v of venues) {
   const hook = getHook(v.id);

@@ -40,6 +40,7 @@ export default function VenueDetailPage() {
   }
 
   const related = getVenuesByRegion(venue.region).filter((v) => v.id !== venue.id).slice(0, 3);
+  const sameCat = venues.filter((v) => v.category === venue.category && v.id !== venue.id && v.region !== venue.region).slice(0, 3);
   const venueContent = getVenueContent(venue.id);
   const subKeywords = getSubKeywords(venue);
 
@@ -347,7 +348,7 @@ export default function VenueDetailPage() {
         <AutoplayNext venue={related[0]} />
       )}
 
-      {/* Related */}
+      {/* Related — 같은 지역 */}
       {related.length > 0 && (
         <section className="mb-8">
           <h2 className="text-lg mb-4">
@@ -355,6 +356,20 @@ export default function VenueDetailPage() {
           </h2>
           <div className="venue-grid">
             {related.map((v) => (
+              <VenueCard key={v.id} venue={v} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Related — 같은 카테고리 */}
+      {sameCat.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-lg mb-4">
+            다른 지역 {catLabel} 추천
+          </h2>
+          <div className="venue-grid">
+            {sameCat.map((v) => (
               <VenueCard key={v.id} venue={v} />
             ))}
           </div>
@@ -372,30 +387,17 @@ export default function VenueDetailPage() {
         <p className="text-sm opacity-80">AI추천+리뷰 → 밤키 바로가기</p>
       </a>
 
-      {/* Fixed phone bar */}
+      {/* Fixed phone bar — 초록 + 가운데 400px */}
       {venue.phone && venue.phone !== '별도문의' && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 max-w-[480px] mx-auto">
-          <div className="bg-gradient-to-r from-accent to-accent-hover shadow-2xl">
-            <div className="px-4 py-3 flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-white font-bold text-sm truncate">{venueLabel}</p>
-                {venue.contact && (
-                  <p className="text-rosegold text-xs font-semibold">{venue.contact} 실장</p>
-                )}
-              </div>
-              <a
-                href={`tel:${venue.phone.replace(/-/g, '')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 bg-white text-accent font-bold text-sm px-4 py-2.5 rounded-xl shrink-0"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                전화
-              </a>
-            </div>
-          </div>
+        <div className="fixed bottom-16 left-0 right-0 z-50 px-4">
+          <a
+            href={`tel:${venue.phone.replace(/-/g, '')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block max-w-[400px] mx-auto bg-[#22C55E] hover:bg-[#16A34A] text-white text-center py-3.5 rounded-xl shadow-2xl transition-colors font-bold text-base"
+          >
+            {venue.contact ? `${venue.contact}에게 전화 ${venue.phone}` : `전화하기 ${venue.phone}`}
+          </a>
         </div>
       )}
 

@@ -82,6 +82,9 @@ export default function VenueListPage() {
           { value: 'night', label: '나이트' },
           { value: 'club', label: '클럽' },
           { value: 'lounge', label: '라운지' },
+          { value: 'room', label: '룸' },
+          { value: 'yojeong', label: '요정' },
+          { value: 'hoppa', label: '호빠' },
         ].map((cat) => (
           <button
             key={cat.value}

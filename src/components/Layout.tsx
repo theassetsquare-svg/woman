@@ -73,7 +73,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             AI추천 + 리뷰 + 비교 — 밤키 바로가기
           </p>
           <span className="inline-block bg-white text-[#7C3AED] font-extrabold px-6 py-2.5 rounded-xl text-sm">
-            밤키에서 완벽한 밤 시작하기 →
+            밤키에서 제대로 된 밤 시작하기 →
           </span>
         </a>
       </section>

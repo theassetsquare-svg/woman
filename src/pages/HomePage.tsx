@@ -15,7 +15,7 @@ export default function HomePage() {
 
   useOgMeta({
     title: '전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103',
-    description: '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 한눈에 비교하세요.',
+    description: '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 비교해 보자.',
     image: '',
     url: '',
     isHome: true,

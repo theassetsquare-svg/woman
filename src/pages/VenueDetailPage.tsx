@@ -201,7 +201,7 @@ export default function VenueDetailPage() {
         <>
           {/* Summary */}
           <section className="content-section">
-            <h2 className="text-lg">한눈에 보기</h2>
+            <h2 className="text-lg">핵심 정리</h2>
             <div className="summary-box">
               <ul className="space-y-2.5">
                 {venueContent.summary.map((item, i) => (
@@ -261,7 +261,7 @@ export default function VenueDetailPage() {
           <BlurLockSection>
             <div className="space-y-2">
               <p className="text-sm font-bold text-[#111111]">방문자 리뷰 모아보기</p>
-              <p className="text-base font-bold text-[#111111]">실제 방문 후기와 평점을 한눈에</p>
+              <p className="text-base font-bold text-[#111111]">실제 방문 후기와 평점을 한 번에</p>
               <p className="text-sm text-[#333333]">분위기 · 사운드 · 서비스 · 접근성 항목별 리뷰</p>
             </div>
           </BlurLockSection>

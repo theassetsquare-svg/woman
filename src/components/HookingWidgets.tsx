@@ -168,7 +168,7 @@ export function ScrollBanner() {
             여기서 끝이 아닙니다!
           </p>
           <p className="text-sm opacity-80">
-            밤키에서 완벽한 밤 시작 →
+            밤키에서 제대로 된 밤 시작 →
           </p>
         </a>
       </div>
@@ -239,7 +239,7 @@ export function FullCompareHook() {
       className="main-hook-banner block my-6"
     >
       <p className="font-black text-base mb-1">103개 전체 업소 비교+랭킹</p>
-      <p className="text-sm opacity-80">밤키에서 한눈에 →</p>
+      <p className="text-sm opacity-80">밤키에서 한 번에 →</p>
     </a>
   );
 }

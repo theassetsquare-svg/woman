@@ -10,7 +10,7 @@ const MAIN = getMainLink();
 const regionHook: Record<string, { title: string; desc: string }> = {
   gangnam: {
     title: '강남 클럽·라운지·나이트 TOP 6 — 금요 밤 필수 코스',
-    desc: '청담H2O나이트부터 아르쥬, 레이스, 사운드, 하입, 컬러까지. 강남권 핵심 6곳의 분위기·입장·예약 정보를 한눈에 비교합니다.',
+    desc: '청담H2O나이트부터 아르쥬, 레이스, 사운드, 하입, 컬러까지. 강남권 핵심 6곳의 분위기·입장·예약 정보를 비교해 봤다.',
   },
   busan: {
     title: '부산연산동물나이트 — 따봉 실장 현장 검증 리뷰',

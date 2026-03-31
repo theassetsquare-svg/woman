@@ -85,7 +85,7 @@ export default function EventsPage() {
   useOgMeta({
     title: '이벤트 캘린더 — 전국 밤문화 일정',
     description:
-      '금요 나이트 피크타임, 토요 클럽 DJ 파티, 평일 이벤트까지. 전국 밤문화 일정을 한눈에.',
+      '금요 나이트 피크타임, 토요 클럽 DJ 파티, 평일 이벤트까지. 전국 밤문화 일정을 한 번에.',
     image: '/og/default.svg',
     url: '/events',
   });
@@ -130,7 +130,7 @@ export default function EventsPage() {
 
       <h1 className="text-2xl font-extrabold text-[#111111] mb-2">이벤트 캘린더</h1>
       <p className="text-base text-[#333333] leading-relaxed mb-6">
-        전국 밤문화 주요 일정을 한눈에 확인하세요.
+        전국 밤문화 주요 일정을 바로 확인하자.
       </p>
 
       {/* Calendar */}

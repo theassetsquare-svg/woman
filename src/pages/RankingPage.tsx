@@ -69,7 +69,7 @@ export default function RankingPage() {
 
       <h1 className="text-2xl font-extrabold text-[#111111] mb-2">인기 랭킹 TOP 20</h1>
       <p className="text-base text-[#333333] leading-relaxed mb-6">
-        실장 연결 가능 업소를 우선으로, 전국 인기 업소를 한눈에.
+        실장 연결 가능 업소를 우선으로, 전국 인기 업소를 한 번에.
       </p>
 
       {/* Filter buttons */}

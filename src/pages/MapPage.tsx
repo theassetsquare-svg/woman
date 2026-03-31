@@ -26,7 +26,7 @@ export default function MapPage() {
   useOgMeta({
     title: '지역별 업소 찾기 — 전국 나이트·클럽·라운지',
     description:
-      '지역을 선택하면 해당 지역의 나이트, 클럽, 라운지, 룸, 요정 업소를 한눈에 확인할 수 있습니다.',
+      '지역을 선택하면 해당 지역의 나이트, 클럽, 라운지, 룸, 요정 업소를 바로 확인된다.',
     image: '/og/default.svg',
     url: '/map',
   });
@@ -52,7 +52,7 @@ export default function MapPage() {
 
       <h1 className="text-2xl font-extrabold text-[#111111] mb-2">지역별 업소 찾기</h1>
       <p className="text-base text-[#333333] leading-relaxed mb-6">
-        지역을 선택하면 해당 지역의 업소를 확인할 수 있습니다.
+        지역을 선택하면 해당 지역의 업소를 확인된다.
       </p>
 
       {/* Region grid */}
@@ -142,7 +142,7 @@ export default function MapPage() {
           className="main-hook-banner inline-block text-center px-6 py-3"
         >
           <p className="font-black text-base mb-1">밤키에서 더 보기</p>
-          <p className="text-sm opacity-80">전국 업소 정보 한눈에 →</p>
+          <p className="text-sm opacity-80">전국 업소 정보 한 번에 →</p>
         </a>
       </div>
     </div>

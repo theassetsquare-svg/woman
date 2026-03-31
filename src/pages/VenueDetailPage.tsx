@@ -417,7 +417,7 @@ export default function VenueDetailPage() {
 
       {/* Fixed phone bar — 초록 + 가운데 400px */}
       {venue.phone && venue.phone !== '별도문의' && (
-        <div className="fixed bottom-16 left-0 right-0 z-50 px-4">
+        <div className="fixed bottom-20 left-0 right-0 z-50 px-4">
           <a
             href={`tel:${venue.phone.replace(/-/g, '')}`}
             target="_blank"

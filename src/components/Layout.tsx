@@ -53,7 +53,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </header>
 
       {/* Main — 하단 네비 여백 확보 */}
-      <main className="flex-1 pb-16" role="main">{children}</main>
+      <main className="flex-1 pb-24" role="main">{children}</main>
 
       {/* 중독 엔진 글로벌 오버레이 */}
       <EngagementOverlay />

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { regions, venues, getRegionCount, getVenuesByRegion, getContactVenues, getVenueLabel, getVenueById } from '../data/venues';
 import { useOgMeta } from '../hooks/useOgMeta';
@@ -270,11 +270,16 @@ export default function HomePage() {
 function RouletteWidget() {
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<typeof venues[0] | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    return () => { clearTimeout(timerRef.current); };
+  }, []);
 
   const spin = () => {
     setSpinning(true);
     setResult(null);
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       const random = venues[Math.floor(Math.random() * venues.length)];
       setResult(random);
       setSpinning(false);

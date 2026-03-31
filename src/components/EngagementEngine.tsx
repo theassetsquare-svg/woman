@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { venues, getVenueLabel } from '../data/venues';
 import { venuePath } from '../utils/slug';
@@ -325,28 +325,29 @@ export function ScrollReward() {
 
 // ========== [9] 체류 시간 마일스톤 ==========
 export function DwellMilestone() {
-  const [, setMinutes] = useState(0);
   const [showMilestone, setShowMilestone] = useState(false);
   const [lastMilestone, setLastMilestone] = useState(0);
+  const lastMilestoneRef = useRef(0);
 
   useEffect(() => {
     const start = Date.now();
+    let hideTimer: ReturnType<typeof setTimeout>;
     const timer = setInterval(() => {
       const elapsed = Math.floor((Date.now() - start) / 60000);
-      setMinutes(elapsed);
-
       const milestones = [3, 5, 10, 15, 30, 60, 90];
       const current = milestones.filter(m => elapsed >= m).pop() || 0;
-      if (current > lastMilestone) {
+      if (current > lastMilestoneRef.current) {
+        lastMilestoneRef.current = current;
         setLastMilestone(current);
         setShowMilestone(true);
         const points = (getLS('points', 0) as number) + current;
         setLS('points', points);
-        setTimeout(() => setShowMilestone(false), 4000);
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => setShowMilestone(false), 4000);
       }
     }, 30000);
-    return () => clearInterval(timer);
-  }, [lastMilestone]);
+    return () => { clearInterval(timer); clearTimeout(hideTimer); };
+  }, []);
 
   if (!showMilestone) return null;
 

@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import type { Venue } from '../data/venues';
-import { getMainLink, getVenueLabel, getVenuesByRegion } from '../data/venues';
+import { getMainLink, getVenueLabel, getVenuesByRegion, venues } from '../data/venues';
 import { venuePath } from '../utils/slug';
 
 const MAIN = getMainLink();
@@ -480,5 +480,284 @@ export function AutoplayNext({ venue }: { venue: Venue }) {
         </button>
       )}
     </div>
+  );
+}
+
+/**
+ * 스와이프 갤러리 — 가로 스크롤 이미지 갤러리
+ */
+export function SwipeGallery({ venue }: { venue: Venue }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+  const labels = ['매장 전경', '내부 인테리어', '무대 & 사운드', '좌석 배치', '입구 & 간판', '야경 분위기'];
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handler = () => {
+      const idx = Math.round(el.scrollLeft / el.offsetWidth);
+      setCurrent(idx);
+    };
+    el.addEventListener('scroll', handler, { passive: true });
+    return () => el.removeEventListener('scroll', handler);
+  }, []);
+
+  return (
+    <section className="my-6">
+      <h3 className="text-base font-black text-[#111111] mb-3">사진 갤러리</h3>
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-auto snap-x snap-mandatory gap-3 scrollbar-hide -mx-4 px-4"
+        style={{ scrollbarWidth: 'none' }}
+      >
+        {labels.map((label, i) => (
+          <div key={i} className="snap-center shrink-0 w-[85%] rounded-xl overflow-hidden relative">
+            <img
+              src={`/og/${venue.id}.svg`}
+              alt={`${getVenueLabel(venue)} ${label}`}
+              width={480}
+              height={270}
+              loading="lazy"
+              className="w-full h-auto block"
+              style={{ filter: i > 0 ? `hue-rotate(${i * 30}deg) brightness(${1 - i * 0.05})` : undefined }}
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
+              <p className="text-white text-sm font-bold drop-shadow-lg">{label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-center gap-1.5 mt-3">
+        {labels.map((_, i) => (
+          <span
+            key={i}
+            className={`w-2 h-2 rounded-full transition-colors ${i === current ? 'bg-accent' : 'bg-rosegold/40'}`}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * VS 투표 — 이 업소 vs 다른 업소
+ */
+export function VSVote({ venue }: { venue: Venue }) {
+  const opponent = venues.find(
+    (v) => v.category === venue.category && v.id !== venue.id && v.region !== venue.region
+  );
+  const [voted, setVoted] = useState<string | null>(null);
+  const [counts, setCounts] = useState({ a: 0, b: 0 });
+
+  useEffect(() => {
+    const seed = venue.id.length + (opponent?.id.length || 0);
+    setCounts({ a: 120 + seed * 7 % 80, b: 95 + seed * 11 % 80 });
+  }, [venue.id, opponent?.id]);
+
+  if (!opponent) return null;
+
+  const total = counts.a + counts.b + (voted ? 1 : 0);
+  const pctA = Math.round(((counts.a + (voted === 'a' ? 1 : 0)) / total) * 100);
+  const pctB = 100 - pctA;
+
+  return (
+    <section className="my-8 p-5 bg-surface-warm border-2 border-rosegold rounded-2xl">
+      <h3 className="text-sm font-black text-accent text-center mb-4">VS 투표</h3>
+      <p className="text-center text-sm font-bold text-[#111111] mb-4">어디가 더 끌리나요?</p>
+      <div className="grid grid-cols-2 gap-3">
+        <button
+          onClick={() => !voted && setVoted('a')}
+          className={`p-3 rounded-xl border-2 text-left transition-all min-h-[48px] ${
+            voted === 'a' ? 'border-accent bg-accent/5' : voted ? 'border-rosegold/50 opacity-60' : 'border-rosegold hover:border-accent'
+          }`}
+        >
+          <p className="text-sm font-bold text-[#111111] truncate">{venue.name}</p>
+          <p className="text-xs text-[#555555]">{venue.area}</p>
+          {voted && <p className="text-xs font-black text-accent mt-1">{pctA}%</p>}
+        </button>
+        <button
+          onClick={() => !voted && setVoted('b')}
+          className={`p-3 rounded-xl border-2 text-left transition-all min-h-[48px] ${
+            voted === 'b' ? 'border-accent bg-accent/5' : voted ? 'border-rosegold/50 opacity-60' : 'border-rosegold hover:border-accent'
+          }`}
+        >
+          <p className="text-sm font-bold text-[#111111] truncate">{opponent.name}</p>
+          <p className="text-xs text-[#555555]">{opponent.area}</p>
+          {voted && <p className="text-xs font-black text-accent mt-1">{pctB}%</p>}
+        </button>
+      </div>
+      {voted && (
+        <p className="text-center text-xs text-[#555555] mt-3">{total}명 참여</p>
+      )}
+    </section>
+  );
+}
+
+/**
+ * 인라인 퀴즈 — 재미 요소
+ */
+export function InlineQuiz({ venue }: { venue: Venue }) {
+  const [answered, setAnswered] = useState(false);
+  const [selected, setSelected] = useState(-1);
+
+  const quizzes = [
+    { q: `${venue.area} 지역에서 가장 많은 카테고리는?`, options: ['나이트', '클럽', '라운지'], correct: 0 },
+    { q: '밤 문화 이용 시 가장 중요한 것은?', options: ['분위기', '음악', '접근성'], correct: 0 },
+    { q: '주말 방문 시 가장 좋은 시간은?', options: ['PM 9~10', 'PM 10~11', 'PM 11~12'], correct: 1 },
+  ];
+  const quiz = quizzes[venue.id.length % quizzes.length];
+
+  const handleAnswer = (idx: number) => {
+    if (answered) return;
+    setSelected(idx);
+    setAnswered(true);
+  };
+
+  return (
+    <section className="my-8 p-5 bg-surface-warm border-2 border-rosegold rounded-2xl">
+      <p className="text-xs font-black text-accent mb-2">퀴즈</p>
+      <p className="text-sm font-bold text-[#111111] mb-4">{quiz.q}</p>
+      <div className="space-y-2">
+        {quiz.options.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => handleAnswer(i)}
+            className={`w-full text-left p-3 rounded-xl border-2 text-sm font-semibold transition-all min-h-[44px] ${
+              !answered ? 'border-rosegold hover:border-accent text-[#111111]' :
+              i === quiz.correct ? 'border-green-500 bg-green-50 text-green-700' :
+              i === selected ? 'border-red-400 bg-red-50 text-red-600' :
+              'border-rosegold/30 opacity-50 text-[#555555]'
+            }`}
+          >
+            {opt}
+          </button>
+        ))}
+      </div>
+      {answered && (
+        <p className="text-xs text-[#555555] mt-3 text-center">
+          {selected === quiz.correct ? '정답! 잘 알고 계시네요.' : `정답은 "${quiz.options[quiz.correct]}"입니다.`}
+        </p>
+      )}
+    </section>
+  );
+}
+
+/**
+ * "이 업소의 비밀" — 스크롤 80%에서 공개
+ */
+export function SecretReveal({ venue }: { venue: Venue }) {
+  const [revealed, setRevealed] = useState(false);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const handler = () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total > 0 && scrolled / total >= 0.8) setShow(true);
+    };
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  if (!show) return null;
+
+  const secrets = [
+    `${venue.area}에서 현지인이 먼저 찾는 곳이다.`,
+    `실장에게 "추천 부탁"이라 하면 세팅이 달라진다.`,
+    `평일 PM 10 이전이 가장 여유롭다.`,
+    `단골이 되면 입장 순서가 빨라진다.`,
+    `금요일 밤 11시가 분위기 절정이다.`,
+  ];
+  const secret = secrets[venue.id.length % secrets.length];
+
+  return (
+    <section className="my-8 animate-fade-in-up">
+      <div className="p-5 bg-gradient-to-br from-[#1C1917] to-[#292524] rounded-2xl text-white">
+        <p className="text-xs font-bold text-rosegold mb-2">이 업소의 비밀</p>
+        {revealed ? (
+          <p className="text-sm leading-relaxed">{secret}</p>
+        ) : (
+          <button
+            onClick={() => setRevealed(true)}
+            className="text-sm font-bold text-white/80 hover:text-white transition-colors min-h-[44px]"
+          >
+            탭해서 비밀 확인하기 →
+          </button>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * 오늘 N명이 봤습니다 — 일일 카운터
+ */
+export function DailyViewCounter({ venueId }: { venueId: string }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const d = new Date();
+    const seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    let s = seed + venueId.length * 31;
+    s = (s * 16807) % 2147483647;
+    const base = 80 + (s % 320);
+    setCount(base);
+  }, [venueId]);
+
+  return (
+    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#555555] bg-surface-warm px-3 py-1.5 rounded-full border border-rosegold/30">
+      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+      오늘 {count}명이 봤습니다
+    </span>
+  );
+}
+
+/**
+ * 무한 스크롤 관련 업소 — 끝없는 추천
+ */
+export function InfiniteRelated({ venue }: { venue: Venue }) {
+  const [items, setItems] = useState<Venue[]>([]);
+  const [page, setPage] = useState(0);
+  const CHUNK = 4;
+
+  useEffect(() => {
+    const pool = venues.filter((v) => v.id !== venue.id);
+    let s = venue.id.length + page * 7;
+    const shuffled = [...pool].sort(() => { s = (s * 16807) % 2147483647; return s / 2147483647 - 0.5; });
+    setItems((prev) => [...prev, ...shuffled.slice(0, CHUNK)]);
+  }, [page, venue.id]);
+
+  return (
+    <section className="mb-8">
+      <h2 className="text-lg mb-4">더 많은 추천</h2>
+      <div className="venue-grid">
+        {items.map((v, i) => (
+          <Link
+            key={`${v.id}-${i}`}
+            to={venuePath(v)}
+            className="flex items-center gap-3 p-3 bg-white border-2 border-rosegold rounded-xl hover:border-accent transition-colors"
+          >
+            <img
+              src={`/og/${v.id}.svg`}
+              alt={getVenueLabel(v)}
+              width={56}
+              height={56}
+              loading="lazy"
+              className="w-14 h-14 rounded-lg object-cover shrink-0"
+            />
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-bold text-[#111111] truncate">{getVenueLabel(v)}</p>
+              <p className="text-xs text-[#555555]">{v.area}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+      <button
+        onClick={() => setPage((p) => p + 1)}
+        className="w-full mt-4 p-3 text-sm font-bold text-accent bg-surface-warm border-2 border-rosegold rounded-xl hover:border-accent transition-colors min-h-[48px]"
+      >
+        더 많은 업소 보기
+      </button>
+    </section>
   );
 }

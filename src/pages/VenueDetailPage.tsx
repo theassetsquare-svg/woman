@@ -5,7 +5,7 @@ import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
-import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable } from '../components/HookingWidgets';
+import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated } from '../components/HookingWidgets';
 import { useTrackVisit } from '../components/EngagementEngine';
 
 const MAIN = getMainLink();
@@ -160,9 +160,12 @@ export default function VenueDetailPage() {
           </p>
         </div>
 
-        {/* FOMO + 자이가르닉 */}
-        <div className="flex items-center justify-between mt-4">
+        {/* FOMO + 오늘 N명 + 자이가르닉 */}
+        <div className="flex flex-wrap items-center gap-2 mt-4">
           <FomoCounter />
+          <DailyViewCounter venueId={venue.id} />
+        </div>
+        <div className="mt-2">
           <ExploreProgress current={venues.indexOf(venue) + 1} total={venues.length} />
         </div>
       </section>
@@ -186,6 +189,9 @@ export default function VenueDetailPage() {
           ))}
         </div>
       </section>
+
+      {/* 스와이프 갤러리 */}
+      <SwipeGallery venue={venue} />
 
       {/* [후킹2] 중간 끊기 */}
       <MidBreakHook />
@@ -260,6 +266,9 @@ export default function VenueDetailPage() {
             </div>
           </BlurLockSection>
 
+          {/* VS 투표 */}
+          <VSVote venue={venue} />
+
           {/* [후킹3] 비슷한 업소 추천 → 메인 */}
           <SimilarHook />
 
@@ -310,6 +319,9 @@ export default function VenueDetailPage() {
           {/* [후킹11] 비교 기능 */}
           <CompareHook />
 
+          {/* 인라인 퀴즈 */}
+          <InlineQuiz venue={venue} />
+
           {/* FAQ */}
           <section className="content-section">
             <h2 className="text-lg">자주 묻는 질문</h2>
@@ -325,6 +337,9 @@ export default function VenueDetailPage() {
 
           {/* [후킹15] 쿠폰 */}
           <CouponHook />
+
+          {/* "이 업소의 비밀" — 스크롤 80% */}
+          <SecretReveal venue={venue} />
 
           {/* Conclusion */}
           <section className="content-section">
@@ -385,6 +400,9 @@ export default function VenueDetailPage() {
           </div>
         </section>
       )}
+
+      {/* 무한 스크롤 추천 */}
+      <InfiniteRelated venue={venue} />
 
       {/* [후킹5] 전체 비교 → 메인 */}
       <a

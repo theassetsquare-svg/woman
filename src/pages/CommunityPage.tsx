@@ -45,7 +45,7 @@ export default function CommunityPage() {
         {boards.map((b) => (
           <div key={b.id} className="p-3 bg-surface-warm border border-rosegold rounded-xl text-center">
             <p className="text-sm font-bold text-[#111111]">{b.label}</p>
-            <p className="text-[10px] text-[#555555] mt-0.5">{b.desc}</p>
+            <p className="text-xs text-[#555555] mt-0.5">{b.desc}</p>
           </div>
         ))}
       </div>
@@ -63,11 +63,11 @@ export default function CommunityPage() {
               className="block p-4 bg-white border-2 border-rosegold rounded-xl hover:border-accent transition-colors"
             >
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-bold text-accent bg-surface-warm px-2 py-0.5 rounded-full">{post.board}</span>
-                <span className="text-[10px] text-[#555555]">{post.author}</span>
+                <span className="text-xs font-bold text-accent bg-surface-warm px-2 py-0.5 rounded-full">{post.board}</span>
+                <span className="text-xs text-[#555555]">{post.author}</span>
               </div>
               <p className="text-sm font-bold text-[#111111] leading-snug">{post.title}</p>
-              <div className="flex gap-3 mt-2 text-[10px] text-[#555555]">
+              <div className="flex gap-3 mt-2 text-xs text-[#555555]">
                 <span>좋아요 {post.likes}</span>
                 <span>댓글 {post.comments}</span>
               </div>

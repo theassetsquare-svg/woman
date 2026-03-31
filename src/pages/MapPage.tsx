@@ -74,7 +74,7 @@ export default function MapPage() {
               >
                 <span className="block text-sm font-bold">{r.name}</span>
                 <span
-                  className="block text-[10px] mt-0.5"
+                  className="block text-xs mt-0.5"
                   style={{ color: isSelected ? 'rgba(255,255,255,0.8)' : '#555555' }}
                 >
                   {count}곳
@@ -106,7 +106,7 @@ export default function MapPage() {
                   >
                     {getVenueLabel(venue)}
                   </Link>
-                  <span className="text-[11px] font-bold text-accent bg-surface-warm px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-bold text-accent bg-surface-warm px-2 py-0.5 rounded-full">
                     {categoryLabels[venue.category || 'night'] || '나이트'}
                   </span>
                 </div>

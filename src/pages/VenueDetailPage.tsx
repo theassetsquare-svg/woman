@@ -206,7 +206,7 @@ export default function VenueDetailPage() {
               <ul className="space-y-2.5">
                 {venueContent.summary.map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-sm text-[#1e293b] leading-relaxed">
-                    <span className="w-5 h-5 rounded-full bg-accent/10 text-accent text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="w-5 h-5 rounded-full bg-accent/10 text-accent text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                       {i + 1}
                     </span>
                     <span>{item}</span>
@@ -417,7 +417,7 @@ export default function VenueDetailPage() {
 
       {/* Fixed phone bar — 초록 + 가운데 400px */}
       {venue.phone && venue.phone !== '별도문의' && (
-        <div className="fixed bottom-20 left-0 right-0 z-50 px-4">
+        <div className="fixed bottom-20 left-0 right-0 z-50 px-4 phone-bar-fixed">
           <a
             href={`tel:${venue.phone.replace(/-/g, '')}`}
             target="_blank"
@@ -440,7 +440,7 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="detail-info-card flex items-start gap-3">
       <div className="min-w-0">
-        <span className="text-[10px] text-[#475569] font-semibold uppercase tracking-wider block mb-0.5">{label}</span>
+        <span className="text-xs text-[#475569] font-semibold uppercase tracking-wider block mb-0.5">{label}</span>
         <span className="text-sm font-semibold text-[#111111] block truncate">{value}</span>
       </div>
     </div>

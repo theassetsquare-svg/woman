@@ -173,7 +173,7 @@ export function PointsBadge() {
   const emoji = points >= 1000 ? '👑' : points >= 500 ? '💎' : points >= 200 ? '🎉' : points >= 50 ? '🌙' : '🌱';
 
   return (
-    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-accent bg-surface-warm px-2 py-0.5 rounded-full">
+    <span className="inline-flex items-center gap-1 text-xs font-bold text-accent bg-surface-warm px-2 py-0.5 rounded-full">
       {emoji} {level} · {points}P
     </span>
   );
@@ -220,7 +220,7 @@ export function DailyMission() {
       <div className="space-y-2">
         {missions.map((m, i) => (
           <div key={i} className={`flex items-center gap-2.5 text-sm ${m.done ? 'text-[#555555] line-through' : 'text-[#111111] font-semibold'}`}>
-            <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] shrink-0 ${
+            <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs shrink-0 ${
               m.done ? 'bg-accent text-white' : 'bg-surface-warm border border-rosegold text-[#555555]'
             }`}>
               {m.done ? '✓' : i + 1}

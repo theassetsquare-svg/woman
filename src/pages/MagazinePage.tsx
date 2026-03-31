@@ -67,10 +67,10 @@ export default function MagazinePage() {
             className="block p-5 bg-white border-2 border-rosegold rounded-xl hover:border-accent transition-colors"
           >
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-[11px] font-bold text-accent bg-surface-warm px-2 py-0.5 rounded-full">
+              <span className="text-xs font-bold text-accent bg-surface-warm px-2 py-0.5 rounded-full">
                 {article.category}
               </span>
-              <span className="text-[11px] text-[#555555]">읽기 {article.readingTime}</span>
+              <span className="text-xs text-[#555555]">읽기 {article.readingTime}</span>
             </div>
             <h2 className="text-lg font-extrabold text-[#111111] leading-snug mb-2">
               {article.title}

@@ -41,7 +41,7 @@ export default function VenueCard({ venue }: { venue: Venue }) {
             </span>
           )}
           {venue.contact && (
-            <span className="text-[11px] text-accent font-bold bg-surface-warm px-2 py-0.5 rounded-full">
+            <span className="text-xs text-accent font-bold bg-surface-warm px-2 py-0.5 rounded-full">
               {venue.contact} 실장
             </span>
           )}

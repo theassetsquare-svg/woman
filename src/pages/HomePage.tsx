@@ -100,7 +100,7 @@ export default function HomePage() {
               <div key={v.id} className="hooking-item">
                 <div className="shrink-0 flex flex-col items-center gap-0.5">
                   <span className="text-accent font-black text-sm">{v.contact}</span>
-                  <span className="text-[10px] text-[#555555]">실장</span>
+                  <span className="text-xs text-[#555555]">실장</span>
                 </div>
                 <div className="min-w-0 flex-1">
                   <Link

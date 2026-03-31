@@ -120,7 +120,7 @@ export default function RankingPage() {
                     {getVenueLabel(venue)}
                   </span>
                   {isContact && (
-                    <span className="flex-shrink-0 text-[10px] font-bold text-white bg-accent px-1.5 py-0.5 rounded-full">
+                    <span className="flex-shrink-0 text-xs font-bold text-white bg-accent px-1.5 py-0.5 rounded-full">
                       실장연결
                     </span>
                   )}

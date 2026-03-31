@@ -1,11 +1,11 @@
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { regions, venues, getRegionCount, getVenuesByRegion, getContactVenues, getVenueLabel, getVenueById } from '../data/venues';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
 import SearchBox from '../components/SearchBox';
-import { SlideUpCTA, ScrollBanner, Top10Hook, TodayRecommendHook, FullCompareHook } from '../components/HookingWidgets';
+import { SlideUpCTA, ScrollBanner, Top10Hook, TodayRecommendHook, FullCompareHook, PullToRefresh } from '../components/HookingWidgets';
 import { EngagementSidebar, EndlessFeed } from '../components/EngagementEngine';
 
 export default function HomePage() {
@@ -20,8 +20,15 @@ export default function HomePage() {
     url: '',
   });
 
+  const handleRefresh = useCallback(() => {
+    window.location.reload();
+  }, []);
+
   return (
     <div>
+      {/* Pull to Refresh */}
+      <PullToRefresh onRefresh={handleRefresh} />
+
       {/* Hero */}
       <section className="hero-section">
         <div className="relative px-4 py-12 text-center">

@@ -5,7 +5,7 @@ import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
-import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated } from '../components/HookingWidgets';
+import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated, InsiderTip, AlsoVisited, haptic } from '../components/HookingWidgets';
 import { useTrackVisit } from '../components/EngagementEngine';
 
 const MAIN = getMainLink();
@@ -280,6 +280,9 @@ export default function VenueDetailPage() {
             </section>
           ))}
 
+          {/* 인사이더 팁 — 스크롤 70% */}
+          <InsiderTip venue={venue} />
+
           {/* 본문 이미지 3 — 나머지 섹션 후 */}
           <div className="my-4">
             <img
@@ -373,6 +376,9 @@ export default function VenueDetailPage() {
         <AutoplayNext venue={related[0]} />
       )}
 
+      {/* 여기 다녀간 사람들이 또 간 곳 */}
+      <AlsoVisited venue={venue} />
+
       {/* Related — 같은 지역 */}
       {related.length > 0 && (
         <section className="mb-8">
@@ -422,6 +428,7 @@ export default function VenueDetailPage() {
             href={`tel:${venue.phone.replace(/-/g, '')}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => haptic('medium')}
             className="block max-w-[400px] mx-auto bg-[#22C55E] hover:bg-[#16A34A] text-white text-center py-3.5 rounded-xl shadow-2xl transition-colors font-bold text-base"
           >
             {venue.contact ? `${venue.contact}에게 전화 ${venue.phone}` : `전화하기 ${venue.phone}`}

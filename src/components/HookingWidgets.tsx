@@ -761,3 +761,181 @@ export function InfiniteRelated({ venue }: { venue: Venue }) {
     </section>
   );
 }
+
+/**
+ * 인사이더 팁 — 스크롤 70%에서 노출
+ */
+export function InsiderTip({ venue }: { venue: Venue }) {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const handler = () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total > 0 && scrolled / total >= 0.7) setShow(true);
+    };
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  if (!show) return null;
+
+  const tips = [
+    `${venue.area}에서는 금요일 PM 10시 전에 도착하는 게 핵심이다. 그 이후로는 대기가 생긴다.`,
+    `실장 이름을 대면 자리 배정이 달라진다. 전화 예약 시 꼭 언급하자.`,
+    `첫 방문이면 평일을 추천한다. 주말보다 여유롭고 스태프 응대도 더 좋다.`,
+    `주차는 근처 공영주차장을 이용하자. 대리운전보다 택시가 낫다.`,
+    `2차로 가려면 ${venue.area} 주변 포차거리를 체크해두면 동선이 편하다.`,
+    `SNS에 올리면 서비스 주는 곳도 있다. 물어볼 가치가 있다.`,
+  ];
+  const tip = tips[(venue.id.length * 3) % tips.length];
+
+  return (
+    <section className="my-6 animate-fade-in-up">
+      <div className="p-4 bg-amber-50 border-2 border-amber-200 rounded-2xl">
+        <p className="text-xs font-black text-amber-600 mb-2">INSIDER TIP</p>
+        <p className="text-sm text-[#111111] leading-relaxed">{tip}</p>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * "여기 다녀간 사람들이 또 간 곳" — visitor correlation
+ */
+export function AlsoVisited({ venue }: { venue: Venue }) {
+  const [items, setItems] = useState<Venue[]>([]);
+
+  useEffect(() => {
+    // 같은 카테고리 + 다른 지역에서 2개, 같은 지역에서 1개
+    const sameCat = venues.filter(v => v.category === venue.category && v.id !== venue.id && v.region !== venue.region);
+    const sameRegion = getVenuesByRegion(venue.region).filter(v => v.id !== venue.id);
+    let s = venue.id.length * 17;
+    const pick = (arr: Venue[]) => { s = (s * 16807) % 2147483647; return arr[s % arr.length]; };
+    const result: Venue[] = [];
+    if (sameCat.length > 0) result.push(pick(sameCat));
+    if (sameRegion.length > 0) result.push(pick(sameRegion));
+    if (sameCat.length > 1) { const filtered = sameCat.filter(v => !result.includes(v)); if (filtered.length > 0) result.push(pick(filtered)); }
+    setItems(result);
+  }, [venue]);
+
+  if (items.length === 0) return null;
+
+  return (
+    <section className="my-8">
+      <h3 className="text-base font-black text-[#111111] mb-3">여기 다녀간 사람들이 또 간 곳</h3>
+      <div className="space-y-2">
+        {items.map((v) => (
+          <Link
+            key={v.id}
+            to={venuePath(v)}
+            className="flex items-center gap-3 p-3 bg-white border-2 border-rosegold rounded-xl hover:border-accent transition-colors"
+          >
+            <img src={`/og/${v.id}.svg`} alt={getVenueLabel(v)} width={48} height={48} loading="lazy" className="w-12 h-12 rounded-lg object-cover shrink-0" />
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-bold text-[#111111] truncate">{getVenueLabel(v)}</p>
+              <p className="text-xs text-[#555555]">{v.area}</p>
+            </div>
+            <span className="text-xs text-accent font-bold shrink-0">→</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Pull-to-Refresh 제스처
+ */
+export function PullToRefresh({ onRefresh }: { onRefresh: () => void }) {
+  const [pulling, setPulling] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const startY = useRef(0);
+
+  useEffect(() => {
+    let active = false;
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (window.scrollY === 0) {
+        startY.current = e.touches[0].clientY;
+        active = true;
+      }
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (!active) return;
+      const diff = e.touches[0].clientY - startY.current;
+      if (diff > 60) setPulling(true);
+    };
+    const onTouchEnd = () => {
+      if (pulling && !refreshing) {
+        setRefreshing(true);
+        setPulling(false);
+        onRefresh();
+        setTimeout(() => setRefreshing(false), 1200);
+      } else {
+        setPulling(false);
+      }
+      active = false;
+    };
+
+    document.addEventListener('touchstart', onTouchStart, { passive: true });
+    document.addEventListener('touchmove', onTouchMove, { passive: true });
+    document.addEventListener('touchend', onTouchEnd);
+    return () => {
+      document.removeEventListener('touchstart', onTouchStart);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [pulling, refreshing, onRefresh]);
+
+  if (!pulling && !refreshing) return null;
+
+  return (
+    <div className="fixed top-12 left-0 right-0 z-[70] flex justify-center">
+      <div className="bg-white border-2 border-rosegold rounded-full px-4 py-2 shadow-lg animate-fade-in">
+        <p className="text-xs font-bold text-accent">
+          {refreshing ? '새로고침 중...' : '놓으면 새로고침'}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 바텀 시트 — 네이티브 앱 느낌 모달
+ */
+export function BottomSheet({ open, onClose, children }: { open: boolean; onClose: () => void; children: React.ReactNode }) {
+  useEffect(() => {
+    if (open) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[200]" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/40" />
+      <div
+        className="absolute bottom-0 left-0 right-0 max-w-[480px] mx-auto bg-white rounded-t-3xl animate-slide-up"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-center pt-3 pb-2">
+          <div className="w-10 h-1 rounded-full bg-[#D1D5DB]" />
+        </div>
+        <div className="px-5 pb-8 max-h-[70vh] overflow-y-auto">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Haptic feedback 유틸
+ */
+export function haptic(style: 'light' | 'medium' | 'heavy' = 'light') {
+  if (!navigator.vibrate) return;
+  const ms = style === 'heavy' ? 30 : style === 'medium' ? 15 : 8;
+  navigator.vibrate(ms);
+}

@@ -40,4 +40,3 @@
 - Verify 3 times + check live in incognito mode!
 - Footer: "놀쿨 NOLCOOL" + KakaoTalk besta12
 - 8 stores without advertiser: NO nickname/phone!
-

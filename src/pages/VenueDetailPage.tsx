@@ -5,7 +5,7 @@ import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
-import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner, FomoCounter, ExploreProgress, AutoplayNext } from '../components/HookingWidgets';
+import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable } from '../components/HookingWidgets';
 import { useTrackVisit } from '../components/EngagementEngine';
 
 const MAIN = getMainLink();
@@ -109,6 +109,9 @@ export default function VenueDetailPage() {
 
   return (
     <div className="px-4 py-8">
+      {/* 스크롤 진행률 바 */}
+      <ScrollProgressBar />
+
       {/* Breadcrumb */}
       <nav className="breadcrumb mb-6" aria-label="경로">
         <Link to="/" target="_blank" rel="noopener noreferrer">홈</Link>
@@ -300,6 +303,9 @@ export default function VenueDetailPage() {
 
           {/* [후킹4] AI 추천 */}
           <AIRecommendHook />
+
+          {/* 비교표 */}
+          <ComparisonTable venue={venue} />
 
           {/* [후킹11] 비교 기능 */}
           <CompareHook />

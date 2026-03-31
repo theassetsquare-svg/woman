@@ -1,10 +1,87 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import type { Venue } from '../data/venues';
-import { getMainLink, getVenueLabel } from '../data/venues';
+import { getMainLink, getVenueLabel, getVenuesByRegion } from '../data/venues';
 import { venuePath } from '../utils/slug';
 
 const MAIN = getMainLink();
+
+/**
+ * 스크롤 진행률 바 — 상단 고정
+ */
+export function ScrollProgressBar() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const handler = () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total > 0) setProgress(Math.min(100, (scrolled / total) * 100));
+    };
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  return (
+    <div className="fixed top-0 left-0 right-0 z-[60] h-1 bg-black/5">
+      <div
+        className="h-full bg-gradient-to-r from-accent to-rosegold transition-[width] duration-150"
+        style={{ width: `${progress}%` }}
+      />
+    </div>
+  );
+}
+
+/**
+ * 비교표 — 같은 지역 업소 간 비교
+ */
+export function ComparisonTable({ venue }: { venue: Venue }) {
+  const others = getVenuesByRegion(venue.region)
+    .filter((v) => v.id !== venue.id)
+    .slice(0, 2);
+
+  if (others.length === 0) return null;
+
+  const all = [venue, ...others];
+
+  return (
+    <section className="my-8">
+      <h3 className="text-base font-black text-[#111111] mb-4">같은 지역 업소 비교</h3>
+      <div className="overflow-x-auto -mx-4 px-4">
+        <table className="w-full text-sm border-collapse min-w-[360px]">
+          <thead>
+            <tr className="border-b-2 border-rosegold">
+              <th className="py-2 px-3 text-left text-xs text-[#475569] font-bold">항목</th>
+              {all.map((v) => (
+                <th key={v.id} className="py-2 px-3 text-left text-xs font-bold text-accent truncate max-w-[120px]">
+                  {v.name}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="text-[#1e293b]">
+            <tr className="border-b border-rosegold/30">
+              <td className="py-2.5 px-3 font-semibold text-[#475569]">영업시간</td>
+              {all.map((v) => <td key={v.id} className="py-2.5 px-3">{v.hours}</td>)}
+            </tr>
+            <tr className="border-b border-rosegold/30 bg-surface-warm/30">
+              <td className="py-2.5 px-3 font-semibold text-[#475569]">위치</td>
+              {all.map((v) => <td key={v.id} className="py-2.5 px-3">{v.area}</td>)}
+            </tr>
+            <tr className="border-b border-rosegold/30">
+              <td className="py-2.5 px-3 font-semibold text-[#475569]">담당</td>
+              {all.map((v) => <td key={v.id} className="py-2.5 px-3">{v.contact ? `${v.contact} 실장` : '-'}</td>)}
+            </tr>
+            <tr className="border-b border-rosegold/30 bg-surface-warm/30">
+              <td className="py-2.5 px-3 font-semibold text-[#475569]">연락처</td>
+              {all.map((v) => <td key={v.id} className="py-2.5 px-3">{v.phone}</td>)}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
 
 /**
  * [후킹6] 3분 체류 후 슬라이드업 CTA

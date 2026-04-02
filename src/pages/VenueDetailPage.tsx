@@ -437,6 +437,8 @@ export default function VenueDetailPage() {
       {venue.phone && venue.phone !== '별도문의' && (
         <a
           href={`tel:${venue.phone.replace(/-/g, '')}`}
+          target="_blank"
+          rel="noopener noreferrer"
           onClick={() => haptic('medium')}
           className="phone-bar flex items-center justify-center"
         >

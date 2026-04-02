@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Header */}
       <header className="site-header sticky top-0 z-50">
         <div className="px-4 py-3 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 group" aria-label="홈으로">
+          <Link to="/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 group" aria-label="홈으로">
             <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-accent to-rosegold flex items-center justify-center text-white text-sm font-black shadow-md">
               N
             </span>
@@ -251,6 +251,8 @@ function MenuLink({ to, label, current, onClick }: { to: string; label: string; 
   return (
     <Link
       to={to}
+      target="_blank"
+      rel="noopener noreferrer"
       onClick={onClick}
       className={`px-4 py-2.5 rounded-xl text-base font-medium transition-colors ${
         isActive ? 'text-accent bg-surface-warm' : 'text-[#111111] hover:bg-surface-warm'

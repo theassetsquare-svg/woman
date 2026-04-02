@@ -740,6 +740,8 @@ export function InfiniteRelated({ venue }: { venue: Venue }) {
           <Link
             key={`${v.id}-${i}`}
             to={venuePath(v)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-3 p-3 bg-white border-2 border-rosegold rounded-xl hover:border-accent transition-colors"
           >
             <img
@@ -834,6 +836,8 @@ export function AlsoVisited({ venue }: { venue: Venue }) {
           <Link
             key={v.id}
             to={venuePath(v)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-3 p-3 bg-white border-2 border-rosegold rounded-xl hover:border-accent transition-colors"
           >
             <img src={`/og/${v.id}.svg`} alt={getVenueLabel(v)} width={48} height={48} loading="lazy" className="w-12 h-12 rounded-lg object-cover shrink-0" />
@@ -1029,6 +1033,8 @@ export function TimeAttack({ venue }: { venue: Venue }) {
           </div>
           <a
             href={`tel:${venue.phone.replace(/-/g, '')}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-accent text-white text-sm font-bold px-4 py-2.5 rounded-xl min-h-[44px] flex items-center"
           >
             바로 전화

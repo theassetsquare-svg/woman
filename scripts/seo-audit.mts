@@ -89,8 +89,8 @@ function checkTitleDups(title: string): string[] {
 
 // Check keyword stuffing: same keyword 2+ in one sentence, 3+ in one paragraph
 function checkStuffing(text: string, kw: string): string | null {
-  // Split by sentences (Korean period, !, ?)
-  const sentences = text.split(/[.!?。]\s*/);
+  // Split by sentences (Korean endings: 다/요/함/임/음 + space, or .!?)
+  const sentences = text.split(/(?<=[.!?。다요함임음])\s+/);
   for (const sent of sentences) {
     if (countKw(sent, kw) >= 2) return `문장내 2회: "${sent.slice(0, 60)}..."`;
   }

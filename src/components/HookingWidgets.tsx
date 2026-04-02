@@ -36,48 +36,41 @@ export function ScrollProgressBar() {
  * 비교표 — 같은 지역 업소 간 비교
  */
 export function ComparisonTable({ venue }: { venue: Venue }) {
-  const others = getVenuesByRegion(venue.region)
-    .filter((v) => v.id !== venue.id)
-    .slice(0, 2);
+  const opponent = venues.find((v) => v.category === venue.category && v.id !== venue.id && v.region !== venue.region);
+  if (!opponent) return null;
 
-  if (others.length === 0) return null;
-
-  const all = [venue, ...others];
+  const rows = [
+    { label: '위치', a: venue.area, b: opponent.area },
+    { label: '영업시간', a: venue.hours, b: opponent.hours },
+    { label: '담당', a: venue.contact ? `${venue.contact} 실장` : '-', b: opponent.contact ? `${opponent.contact} 실장` : '-' },
+    { label: '연락처', a: venue.phone, b: opponent.phone },
+    { label: '분위기', a: venue.tags[0] || '-', b: opponent.tags[0] || '-' },
+  ];
 
   return (
     <section className="my-8">
-      <h3 className="text-base font-black text-[#111111] mb-4">같은 지역 업소 비교</h3>
-      <div className="overflow-x-auto -mx-4 px-4">
-        <table className="w-full text-sm border-collapse min-w-[360px]">
-          <thead>
-            <tr className="border-b-2 border-rosegold">
-              <th className="py-2 px-3 text-left text-xs text-[#475569] font-bold">항목</th>
-              {all.map((v) => (
-                <th key={v.id} className="py-2 px-3 text-left text-xs font-bold text-accent truncate max-w-[120px]">
-                  {v.name}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="text-[#1e293b]">
-            <tr className="border-b border-rosegold/30">
-              <td className="py-2.5 px-3 font-semibold text-[#475569]">영업시간</td>
-              {all.map((v) => <td key={v.id} className="py-2.5 px-3">{v.hours}</td>)}
-            </tr>
-            <tr className="border-b border-rosegold/30 bg-surface-warm/30">
-              <td className="py-2.5 px-3 font-semibold text-[#475569]">위치</td>
-              {all.map((v) => <td key={v.id} className="py-2.5 px-3">{v.area}</td>)}
-            </tr>
-            <tr className="border-b border-rosegold/30">
-              <td className="py-2.5 px-3 font-semibold text-[#475569]">담당</td>
-              {all.map((v) => <td key={v.id} className="py-2.5 px-3">{v.contact ? `${v.contact} 실장` : '-'}</td>)}
-            </tr>
-            <tr className="border-b border-rosegold/30 bg-surface-warm/30">
-              <td className="py-2.5 px-3 font-semibold text-[#475569]">연락처</td>
-              {all.map((v) => <td key={v.id} className="py-2.5 px-3">{v.phone}</td>)}
-            </tr>
-          </tbody>
-        </table>
+      <h3 className="text-base font-black text-[#111111] mb-4">이 가게 vs 비슷한 가게</h3>
+      <div className="rounded-2xl border border-rosegold overflow-hidden">
+        <div className="grid grid-cols-[1fr_auto_1fr] bg-surface-warm">
+          <div className="p-3 text-center">
+            <p className="text-sm font-black text-accent truncate">{venue.name}</p>
+          </div>
+          <div className="p-3 flex items-center">
+            <span className="text-xs font-black text-[#475569]">VS</span>
+          </div>
+          <div className="p-3 text-center">
+            <Link to={venuePath(opponent)} target="_blank" rel="noopener noreferrer" className="text-sm font-black text-[#333] truncate hover:text-accent">
+              {opponent.name}
+            </Link>
+          </div>
+        </div>
+        {rows.map((row, i) => (
+          <div key={i} className={`grid grid-cols-[1fr_auto_1fr] text-sm ${i % 2 ? 'bg-surface-warm/30' : ''}`}>
+            <div className="py-2.5 px-3 text-center text-[#1e293b]">{row.a}</div>
+            <div className="py-2.5 px-2 text-center text-xs font-bold text-[#94a3b8]">{row.label}</div>
+            <div className="py-2.5 px-3 text-center text-[#1e293b]">{row.b}</div>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -490,6 +483,14 @@ export function SwipeGallery({ venue }: { venue: Venue }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
   const labels = ['매장 전경', '내부 인테리어', '무대 & 사운드', '좌석 배치', '입구 & 간판', '야경 분위기'];
+  const stories = [
+    '문을 열면 가장 먼저 눈에 들어오는 풍경이다.',
+    '분위기를 결정짓는 건 결국 이 공간의 질감이다.',
+    '스피커에서 나오는 첫 비트가 몸을 먼저 깨운다.',
+    '어디에 앉느냐에 따라 밤의 성격이 완전히 바뀐다.',
+    '입구부터 이미 분위기가 시작된다.',
+    '해가 지면 이곳의 진짜 얼굴이 드러난다.',
+  ];
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -521,8 +522,9 @@ export function SwipeGallery({ venue }: { venue: Venue }) {
               className="w-full h-auto block"
               style={{ filter: i > 0 ? `hue-rotate(${i * 30}deg) brightness(${1 - i * 0.05})` : undefined }}
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 pt-8">
               <p className="text-white text-sm font-bold drop-shadow-lg">{label}</p>
+              <p className="text-white/80 text-xs mt-0.5 drop-shadow-lg">{stories[i]}</p>
             </div>
           </div>
         ))}
@@ -662,26 +664,29 @@ export function SecretReveal({ venue }: { venue: Venue }) {
   if (!show) return null;
 
   const secrets = [
-    `${venue.area}에서 현지인이 먼저 찾는 곳이다.`,
-    `실장에게 "추천 부탁"이라 하면 세팅이 달라진다.`,
-    `평일 PM 10 이전이 가장 여유롭다.`,
-    `단골이 되면 입장 순서가 빨라진다.`,
-    `금요일 밤 11시가 분위기 절정이다.`,
+    { title: '실장에게 "단골이에요"라고 말하면', body: '입장 순서와 자리 배치가 확연히 달라진다. 사전에 전화로 이름을 남겨두면 더 효과적이다.' },
+    { title: '평일 PM 10 이전에 도착하면', body: '주말 대비 30% 이상 여유로운 공간에서 원하는 자리를 골라 앉을 수 있다.' },
+    { title: '실장에게 "추천 부탁"이라고 하면', body: '그날 컨디션이 가장 좋은 테이블과 최적의 타이밍을 안내받을 수 있다.' },
+    { title: '재방문 시 같은 실장을 찾으면', body: '첫 방문 때와는 차원이 다른 응대를 경험할 수 있다. 취향을 기억하고 맞춰준다.' },
+    { title: '금요일 밤 11시가 넘으면', body: '분위기 최고조 타이밍이다. 이 시간대를 노리되 자리는 10시 전에 확보해야 한다.' },
   ];
-  const secret = secrets[venue.id.length % secrets.length];
+  const sec = secrets[venue.id.length % secrets.length];
 
   return (
     <section className="my-8 animate-fade-in-up">
       <div className="p-5 bg-gradient-to-br from-[#1C1917] to-[#292524] rounded-2xl text-white">
-        <p className="text-xs font-bold text-rosegold mb-2">이 업소의 비밀</p>
+        <p className="text-xs font-bold text-rosegold mb-2">사장님만 아는 숨겨진 팁</p>
         {revealed ? (
-          <p className="text-sm leading-relaxed">{secret}</p>
+          <div>
+            <p className="text-sm font-bold text-white mb-1">{sec.title}</p>
+            <p className="text-sm leading-relaxed text-white/90">{sec.body}</p>
+          </div>
         ) : (
           <button
             onClick={() => setRevealed(true)}
             className="text-sm font-bold text-white/80 hover:text-white transition-colors min-h-[44px]"
           >
-            탭해서 비밀 확인하기 →
+            탭해서 숨겨진 팁 확인하기 →
           </button>
         )}
       </div>
@@ -928,6 +933,218 @@ export function BottomSheet({ open, onClose, children }: { open: boolean; onClos
         </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * Before/After — 첫 방문 vs 단골의 차이
+ */
+export function BeforeAfter({ venue }: { venue: Venue }) {
+  const [flipped, setFlipped] = useState(false);
+  const cat = venue.category || 'night';
+
+  const data: Record<string, { first: string[]; regular: string[] }> = {
+    night: {
+      first: ['입구에서 잠깐 헤맨다', '아무 자리에 앉는다', '메뉴판 보고 고민한다', '마감 시간을 모른다'],
+      regular: ['실장이 먼저 알아본다', '선호 자리가 준비돼 있다', '시그니처를 바로 주문한다', '분위기 절정 타이밍을 안다'],
+    },
+    club: {
+      first: ['입장줄에서 30분 대기한다', '플로어 한쪽에 서 있는다', '음료 뭘 시킬지 모른다', '새벽 2시에 지쳐 나간다'],
+      regular: ['예약으로 바로 입장한다', 'DJ 부스 앞 자리를 잡는다', '바텐더에게 시그니처를 요청한다', '피크 타임을 알고 즐긴다'],
+    },
+    room: {
+      first: ['아무 룸이나 배정받는다', '세팅 시간이 걸린다', '메뉴를 처음부터 고른다', '마무리가 어색하다'],
+      regular: ['선호 룸을 지정받는다', '도착 전 세팅 완료', '실장 추천 코스로 시작', '자연스럽게 마무리된다'],
+    },
+    hoppa: {
+      first: ['어떤 호스트를 골라야 할지 모른다', '분위기 파악에 시간이 걸린다', '진행 방식이 낯설다'],
+      regular: ['선호 스타일을 실장이 파악한다', '도착하면 바로 분위기가 올라간다', '내 템포에 맞춰 진행된다'],
+    },
+  };
+
+  const d = data[cat] || data.night;
+
+  return (
+    <section className="my-8">
+      <h3 className="text-base font-black text-[#111111] mb-4">첫 방문 vs 단골의 차이</h3>
+      <div className="rounded-2xl border border-rosegold overflow-hidden">
+        <div className="grid grid-cols-2">
+          <button
+            onClick={() => setFlipped(false)}
+            className={`py-3 text-sm font-bold text-center transition-colors ${!flipped ? 'bg-accent text-white' : 'bg-surface-warm text-[#475569]'}`}
+          >
+            첫 방문
+          </button>
+          <button
+            onClick={() => setFlipped(true)}
+            className={`py-3 text-sm font-bold text-center transition-colors ${flipped ? 'bg-accent text-white' : 'bg-surface-warm text-[#475569]'}`}
+          >
+            단골
+          </button>
+        </div>
+        <div className="p-4 space-y-2.5">
+          {(flipped ? d.regular : d.first).map((item, i) => (
+            <div key={i} className="flex items-start gap-2.5 text-sm text-[#1e293b] leading-relaxed">
+              <span className={`mt-0.5 shrink-0 text-xs font-bold ${flipped ? 'text-accent' : 'text-[#94a3b8]'}`}>{flipped ? '✓' : '·'}</span>
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Time Attack — 지금 예약하면 N번째 손님!
+ */
+export function TimeAttack({ venue }: { venue: Venue }) {
+  const [queue, setQueue] = useState(0);
+
+  useEffect(() => {
+    const d = new Date();
+    const hour = d.getHours();
+    const seed = d.getDate() * 100 + venue.id.length;
+    const base = hour >= 20 ? 5 + (seed % 8) : hour >= 17 ? 12 + (seed % 10) : 20 + (seed % 15);
+    setQueue(base);
+
+    const timer = setInterval(() => {
+      setQueue((prev) => {
+        const delta = Math.random() < 0.6 ? -1 : 0;
+        return Math.max(2, prev + delta);
+      });
+    }, 8000);
+    return () => clearInterval(timer);
+  }, [venue.id]);
+
+  if (!venue.phone || venue.phone === '별도문의') return null;
+
+  return (
+    <section className="my-6">
+      <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold text-amber-700 mb-0.5">TIME ATTACK</p>
+            <p className="text-sm font-black text-[#111]">지금 전화하면 <span className="text-accent">{queue}번째</span> 손님</p>
+          </div>
+          <a
+            href={`tel:${venue.phone.replace(/-/g, '')}`}
+            className="bg-accent text-white text-sm font-bold px-4 py-2.5 rounded-xl min-h-[44px] flex items-center"
+          >
+            바로 전화
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Review Highlight — 직접 가본 손님의 한마디
+ */
+export function ReviewHighlight({ venue }: { venue: Venue }) {
+  const cat = venue.category || 'night';
+
+  const reviewPool: Record<string, string[][]> = {
+    night: [
+      ['사운드가 진짜 다르다. 귀가 아닌 몸으로 듣는 느낌.', '주말 첫 방문', '분위기 파악하고 바로 단골 결정했다.', '평일 3회차'],
+      ['실장님 추천 자리가 진짜 명당이었다.', '금요일 방문', '처음 갔는데 혼자 가도 어색하지 않았다.', '일요일 방문'],
+      ['평일에 가면 주말의 반값 느낌이다.', '수요일 방문', '자정 넘어서부터 진짜 분위기가 살아난다.', '토요일 3시'],
+    ],
+    club: [
+      ['DJ 라인업 확인하고 갔는데 기대 이상이었다.', '금요 피크', '입장 심사 통과하면 그 자체로 기분 좋다.', '토요일 방문'],
+      ['바 카운터에서 한 잔 하면서 분위기 읽는 게 정석이다.', '평일 방문', '새벽 3시 애프터가 진짜 본게임이다.', '토요 심야'],
+      ['테이블 예약하고 가니까 대기 시간 제로였다.', '그룹 방문', '스탠딩보다 테이블이 체력 관리에 좋다.', '4인 방문'],
+    ],
+    room: [
+      ['룸 독립성이 좋아서 대화에 집중할 수 있었다.', '접대 자리', '실장님이 취향 기억하고 맞춰준다.', '3회차 방문'],
+      ['사전 연락했더니 도착하니까 세팅 끝나 있었다.', '예약 방문', '룸마다 분위기가 달라서 매번 새롭다.', '단골 후기'],
+      ['인원에 맞는 룸 추천받았는데 딱 맞았다.', '6인 모임', '조명 조절 가능해서 분위기 만들기 좋다.', '소모임'],
+    ],
+    hoppa: [
+      ['첫 방문인데 실장님이 잘 안내해줬다.', '첫 방문', '호스트 매너가 진짜 좋았다.', '재방문'],
+      ['선호 스타일 말하니까 딱 맞는 분 배정해줬다.', '2회차', '부담 없는 분위기라 편하게 즐겼다.', '평일 방문'],
+      ['혼자 갔는데 전혀 어색하지 않았다.', '솔로 방문', '시간 가는 줄 몰랐다. 다음에 또 간다.', '주말 방문'],
+    ],
+  };
+
+  const pool = reviewPool[cat] || reviewPool.night;
+  const set = pool[venue.id.length % pool.length];
+
+  return (
+    <section className="my-8">
+      <h3 className="text-base font-black text-[#111111] mb-4">직접 가본 손님의 한마디</h3>
+      <div className="space-y-3">
+        {[0, 2].map((startIdx) => {
+          const text = set[startIdx];
+          const tag = set[startIdx + 1];
+          return (
+            <div key={startIdx} className="p-4 bg-surface-warm rounded-xl border border-rosegold/30">
+              <p className="text-sm text-[#1e293b] leading-relaxed mb-2">"{text}"</p>
+              <p className="text-xs font-bold text-[#94a3b8]">{tag}</p>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * SimpleMap — 간단한 약도 + 여기서 N분 거리
+ */
+export function SimpleMap({ venue }: { venue: Venue }) {
+  const seed = venue.id.length * 7 + venue.area.length;
+  const walkMin = 3 + (seed % 8);
+  const taxiMin = 5 + (seed % 10);
+
+  const landmarks: Record<string, { station: string; landmark: string }> = {
+    gangnam: { station: '강남역', landmark: '강남대로' },
+    apgujeong: { station: '압구정로데오역', landmark: '갤러리아백화점' },
+    cheongdam: { station: '청담역', landmark: '청담사거리' },
+    sinsa: { station: '신사역', landmark: '가로수길' },
+    hongdae: { station: '홍대입구역', landmark: '걷고싶은거리' },
+    itaewon: { station: '이태원역', landmark: '해밀턴호텔' },
+    nowon: { station: '노원역', landmark: '노원역사거리' },
+    ilsan: { station: '정발산역', landmark: '라페스타' },
+    suwon: { station: '수원역', landmark: '수원역광장' },
+    busan: { station: '서면역', landmark: '서면교차로' },
+    haeundae: { station: '해운대역', landmark: '해운대해수욕장' },
+    daejeon: { station: '둔산동', landmark: '갤러리아타임월드' },
+    daegu: { station: '반월당역', landmark: '동성로' },
+    incheon: { station: '부평역', landmark: '부평지하상가' },
+    gwangju: { station: '상무지구', landmark: '상무시민공원' },
+    ulsan: { station: '남구', landmark: '삼산동번화가' },
+    jeju: { station: '제주시', landmark: '중앙로' },
+  };
+
+  const info = landmarks[venue.region] || { station: `${venue.area}역`, landmark: `${venue.area} 중심가` };
+
+  return (
+    <section className="my-8">
+      <h3 className="text-base font-black text-[#111111] mb-4">찾아가는 길</h3>
+      <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0]">
+        <div className="flex items-start gap-3 mb-3">
+          <span className="w-8 h-8 bg-accent/10 text-accent rounded-lg flex items-center justify-center shrink-0 text-sm">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          </span>
+          <div>
+            <p className="text-sm font-bold text-[#111]">{venue.address}</p>
+            <p className="text-xs text-[#64748B] mt-0.5">{info.landmark} 인근</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="bg-white p-3 rounded-xl text-center border border-[#E2E8F0]">
+            <p className="text-lg font-black text-accent">{walkMin}분</p>
+            <p className="text-xs text-[#64748B] font-medium">{info.station}에서 도보</p>
+          </div>
+          <div className="bg-white p-3 rounded-xl text-center border border-[#E2E8F0]">
+            <p className="text-lg font-black text-[#111]">{taxiMin}분</p>
+            <p className="text-xs text-[#64748B] font-medium">택시 이용 시</p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 

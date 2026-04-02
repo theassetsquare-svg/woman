@@ -5,7 +5,7 @@ import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
-import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated, InsiderTip, AlsoVisited, haptic } from '../components/HookingWidgets';
+import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated, InsiderTip, AlsoVisited, haptic, BeforeAfter, TimeAttack, ReviewHighlight, SimpleMap } from '../components/HookingWidgets';
 import { useTrackVisit } from '../components/EngagementEngine';
 
 const MAIN = getMainLink();
@@ -190,8 +190,14 @@ export default function VenueDetailPage() {
         </div>
       </section>
 
-      {/* 스와이프 갤러리 */}
+      {/* 약도 + 거리 정보 */}
+      <SimpleMap venue={venue} />
+
+      {/* 스와이프 갤러리 (6장 + 한줄 스토리) */}
       <SwipeGallery venue={venue} />
+
+      {/* Time Attack — 지금 예약하면 N번째 */}
+      <TimeAttack venue={venue} />
 
       {/* [후킹2] 중간 끊기 */}
       <MidBreakHook />
@@ -266,6 +272,9 @@ export default function VenueDetailPage() {
             </div>
           </BlurLockSection>
 
+          {/* 첫 방문 vs 단골 */}
+          <BeforeAfter venue={venue} />
+
           {/* VS 투표 */}
           <VSVote venue={venue} />
 
@@ -335,13 +344,16 @@ export default function VenueDetailPage() {
             </div>
           </section>
 
+          {/* 직접 가본 손님의 한마디 */}
+          <ReviewHighlight venue={venue} />
+
           {/* [후킹14] 리뷰 작성 */}
           <WriteReviewHook />
 
           {/* [후킹15] 쿠폰 */}
           <CouponHook />
 
-          {/* "이 업소의 비밀" — 스크롤 80% */}
+          {/* 사장님만 아는 숨겨진 팁 — 스크롤 80% */}
           <SecretReveal venue={venue} />
 
           {/* Conclusion */}

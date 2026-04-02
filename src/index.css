@@ -64,8 +64,8 @@
   body {
     @apply bg-white text-text min-h-screen m-0;
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, sans-serif;
-    font-size: 17px;
-    line-height: 1.8;
+    font-size: 16px;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     max-width: 480px;
@@ -1099,40 +1099,40 @@
   border-color: var(--color-accent);
 }
 
-/* ===== MOBILE BOTTOM NAV ===== */
-.mobile-bottom-nav {
+/* ===== BOTTOM BARS: 전화 + 메인링크 ===== */
+.phone-bar {
+  position: fixed;
+  bottom: 48px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 44px;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #111;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+  z-index: 49;
+}
+.main-link-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  width: 100%;
+  height: 48px;
   max-width: 480px;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid var(--color-rosegold);
-  padding: 0.375rem 0 calc(0.375rem + env(safe-area-inset-bottom, 0));
-  box-shadow: 0 -2px 12px rgba(232, 180, 184, 0.1);
-}
-
-.mobile-bottom-tab {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  padding: 0.375rem 0.75rem;
-  color: var(--color-text-muted);
-  transition: color 0.2s ease;
-  min-width: 48px;
-  min-height: 48px;
-  justify-content: center;
-}
-.mobile-bottom-tab--active {
-  color: var(--color-accent);
+  background: #8B5CF6;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  z-index: 50;
 }
 
 /* ===== SCROLLBAR HIDE UTILITY ===== */
@@ -1147,39 +1147,22 @@
   body {
     max-width: 640px;
   }
-  /* PC: 하단 네비 숨기기 */
-  .mobile-bottom-nav {
-    display: none !important;
-  }
-  /* PC: 전화바 오른쪽 하단 고정 */
-  .phone-bar-fixed {
-    bottom: 24px !important;
-    right: 24px !important;
-    left: auto !important;
-    max-width: 280px !important;
-  }
   /* PC: 카드 그리드 2열 유지 */
   .venue-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
   }
-  /* PC: 하단 여백 줄이기 (네비 없으므로) */
-  main[role="main"] {
-    padding-bottom: 2rem !important;
-  }
-  /* PC: slide-up/scroll-banner 위치 조정 */
-  .slide-up-cta {
-    bottom: 0 !important;
-  }
-  .scroll-banner {
-    bottom: 70px !important;
+  /* PC: 하단바 max-width 유지 */
+  .phone-bar, .main-link-bar {
+    max-width: 640px;
   }
 }
 
 /* ===== MOBILE SAFE AREA ===== */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
-  .mobile-bottom-nav {
-    padding-bottom: calc(0.375rem + env(safe-area-inset-bottom));
+  .main-link-bar {
+    padding-bottom: env(safe-area-inset-bottom);
+    height: calc(48px + env(safe-area-inset-bottom));
   }
 }
 

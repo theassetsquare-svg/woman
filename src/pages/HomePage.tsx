@@ -5,7 +5,7 @@ import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
 import SearchBox from '../components/SearchBox';
-import { SlideUpCTA, ScrollBanner, Top10Hook, TodayRecommendHook, FullCompareHook, PullToRefresh } from '../components/HookingWidgets';
+import { Top10Hook, TodayRecommendHook, FullCompareHook, PullToRefresh } from '../components/HookingWidgets';
 import { EngagementSidebar, EndlessFeed } from '../components/EngagementEngine';
 
 export default function HomePage() {
@@ -267,9 +267,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Floating widgets */}
-      <SlideUpCTA />
-      <ScrollBanner />
     </div>
   );
 }

@@ -52,8 +52,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <CategoryTabs />
       </header>
 
-      {/* Main — 하단 네비 여백 확보 */}
-      <main className="flex-1 pb-24" role="main">{children}</main>
+      {/* Main — 하단 2줄 바 여백 확보 (44+48=92px) */}
+      <main className="flex-1 pb-[100px]" role="main">{children}</main>
 
       {/* 중독 엔진 글로벌 오버레이 */}
       <EngagementOverlay />
@@ -79,7 +79,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </section>
 
       {/* Footer */}
-      <footer className="site-footer text-white pb-16" role="contentinfo">
+      <footer className="site-footer text-white pb-[100px]" role="contentinfo">
         <div className="px-4 py-12">
           {/* 카테고리 링크 */}
           <div className="mb-8">
@@ -150,8 +150,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </footer>
 
-      {/* MobileNav 하단 고정 */}
-      <MobileNav />
+      {/* 하단 고정: 메인링크 바 */}
+      <a
+        href={MAIN}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="main-link-bar flex items-center justify-center"
+      >
+        놀쿨에서 더 보기 →
+      </a>
     </div>
   );
 }
@@ -193,40 +200,6 @@ function CategoryTabs() {
         </Link>
       ))}
     </div>
-  );
-}
-
-function MobileNav() {
-  const location = useLocation();
-
-  const tabs = [
-    { to: '/', label: '홈', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-    { to: '/venues', label: '전체', icon: 'M4 6h16M4 10h16M4 14h16M4 18h16' },
-    { to: '/gangnam', label: '강남', icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z' },
-    { to: '/busan', label: '부산', icon: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064' },
-    { to: '/gyeonggi', label: '경기', icon: 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7' },
-  ];
-
-  return (
-    <nav className="mobile-bottom-nav" aria-label="하단 네비게이션">
-      {tabs.map((tab) => {
-        const isActive = tab.to === '/' ? location.pathname === '/' : location.pathname.startsWith(tab.to);
-        return (
-          <Link
-            key={tab.to}
-            to={tab.to}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`mobile-bottom-tab ${isActive ? 'mobile-bottom-tab--active' : ''}`}
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
-            </svg>
-            <span className="text-[11px] font-semibold mt-0.5">{tab.label}</span>
-          </Link>
-        );
-      })}
-    </nav>
   );
 }
 

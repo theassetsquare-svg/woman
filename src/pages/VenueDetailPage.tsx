@@ -5,7 +5,7 @@ import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
-import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, SlideUpCTA, ScrollBanner, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated, InsiderTip, AlsoVisited, haptic } from '../components/HookingWidgets';
+import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated, InsiderTip, AlsoVisited, haptic } from '../components/HookingWidgets';
 import { useTrackVisit } from '../components/EngagementEngine';
 
 const MAIN = getMainLink();
@@ -421,24 +421,16 @@ export default function VenueDetailPage() {
         <p className="text-sm opacity-80">AI추천+리뷰 → 밤키 바로가기</p>
       </a>
 
-      {/* Fixed phone bar — 초록 + 가운데 400px */}
+      {/* 하단 고정: 전화번호 바 */}
       {venue.phone && venue.phone !== '별도문의' && (
-        <div className="fixed bottom-20 left-0 right-0 z-50 px-4 phone-bar-fixed">
-          <a
-            href={`tel:${venue.phone.replace(/-/g, '')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => haptic('medium')}
-            className="block max-w-[400px] mx-auto bg-[#22C55E] hover:bg-[#16A34A] text-white text-center py-3.5 rounded-xl shadow-2xl transition-colors font-bold text-base"
-          >
-            {venue.contact ? `${venue.contact}에게 전화 ${venue.phone}` : `전화하기 ${venue.phone}`}
-          </a>
-        </div>
+        <a
+          href={`tel:${venue.phone.replace(/-/g, '')}`}
+          onClick={() => haptic('medium')}
+          className="phone-bar flex items-center justify-center"
+        >
+          {venue.contact ? `${venue.contact} ${venue.phone}` : venue.phone}
+        </a>
       )}
-
-      {/* Floating widgets */}
-      <SlideUpCTA />
-      <ScrollBanner />
     </div>
   );
 }

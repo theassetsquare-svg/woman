@@ -132,11 +132,11 @@ let count = 0;
   let html = template;
   html = html.replace(
     /<meta property="og:image" content="[^"]*"/,
-    `<meta property="og:image" content="${BASE}/og/default.svg"`
+    `<meta property="og:image" content="${BASE}/og/default.jpg"`
   );
   html = html.replace(
     /<meta name="twitter:image" content="[^"]*"/,
-    `<meta name="twitter:image" content="${BASE}/og/default.svg"`
+    `<meta name="twitter:image" content="${BASE}/og/default.jpg"`
   );
   writeFileSync('dist/index.html', html);
   count++;
@@ -208,7 +208,7 @@ for (const cp of categoryPages) {
   writePage(cp.path, generateHTML({
     title, description: desc,
     canonical: `${BASE}${cp.path}`,
-    ogImage: `${BASE}/og/category-${cp.key}.svg`,
+    ogImage: `${BASE}/og/category-${cp.key}.jpg`,
     h1: `${cp.label} 전체보기`,
     introText: desc,
   }));
@@ -312,7 +312,7 @@ for (const v of venues) {
     '@type': 'NightClub',
     name: v.keyword,
     url: `${BASE}${v.path}`,
-    image: `${BASE}/og/${v.id}.svg`,
+    image: `${BASE}/og/${v.id}.jpg`,
   };
   if (v.phone && v.phone !== '별도문의') localBusiness.telephone = v.phone;
 
@@ -320,7 +320,7 @@ for (const v of venues) {
     title,
     description: desc,
     canonical: `${BASE}${v.path}`,
-    ogImage: `${BASE}/og/${v.id}.svg`,
+    ogImage: `${BASE}/og/${v.id}.jpg`,
     h1: v.keyword,
     introText: desc,
     jsonLd: [breadcrumb, localBusiness],

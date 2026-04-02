@@ -275,7 +275,7 @@ export default function HomePage() {
 function RouletteWidget() {
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<typeof venues[0] | null>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     return () => { clearTimeout(timerRef.current); };

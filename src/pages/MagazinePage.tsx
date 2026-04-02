@@ -36,7 +36,7 @@ export default function MagazinePage() {
     title: '매거진 — 밤문화 가이드 & 비교 분석',
     description:
       '강남 vs 홍대 비교, 나이트 초보 가이드, 룸과 요정 차이까지. 현장 기반 밤문화 매거진.',
-    image: '/og/default.svg',
+    image: '/og/default.jpg',
     url: '/magazine',
   });
 

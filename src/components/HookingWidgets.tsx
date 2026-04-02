@@ -514,7 +514,7 @@ export function SwipeGallery({ venue }: { venue: Venue }) {
         {labels.map((label, i) => (
           <div key={i} className="snap-center shrink-0 w-[85%] rounded-xl overflow-hidden relative">
             <img
-              src={`/og/${venue.id}.svg`}
+              src={`/og/${venue.id}.jpg`}
               alt={`${getVenueLabel(venue)} ${label}`}
               width={480}
               height={270}
@@ -745,7 +745,7 @@ export function InfiniteRelated({ venue }: { venue: Venue }) {
             className="flex items-center gap-3 p-3 bg-white border-2 border-rosegold rounded-xl hover:border-accent transition-colors"
           >
             <img
-              src={`/og/${v.id}.svg`}
+              src={`/og/${v.id}.jpg`}
               alt={getVenueLabel(v)}
               width={56}
               height={56}
@@ -840,7 +840,7 @@ export function AlsoVisited({ venue }: { venue: Venue }) {
             rel="noopener noreferrer"
             className="flex items-center gap-3 p-3 bg-white border-2 border-rosegold rounded-xl hover:border-accent transition-colors"
           >
-            <img src={`/og/${v.id}.svg`} alt={getVenueLabel(v)} width={48} height={48} loading="lazy" className="w-12 h-12 rounded-lg object-cover shrink-0" />
+            <img src={`/og/${v.id}.jpg`} alt={getVenueLabel(v)} width={48} height={48} loading="lazy" className="w-12 h-12 rounded-lg object-cover shrink-0" />
             <div className="min-w-0 flex-1">
               <p className="text-sm font-bold text-[#111111] truncate">{getVenueLabel(v)}</p>
               <p className="text-xs text-[#555555]">{v.area}</p>

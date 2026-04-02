@@ -86,7 +86,7 @@ export default function EventsPage() {
     title: '이벤트 캘린더 — 전국 밤문화 일정',
     description:
       '금요 나이트 피크타임, 토요 클럽 DJ 파티, 평일 이벤트까지. 전국 밤문화 일정을 한 번에.',
-    image: '/og/default.svg',
+    image: '/og/default.jpg',
     url: '/events',
   });
 

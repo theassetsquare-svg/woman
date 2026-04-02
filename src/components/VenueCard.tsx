@@ -20,7 +20,7 @@ export default function VenueCard({ venue }: { venue: Venue }) {
       {/* Thumbnail */}
       <div className="venue-card-thumb">
         <img
-          src={`/og/${venue.id}.svg`}
+          src={`/og/${venue.id}.jpg`}
           alt={label}
           width={480}
           height={270}

@@ -29,7 +29,7 @@ export default function CommunityPage() {
   useOgMeta({
     title: '커뮤니티 — 밤문화 후기·팁·파티모집',
     description: '전국 밤문화 솔직 후기, 꿀팁, 파티 모집. 진짜 경험한 사람들의 이야기.',
-    image: '/og/default.svg',
+    image: '/og/default.jpg',
     url: '/community',
   });
 

@@ -47,7 +47,7 @@ export default function RankingPage() {
     title: '인기 랭킹 TOP 20 — 전국 나이트·클럽·라운지',
     description:
       '전국 나이트, 클럽, 라운지, 룸, 요정 인기 랭킹 TOP 20. 실장 연결 가능 업소 우선 표시.',
-    image: '/og/default.svg',
+    image: '/og/default.jpg',
     url: '/ranking',
   });
 

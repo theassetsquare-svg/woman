@@ -9,6 +9,7 @@ interface OgMetaOptions {
   image: string;
   url: string;
   isHome?: boolean;
+  imageAlt?: string;
 }
 
 function setMeta(property: string, content: string) {
@@ -30,11 +31,12 @@ function setMeta(property: string, content: string) {
   }
 }
 
-export function useOgMeta({ title, description, image, url, isHome }: OgMetaOptions) {
+export function useOgMeta({ title, description, image, url, isHome, imageAlt }: OgMetaOptions) {
   useEffect(() => {
-    const resolvedImage = image || '/og/default.svg';
+    const resolvedImage = image || '/og/default.jpg';
     const absImage = `${BASE_URL}${resolvedImage}`;
     const absUrl = `${BASE_URL}${url}`;
+    const alt = imageAlt || title;
 
     // 홈페이지만 놀쿨 포함, 나머지는 가게이름 — 후킹제목만
     const raw = isHome ? `${title} | ${SITE_NAME}` : title;
@@ -46,12 +48,13 @@ export function useOgMeta({ title, description, image, url, isHome }: OgMetaOpti
     setMeta('og:title', pageTitle);
     setMeta('og:description', desc);
     setMeta('og:image', absImage);
+    setMeta('og:image:width', '1200');
+    setMeta('og:image:height', '630');
+    setMeta('og:image:type', 'image/jpeg');
+    setMeta('og:image:alt', alt);
     setMeta('og:url', absUrl);
     setMeta('og:type', 'website');
     setMeta('og:site_name', SITE_NAME);
-    setMeta('og:image:width', '1200');
-    setMeta('og:image:height', '1200');
-    setMeta('og:image:type', 'image/svg+xml');
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', pageTitle);
     setMeta('twitter:description', desc);
@@ -62,12 +65,13 @@ export function useOgMeta({ title, description, image, url, isHome }: OgMetaOpti
       setMeta('description', '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 비교해 보자');
       setMeta('og:title', `전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103 | ${SITE_NAME}`);
       setMeta('og:description', '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 비교해 보자');
-      setMeta('og:image', `${BASE_URL}/og/default.svg`);
+      setMeta('og:image', `${BASE_URL}/og/default.jpg`);
+      setMeta('og:image:alt', '놀쿨 NOLCOOL');
       setMeta('og:url', BASE_URL);
       setMeta('twitter:card', 'summary_large_image');
       setMeta('twitter:title', `전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103 | ${SITE_NAME}`);
       setMeta('twitter:description', '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 비교해 보자');
-      setMeta('twitter:image', `${BASE_URL}/og/default.svg`);
+      setMeta('twitter:image', `${BASE_URL}/og/default.jpg`);
     };
-  }, [title, description, image, url, isHome]);
+  }, [title, description, image, url, isHome, imageAlt]);
 }

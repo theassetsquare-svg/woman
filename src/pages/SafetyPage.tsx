@@ -6,7 +6,7 @@ export default function SafetyPage() {
   useOgMeta({
     title: '안전 가이드 — 음주 계산기·긴급 연락처·막차 정보',
     description: '즐거운 밤을 위한 안전 가이드. 음주 계산기, 긴급 연락처, 대리운전 번호까지.',
-    image: '/og/default.svg',
+    image: '/og/default.jpg',
     url: '/safety',
   });
 

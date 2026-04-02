@@ -23,8 +23,9 @@ export default function VenueDetailPage() {
       ? {
           title: `${venueLabel} — ${hook}`,
           description: seoDesc || venue.description,
-          image: `/og/${venue.id}.svg`,
+          image: `/og/${venue.id}.jpg`,
           url: venuePath(venue),
+          imageAlt: venueLabel,
         }
       : { title: '업소를 찾을 수 없습니다', description: '', image: '', url: '' }
   );
@@ -91,7 +92,7 @@ export default function VenueDetailPage() {
       '@type': 'NightClub',
       name: venueLabel,
       url: `${BASE}${venuePath(venue)}`,
-      image: `${BASE}/og/${venue.id}.svg`,
+      image: `${BASE}/og/${venue.id}.jpg`,
       address: venue.address,
     };
     if (venue.phone && venue.phone !== '별도문의') localBusiness.telephone = venue.phone;
@@ -125,7 +126,7 @@ export default function VenueDetailPage() {
       <section className="mb-8 animate-fade-in-up">
         <div className="detail-hero-img mb-6">
           <img
-            src={`/og/${venue.id}.svg`}
+            src={`/og/${venue.id}.jpg`}
             alt={venueLabel}
             width={1200}
             height={630}
@@ -231,7 +232,7 @@ export default function VenueDetailPage() {
           {/* 본문 이미지 1 — intro 아래 */}
           <div className="my-4">
             <img
-              src={`/og/${venue.id}.svg`}
+              src={`/og/${venue.id}.jpg`}
               alt="현장 분위기"
               width={480}
               height={270}
@@ -250,7 +251,7 @@ export default function VenueDetailPage() {
               {i === 1 && (
                 <div className="my-4">
                   <img
-                    src={`/og/${venue.id}.svg`}
+                    src={`/og/${venue.id}.jpg`}
                     alt="내부 공간"
                     width={480}
                     height={270}
@@ -295,7 +296,7 @@ export default function VenueDetailPage() {
           {/* 본문 이미지 3 — 나머지 섹션 후 */}
           <div className="my-4">
             <img
-              src={`/og/${venue.id}.svg`}
+              src={`/og/${venue.id}.jpg`}
               alt="위치 및 접근성"
               width={480}
               height={270}

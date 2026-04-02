@@ -27,7 +27,7 @@ export default function MapPage() {
     title: '지역별 업소 찾기 — 전국 나이트·클럽·라운지',
     description:
       '지역을 선택하면 해당 지역의 나이트, 클럽, 라운지, 룸, 요정 업소를 바로 확인된다.',
-    image: '/og/default.svg',
+    image: '/og/default.jpg',
     url: '/map',
   });
 

@@ -122,7 +122,7 @@ export default function CategoryPage() {
 
   useOgMeta(
     cat
-      ? { title: cat.title, description: cat.desc, image: `/og/category-${catKey}.svg`, url: `/${cat.plural}` }
+      ? { title: cat.title, description: cat.desc, image: `/og/category-${catKey}.jpg`, url: `/${cat.plural}` }
       : { title: '카테고리를 찾을 수 없습니다', description: '', image: '', url: '' }
   );
 

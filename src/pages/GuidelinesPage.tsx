@@ -5,7 +5,7 @@ export default function GuidelinesPage() {
   useOgMeta({
     title: '커뮤니티 가이드라인 — 건강한 밤문화 이야기',
     description: '서로 존중하는 커뮤니티를 위한 가이드라인. 욕설·허위정보·불법광고는 삭제됩니다.',
-    image: '/og/default.svg',
+    image: '/og/default.jpg',
     url: '/community/guidelines',
   });
 

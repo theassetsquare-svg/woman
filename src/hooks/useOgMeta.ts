@@ -37,22 +37,24 @@ export function useOgMeta({ title, description, image, url, isHome }: OgMetaOpti
     const absUrl = `${BASE_URL}${url}`;
 
     // 홈페이지만 놀쿨 포함, 나머지는 가게이름 — 후킹제목만
-    const pageTitle = isHome ? `${title} | ${SITE_NAME}` : title;
+    const raw = isHome ? `${title} | ${SITE_NAME}` : title;
+    const pageTitle = raw.length > 60 ? raw.slice(0, 57) + '…' : raw;
+    const desc = description.length > 150 ? description.slice(0, 147) + '…' : description;
 
     document.title = pageTitle;
-    setMeta('description', description);
+    setMeta('description', desc);
     setMeta('og:title', pageTitle);
-    setMeta('og:description', description);
+    setMeta('og:description', desc);
     setMeta('og:image', absImage);
     setMeta('og:url', absUrl);
     setMeta('og:type', 'website');
     setMeta('og:site_name', SITE_NAME);
     setMeta('og:image:width', '1200');
-    setMeta('og:image:height', '630');
+    setMeta('og:image:height', '1200');
     setMeta('og:image:type', 'image/svg+xml');
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', pageTitle);
-    setMeta('twitter:description', description);
+    setMeta('twitter:description', desc);
     setMeta('twitter:image', absImage);
 
     return () => {

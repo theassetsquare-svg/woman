@@ -172,7 +172,7 @@ export default function VenueDetailPage() {
 
       {/* Detail Info */}
       <section className="content-section">
-        <h2 className="text-lg">상세 정보</h2>
+        <h2 className="text-lg">{venueLabel} 상세 정보</h2>
         <p className="text-[#1e293b] text-sm leading-relaxed mb-4">{venue.description}</p>
 
         <div className="space-y-2 mb-4">
@@ -201,7 +201,7 @@ export default function VenueDetailPage() {
         <>
           {/* Summary */}
           <section className="content-section">
-            <h2 className="text-lg">핵심 정리</h2>
+            <h2 className="text-lg">{venueLabel} 핵심 요약</h2>
             <div className="summary-box">
               <ul className="space-y-2.5">
                 {venueContent.summary.map((item, i) => (
@@ -327,7 +327,7 @@ export default function VenueDetailPage() {
 
           {/* FAQ */}
           <section className="content-section">
-            <h2 className="text-lg">자주 묻는 질문</h2>
+            <h2 className="text-lg">{venueLabel} FAQ</h2>
             <div className="space-y-2.5">
               {venueContent.faq.map((item, i) => (
                 <FaqItem key={i} q={item.q} a={item.a} />

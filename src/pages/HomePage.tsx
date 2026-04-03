@@ -170,7 +170,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* AI 추천 티저 → 밤키 */}
+      {/* AI 추천 티저 → 놀쿨 */}
       <section className="px-4 py-2">
         <TodayRecommendHook />
       </section>
@@ -214,7 +214,7 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* 103개 전체 비교 → 밤키 */}
+      {/* 103개 전체 비교 → 놀쿨 */}
       <section className="px-4 py-2">
         <FullCompareHook />
       </section>

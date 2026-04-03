@@ -76,7 +76,7 @@ export default function CommunityPage() {
         </div>
       </section>
 
-      {/* 글쓰기 → 밤키 유입 */}
+      {/* 글쓰기 → 놀쿨 유입 */}
       <section className="mb-8">
         <a
           href={MAIN}
@@ -85,7 +85,7 @@ export default function CommunityPage() {
           className="main-hook-banner block text-center"
         >
           <p className="font-black text-base mb-1">글쓰기 · 댓글 · 좋아요</p>
-          <p className="text-sm opacity-80">밤키에서 참여하기 →</p>
+          <p className="text-sm opacity-80">놀쿨에서 참여하기 →</p>
         </a>
       </section>
 

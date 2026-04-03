@@ -142,7 +142,7 @@ export default function RegionPage() {
         className="footer-mega-cta block mt-10"
       >
         <p className="text-lg font-black mb-1">103개 전체 업소 비교+랭킹</p>
-        <p className="text-sm opacity-80">밤키에서 확인 →</p>
+        <p className="text-sm opacity-80">놀쿨에서 확인 →</p>
       </a>
 
       {/* Note */}

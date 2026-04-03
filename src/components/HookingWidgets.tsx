@@ -121,7 +121,7 @@ export function SlideUpCTA() {
             더 많은 정보가 기다리고 있습니다
           </p>
           <p className="text-sm opacity-80">
-            밤키 바로가기 →
+            놀쿨 바로가기 →
           </p>
         </a>
       </div>
@@ -170,7 +170,7 @@ export function ScrollBanner() {
             여기서 끝이 아닙니다!
           </p>
           <p className="text-sm opacity-80">
-            밤키에서 제대로 된 밤 시작 →
+            놀쿨에서 제대로 된 밤 시작 →
           </p>
         </a>
       </div>
@@ -190,7 +190,7 @@ export function MidBreakHook() {
       className="main-hook-banner block my-8"
     >
       <p className="font-black text-base mb-1">전체 리뷰 93개 + 실시간 순위</p>
-      <p className="text-sm opacity-80">밤키에서 확인 →</p>
+      <p className="text-sm opacity-80">놀쿨에서 확인 →</p>
     </a>
   );
 }
@@ -207,7 +207,7 @@ export function SimilarHook() {
       className="main-hook-banner block my-6"
     >
       <p className="font-black text-base mb-1">이 업소와 비슷한 곳 5개 더 보기</p>
-      <p className="text-sm opacity-80">밤키에서 전체 비교 →</p>
+      <p className="text-sm opacity-80">놀쿨에서 전체 비교 →</p>
     </a>
   );
 }
@@ -224,7 +224,7 @@ export function AIRecommendHook() {
       className="main-hook-banner block my-6"
     >
       <p className="font-black text-base mb-1">AI가 당신에게 맞는 업소를 추천합니다</p>
-      <p className="text-sm opacity-80">밤키에서 무료 체험 →</p>
+      <p className="text-sm opacity-80">놀쿨에서 무료 체험 →</p>
     </a>
   );
 }
@@ -241,7 +241,7 @@ export function FullCompareHook() {
       className="main-hook-banner block my-6"
     >
       <p className="font-black text-base mb-1">103개 전체 업소 비교+랭킹</p>
-      <p className="text-sm opacity-80">밤키에서 한 번에 →</p>
+      <p className="text-sm opacity-80">놀쿨에서 한 번에 →</p>
     </a>
   );
 }
@@ -263,7 +263,7 @@ export function BlurLockSection({ children }: { children: React.ReactNode }) {
       >
         <p className="text-lg font-black text-[#111111] mb-2">전체 리뷰+평점 보기</p>
         <span className="btn-main-hook text-sm px-4 py-2">
-          밤키에서 무료 확인 →
+          놀쿨에서 무료 확인 →
         </span>
       </a>
     </div>
@@ -282,7 +282,7 @@ export function CompareHook() {
       className="block my-6 p-4 bg-surface-warm border-2 border-rosegold rounded-2xl text-center hover:border-accent transition-colors"
     >
       <p className="text-base font-bold text-[#111111] mb-1">이 업소 vs 다른 업소 비교하기</p>
-      <p className="text-sm text-accent font-semibold">밤키에서만 가능 →</p>
+      <p className="text-sm text-accent font-semibold">놀쿨에서만 가능 →</p>
     </a>
   );
 }
@@ -329,7 +329,7 @@ export function TodayRecommendHook() {
       className="main-hook-banner block my-6"
     >
       <p className="font-black text-base mb-1">오늘 당신에게 맞는 곳은?</p>
-      <p className="text-sm opacity-80">밤키에서 AI 추천 받기 →</p>
+      <p className="text-sm opacity-80">놀쿨에서 AI 추천 받기 →</p>
     </a>
   );
 }
@@ -346,7 +346,7 @@ export function WriteReviewHook() {
       className="block my-4 p-4 bg-surface-warm border-2 border-rosegold rounded-2xl text-center hover:border-accent transition-colors"
     >
       <p className="text-base font-bold text-[#111111] mb-1">나도 리뷰 쓰기</p>
-      <p className="text-sm text-accent font-semibold">밤키에서 작성 →</p>
+      <p className="text-sm text-accent font-semibold">놀쿨에서 작성 →</p>
     </a>
   );
 }
@@ -363,7 +363,7 @@ export function CouponHook() {
       className="block my-4 p-4 bg-gradient-to-r from-surface-warm to-[#FCE7F3] border-2 border-rosegold rounded-2xl text-center hover:border-accent transition-colors"
     >
       <p className="text-base font-bold text-[#111111] mb-1">이 업소 할인 쿠폰 받기</p>
-      <p className="text-sm text-accent font-semibold">밤키 회원 전용 →</p>
+      <p className="text-sm text-accent font-semibold">놀쿨 회원 전용 →</p>
     </a>
   );
 }
@@ -391,7 +391,7 @@ export function Top10Hook({ items }: { items: { rank: number; name: string }[] }
         rel="noopener noreferrer"
         className="main-hook-banner block mt-4"
       >
-        <p className="font-bold text-sm">4위~10위 전체 보기 → 밤키</p>
+        <p className="font-bold text-sm">4위~10위 전체 보기 → 놀쿨</p>
       </a>
     </div>
   );

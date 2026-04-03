@@ -431,7 +431,7 @@ export default function VenueDetailPage() {
         className="footer-mega-cta block mb-8"
       >
         <p className="text-lg font-black mb-1">103개 전체 업소 실시간 순위</p>
-        <p className="text-sm opacity-80">AI추천+리뷰 → 밤키 바로가기</p>
+        <p className="text-sm opacity-80">AI추천+리뷰 → 놀쿨 바로가기</p>
       </a>
 
       {/* 하단 고정: 전화번호 바 */}

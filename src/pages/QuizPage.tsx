@@ -126,7 +126,7 @@ export default function QuizPage() {
             <button onClick={restart} className="btn-secondary text-sm">다시 하기</button>
             <a href={MAIN} target="_blank" rel="noopener noreferrer" className="main-hook-banner block">
               <p className="font-black text-base mb-1">AI가 더 정확하게 추천</p>
-              <p className="text-sm opacity-80">밤키에서 확인 →</p>
+              <p className="text-sm opacity-80">놀쿨에서 확인 →</p>
             </a>
           </div>
         </div>

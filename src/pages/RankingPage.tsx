@@ -149,7 +149,7 @@ export default function RankingPage() {
           className="main-hook-banner inline-block text-center px-6 py-3"
         >
           <p className="font-black text-base mb-1">실제 리뷰 데이터 기반 랭킹</p>
-          <p className="text-sm opacity-80">밤키에서 확인 →</p>
+          <p className="text-sm opacity-80">놀쿨에서 확인 →</p>
         </a>
       </div>
     </div>

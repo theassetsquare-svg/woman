@@ -28,7 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         rel="noopener noreferrer"
         className="top-banner block"
       >
-        고급 정보+실시간 예약은 ★밤키★에서 →
+        고급 정보+실시간 예약은 ★놀쿨★에서 →
       </a>
 
       {/* Header */}
@@ -70,10 +70,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             103개 업소 실시간 순위
           </p>
           <p className="text-base font-bold opacity-90 mb-4">
-            AI추천 + 리뷰 + 비교 — 밤키 바로가기
+            AI추천 + 리뷰 + 비교 — 놀쿨 바로가기
           </p>
           <span className="inline-block bg-white text-[#7C3AED] font-extrabold px-6 py-2.5 rounded-xl text-sm">
-            밤키에서 제대로 된 밤 시작하기 →
+            놀쿨에서 제대로 된 밤 시작하기 →
           </span>
         </a>
       </section>
@@ -131,7 +131,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   rel="noopener noreferrer"
                   className="text-sm text-rosegold hover:text-white font-bold transition-colors"
                 >
-                  밤키 메인 바로가기 →
+                  놀쿨 메인 바로가기 →
                 </a>
               </div>
             </div>

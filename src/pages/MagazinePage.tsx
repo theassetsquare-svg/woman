@@ -88,7 +88,7 @@ export default function MagazinePage() {
           rel="noopener noreferrer"
           className="main-hook-banner inline-block text-center px-6 py-3"
         >
-          <p className="font-black text-base mb-1">밤키에서 더 보기</p>
+          <p className="font-black text-base mb-1">놀쿨에서 더 보기</p>
           <p className="text-sm opacity-80">더 많은 매거진 콘텐츠 →</p>
         </a>
       </div>

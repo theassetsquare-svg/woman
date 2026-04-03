@@ -141,7 +141,7 @@ export default function MapPage() {
           rel="noopener noreferrer"
           className="main-hook-banner inline-block text-center px-6 py-3"
         >
-          <p className="font-black text-base mb-1">밤키에서 더 보기</p>
+          <p className="font-black text-base mb-1">놀쿨에서 더 보기</p>
           <p className="text-sm opacity-80">전국 업소 정보 한 번에 →</p>
         </a>
       </div>

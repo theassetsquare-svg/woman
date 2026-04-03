@@ -214,8 +214,8 @@ export default function EventsPage() {
           rel="noopener noreferrer"
           className="main-hook-banner inline-block text-center px-6 py-3"
         >
-          <p className="font-black text-base mb-1">이벤트 등록은 밤키에서</p>
-          <p className="text-sm opacity-80">밤키에서 더 보기 →</p>
+          <p className="font-black text-base mb-1">이벤트 등록은 놀쿨에서</p>
+          <p className="text-sm opacity-80">놀쿨에서 더 보기 →</p>
         </a>
       </div>
     </div>

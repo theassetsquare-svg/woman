@@ -13,6 +13,7 @@ export function useCanonical() {
 
     // Update canonical
     let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    const created = !link;
     if (link) {
       link.href = url;
     } else {
@@ -25,5 +26,9 @@ export function useCanonical() {
     // Update og:url
     const ogUrl = document.querySelector<HTMLMetaElement>('meta[property="og:url"]');
     if (ogUrl) ogUrl.content = url;
+
+    return () => {
+      if (created && link) link.remove();
+    };
   }, [pathname]);
 }

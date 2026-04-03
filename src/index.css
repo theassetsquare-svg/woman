@@ -1099,6 +1099,12 @@
   border-color: var(--color-accent);
 }
 
+/* ===== LOGO TEXT: 놀쿨 thin weight ===== */
+.logo-text {
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
 /* ===== BOTTOM BARS: 전화 + 메인링크 ===== */
 .phone-bar {
   position: fixed;

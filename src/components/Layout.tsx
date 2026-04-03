@@ -139,13 +139,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           {/* 놀쿨 브랜드 */}
           <div className="text-center py-6 mb-4">
-            <p className="text-xl font-black text-white mb-2">놀쿨 NOLCOOL</p>
-            <p className="text-sm text-slate-400 mb-4">구글·AI에서 놀쿨을 검색하세요</p>
+            <p className="text-xl text-white mb-2"><span className="logo-text">놀쿨</span> <span className="font-black">NOLCOOL</span></p>
+            <p className="text-sm text-slate-400 mb-4">구글·AI에서 <span className="logo-text">놀쿨</span>을 검색하세요</p>
             <p className="text-base font-bold text-rosegold">광고문의 카톡 besta12</p>
           </div>
 
           <div className="border-t border-white/10 pt-5 text-center text-xs text-slate-600">
-            &copy; {year} 놀쿨 NOLCOOL. 정보는 참고용이며, 정확한 정보는 각 업소에 직접 확인하시기 바랍니다.
+            &copy; {year} <span className="logo-text">놀쿨</span> NOLCOOL. 정보는 참고용이며, 정확한 정보는 각 업소에 직접 확인하시기 바랍니다.
           </div>
         </div>
       </footer>
@@ -157,7 +157,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         rel="noopener noreferrer"
         className="main-link-bar flex items-center justify-center"
       >
-        놀쿨에서 더 보기 →
+        <span className="logo-text">놀쿨</span>에서 더 보기 →
       </a>
     </div>
   );

@@ -6,6 +6,15 @@ import { venuePath } from '../utils/slug';
 
 const MAIN = getMainLink();
 
+/** Deterministic hash from string → stable number per venue */
+function hashSeed(str: string): number {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h);
+}
+
 /**
  * 스크롤 진행률 바 — 상단 고정
  */
@@ -645,8 +654,21 @@ export function InlineQuiz({ venue }: { venue: Venue }) {
 }
 
 /**
- * "이 업소의 비밀" — 스크롤 80%에서 공개
+ * "이 업소의 비밀" — 스크롤 80%에서 공개 (per-venue unique)
  */
+function generateSecret(venue: Venue): { title: string; body: string } {
+  const label = getVenueLabel(venue);
+  const area = venue.area;
+  const contact = venue.contact || '담당 실장';
+  const s = hashSeed(venue.id);
+  const variant = s % 5;
+  if (variant === 0) return { title: `${label} ${contact}에게 "단골이에요"라고 말하면`, body: `${area} 현장에서 입장 순서와 자리 배치가 확연히 달라진다. ${label} 방문 전 전화로 이름을 남겨두면 ${contact}이 직접 안내한다.` };
+  if (variant === 1) return { title: `${label} 평일 PM 10 이전에 도착하면`, body: `${area}의 주말 대비 30% 이상 여유로운 공간에서 ${label} 원하는 자리를 골라 앉을 수 있다. 피크 전이 진짜 찬스다.` };
+  if (variant === 2) return { title: `${label}에서 ${contact}에게 "추천 부탁"이라고 하면`, body: `그날 컨디션이 가장 좋은 테이블과 최적의 타이밍을 안내받을 수 있다. ${label} 현장의 숨겨진 명당은 ${contact}만 안다.` };
+  if (variant === 3) return { title: `${label} 재방문 시 같은 ${contact}을 찾으면`, body: `첫 방문 때와는 차원이 다른 응대를 경험할 수 있다. ${label}의 ${contact}은 취향을 기억하고 맞춰준다.` };
+  return { title: `${label} 금요일 밤 11시가 넘으면`, body: `${area} 현장 분위기 최고조 타이밍이다. ${label} 자리는 10시 전에 확보해야 한다. ${contact}에게 미리 연락하면 유리하다.` };
+}
+
 export function SecretReveal({ venue }: { venue: Venue }) {
   const [revealed, setRevealed] = useState(false);
   const [show, setShow] = useState(false);
@@ -663,14 +685,7 @@ export function SecretReveal({ venue }: { venue: Venue }) {
 
   if (!show) return null;
 
-  const secrets = [
-    { title: '실장에게 "단골이에요"라고 말하면', body: '입장 순서와 자리 배치가 확연히 달라진다. 사전에 전화로 이름을 남겨두면 더 효과적이다.' },
-    { title: '평일 PM 10 이전에 도착하면', body: '주말 대비 30% 이상 여유로운 공간에서 원하는 자리를 골라 앉을 수 있다.' },
-    { title: '실장에게 "추천 부탁"이라고 하면', body: '그날 컨디션이 가장 좋은 테이블과 최적의 타이밍을 안내받을 수 있다.' },
-    { title: '재방문 시 같은 실장을 찾으면', body: '첫 방문 때와는 차원이 다른 응대를 경험할 수 있다. 취향을 기억하고 맞춰준다.' },
-    { title: '금요일 밤 11시가 넘으면', body: '분위기 최고조 타이밍이다. 이 시간대를 노리되 자리는 10시 전에 확보해야 한다.' },
-  ];
-  const sec = secrets[venue.id.length % secrets.length];
+  const sec = generateSecret(venue);
 
   return (
     <section className="my-8 animate-fade-in-up">
@@ -770,8 +785,22 @@ export function InfiniteRelated({ venue }: { venue: Venue }) {
 }
 
 /**
- * 인사이더 팁 — 스크롤 70%에서 노출
+ * 인사이더 팁 — 스크롤 70%에서 노출 (per-venue unique)
  */
+function generateInsiderTip(venue: Venue): string {
+  const label = getVenueLabel(venue);
+  const area = venue.area;
+  const contact = venue.contact || '담당 실장';
+  const s = hashSeed(venue.id);
+  const variant = s % 6;
+  if (variant === 0) return `${label} 방문 시 ${area}에서는 금요일 PM 10시 전에 도착하는 게 핵심이다. 그 이후로는 ${label} 앞에 대기가 생긴다.`;
+  if (variant === 1) return `${label}에서 ${contact} 이름을 대면 자리 배정이 달라진다. ${label} 전화 예약 시 꼭 언급하자.`;
+  if (variant === 2) return `${label} 첫 방문이면 평일을 추천한다. ${area} 주말보다 여유롭고 ${label} 스태프 응대도 더 좋다.`;
+  if (variant === 3) return `${label} 주차는 ${area} 근처 공영주차장을 이용하자. ${label} 방문 시 대리운전보다 택시가 편하다.`;
+  if (variant === 4) return `${label}에서 2차로 가려면 ${area} 주변 먹자골목을 체크해두면 동선이 편하다. ${label} 단골들의 루트다.`;
+  return `${label} 방문 후 SNS에 올리면 서비스 주는 경우도 있다. ${label}의 ${contact}에게 물어볼 가치가 있다.`;
+}
+
 export function InsiderTip({ venue }: { venue: Venue }) {
   const [show, setShow] = useState(false);
 
@@ -787,15 +816,7 @@ export function InsiderTip({ venue }: { venue: Venue }) {
 
   if (!show) return null;
 
-  const tips = [
-    `${venue.area}에서는 금요일 PM 10시 전에 도착하는 게 핵심이다. 그 이후로는 대기가 생긴다.`,
-    `실장 이름을 대면 자리 배정이 달라진다. 전화 예약 시 꼭 언급하자.`,
-    `첫 방문이면 평일을 추천한다. 주말보다 여유롭고 스태프 응대도 더 좋다.`,
-    `주차는 근처 공영주차장을 이용하자. 대리운전보다 택시가 낫다.`,
-    `2차로 가려면 ${venue.area} 주변 포차거리를 체크해두면 동선이 편하다.`,
-    `SNS에 올리면 서비스 주는 곳도 있다. 물어볼 가치가 있다.`,
-  ];
-  const tip = tips[(venue.id.length * 3) % tips.length];
+  const tip = generateInsiderTip(venue);
 
   return (
     <section className="my-6 animate-fade-in-up">
@@ -941,32 +962,35 @@ export function BottomSheet({ open, onClose, children }: { open: boolean; onClos
 }
 
 /**
- * Before/After — 첫 방문 vs 단골의 차이
+ * Before/After — 첫 방문 vs 단골의 차이 (per-venue unique)
  */
+function generateBeforeAfter(venue: Venue): { first: string[]; regular: string[] } {
+  const label = getVenueLabel(venue);
+  const contact = venue.contact || '담당 실장';
+  const cat = venue.category || 'night';
+  if (cat === 'club') return {
+    first: [`${label} 입장줄에서 대기한다`, '플로어 한쪽에 서 있는다', '음료 뭘 시킬지 모른다', '새벽 2시에 지쳐 나간다'],
+    regular: [`${label}은 예약으로 바로 입장`, `${contact}이 DJ 부스 앞 자리를 잡아준다`, '바텐더에게 시그니처를 요청한다', `${label} 피크 타임을 알고 즐긴다`],
+  };
+  if (cat === 'room') return {
+    first: [`${label}에서 아무 룸이나 배정받는다`, '세팅 시간이 걸린다', '메뉴를 처음부터 고른다', '마무리가 어색하다'],
+    regular: [`${label} 선호 룸을 지정받는다`, `${contact}이 도착 전 세팅 완료`, `${label} 추천 코스로 시작`, '자연스럽게 마무리된다'],
+  };
+  if (cat === 'hoppa') return {
+    first: [`${label}에서 호스트를 고르기 어렵다`, '분위기 파악에 시간이 걸린다', '진행 방식이 낯설다'],
+    regular: [`${label} ${contact}이 선호 스타일 파악`, '도착하면 바로 분위기가 올라간다', `${label}에서 내 템포에 맞춰 진행`],
+  };
+  // night / lounge / yojeong
+  return {
+    first: [`${label} 입구에서 잠깐 헤맨다`, '아무 자리에 앉는다', '메뉴판 보고 고민한다', '마감 시간을 모른다'],
+    regular: [`${label}의 ${contact}이 먼저 알아본다`, '선호 자리가 준비돼 있다', `${label} 시그니처를 바로 주문한다`, '분위기 절정 타이밍을 안다'],
+  };
+}
+
 export function BeforeAfter({ venue }: { venue: Venue }) {
   const [flipped, setFlipped] = useState(false);
-  const cat = venue.category || 'night';
 
-  const data: Record<string, { first: string[]; regular: string[] }> = {
-    night: {
-      first: ['입구에서 잠깐 헤맨다', '아무 자리에 앉는다', '메뉴판 보고 고민한다', '마감 시간을 모른다'],
-      regular: ['실장이 먼저 알아본다', '선호 자리가 준비돼 있다', '시그니처를 바로 주문한다', '분위기 절정 타이밍을 안다'],
-    },
-    club: {
-      first: ['입장줄에서 30분 대기한다', '플로어 한쪽에 서 있는다', '음료 뭘 시킬지 모른다', '새벽 2시에 지쳐 나간다'],
-      regular: ['예약으로 바로 입장한다', 'DJ 부스 앞 자리를 잡는다', '바텐더에게 시그니처를 요청한다', '피크 타임을 알고 즐긴다'],
-    },
-    room: {
-      first: ['아무 룸이나 배정받는다', '세팅 시간이 걸린다', '메뉴를 처음부터 고른다', '마무리가 어색하다'],
-      regular: ['선호 룸을 지정받는다', '도착 전 세팅 완료', '실장 추천 코스로 시작', '자연스럽게 마무리된다'],
-    },
-    hoppa: {
-      first: ['어떤 호스트를 골라야 할지 모른다', '분위기 파악에 시간이 걸린다', '진행 방식이 낯설다'],
-      regular: ['선호 스타일을 실장이 파악한다', '도착하면 바로 분위기가 올라간다', '내 템포에 맞춰 진행된다'],
-    },
-  };
-
-  const d = data[cat] || data.night;
+  const d = generateBeforeAfter(venue);
 
   return (
     <section className="my-8">
@@ -1046,51 +1070,49 @@ export function TimeAttack({ venue }: { venue: Venue }) {
 }
 
 /**
- * Review Highlight — 직접 가본 손님의 한마디
+ * Review Highlight — 직접 가본 손님의 한마디 (per-venue unique)
  */
-export function ReviewHighlight({ venue }: { venue: Venue }) {
+function generateReviews(venue: Venue): { text: string; tag: string }[] {
+  const label = getVenueLabel(venue);
+  const contact = venue.contact || '담당 실장';
+  const area = venue.area;
+  const s = hashSeed(venue.id);
   const cat = venue.category || 'night';
 
-  const reviewPool: Record<string, string[][]> = {
-    night: [
-      ['사운드가 진짜 다르다. 귀가 아닌 몸으로 듣는 느낌.', '주말 첫 방문', '분위기 파악하고 바로 단골 결정했다.', '평일 3회차'],
-      ['실장님 추천 자리가 진짜 명당이었다.', '금요일 방문', '처음 갔는데 혼자 가도 어색하지 않았다.', '일요일 방문'],
-      ['평일에 가면 주말의 반값 느낌이다.', '수요일 방문', '자정 넘어서부터 진짜 분위기가 살아난다.', '토요일 3시'],
-    ],
-    club: [
-      ['DJ 라인업 확인하고 갔는데 기대 이상이었다.', '금요 피크', '입장 심사 통과하면 그 자체로 기분 좋다.', '토요일 방문'],
-      ['바 카운터에서 한 잔 하면서 분위기 읽는 게 정석이다.', '평일 방문', '새벽 3시 애프터가 진짜 본게임이다.', '토요 심야'],
-      ['테이블 예약하고 가니까 대기 시간 제로였다.', '그룹 방문', '스탠딩보다 테이블이 체력 관리에 좋다.', '4인 방문'],
-    ],
-    room: [
-      ['룸 독립성이 좋아서 대화에 집중할 수 있었다.', '접대 자리', '실장님이 취향 기억하고 맞춰준다.', '3회차 방문'],
-      ['사전 연락했더니 도착하니까 세팅 끝나 있었다.', '예약 방문', '룸마다 분위기가 달라서 매번 새롭다.', '단골 후기'],
-      ['인원에 맞는 룸 추천받았는데 딱 맞았다.', '6인 모임', '조명 조절 가능해서 분위기 만들기 좋다.', '소모임'],
-    ],
-    hoppa: [
-      ['첫 방문인데 실장님이 잘 안내해줬다.', '첫 방문', '호스트 매너가 진짜 좋았다.', '재방문'],
-      ['선호 스타일 말하니까 딱 맞는 분 배정해줬다.', '2회차', '부담 없는 분위기라 편하게 즐겼다.', '평일 방문'],
-      ['혼자 갔는데 전혀 어색하지 않았다.', '솔로 방문', '시간 가는 줄 몰랐다. 다음에 또 간다.', '주말 방문'],
-    ],
-  };
+  const templates: { text: string; tag: string }[][] = cat === 'club' ? [
+    [{ text: `${label} DJ 라인업 확인하고 갔는데 기대 이상이었다.`, tag: `${area} 금요 피크` }, { text: `${label} 입장 분위기부터 다르다. 한번 오면 또 오게 된다.`, tag: `${label} 토요일` }],
+    [{ text: `${label} 바 카운터에서 한 잔 하면서 분위기 읽는 게 정석이다.`, tag: `${label} 평일` }, { text: `새벽 3시 ${label} 애프터가 진짜 본게임이다.`, tag: `${area} 심야` }],
+    [{ text: `${label} 테이블 예약하고 가니까 대기 시간 제로였다.`, tag: `${label} 그룹` }, { text: `${label}은 스탠딩보다 테이블이 체력 관리에 좋다.`, tag: `${area} 4인` }],
+  ] : cat === 'room' ? [
+    [{ text: `${label} 룸 독립성이 좋아서 대화에 집중할 수 있었다.`, tag: `${label} 접대` }, { text: `${contact} 실장님이 취향 기억하고 맞춰준다.`, tag: `${label} 3회차` }],
+    [{ text: `${label} 사전 연락했더니 세팅 끝나 있었다.`, tag: `${label} 예약` }, { text: `${label} 룸마다 분위기가 달라서 매번 새롭다.`, tag: `${area} 단골` }],
+    [{ text: `${label} 인원에 맞는 룸 추천받았는데 딱 맞았다.`, tag: `${label} 6인` }, { text: `${label} 조명 조절 가능해서 분위기 만들기 좋다.`, tag: `${area} 소모임` }],
+  ] : cat === 'hoppa' ? [
+    [{ text: `${label} 첫 방문인데 ${contact}이 잘 안내해줬다.`, tag: `${label} 첫 방문` }, { text: `${label} 호스트 매너가 진짜 좋았다.`, tag: `${area} 재방문` }],
+    [{ text: `${label}에서 선호 스타일 말하니까 딱 맞는 분 배정해줬다.`, tag: `${label} 2회차` }, { text: `${label} 부담 없는 분위기라 편하게 즐겼다.`, tag: `${area} 평일` }],
+    [{ text: `${label} 혼자 갔는데 전혀 어색하지 않았다.`, tag: `${label} 솔로` }, { text: `${label} 시간 가는 줄 몰랐다. 다음에 또 간다.`, tag: `${area} 주말` }],
+  ] : [
+    [{ text: `${label} 사운드가 진짜 다르다. 몸으로 듣는 느낌.`, tag: `${label} 주말 첫 방문` }, { text: `${label} 분위기 파악하고 바로 단골 결정했다.`, tag: `${area} 평일 3회차` }],
+    [{ text: `${label} ${contact} 추천 자리가 진짜 명당이었다.`, tag: `${label} 금요일` }, { text: `${label} 처음 갔는데 혼자 가도 어색하지 않았다.`, tag: `${area} 일요일` }],
+    [{ text: `${label} 평일에 가면 주말의 반값 느낌이다.`, tag: `${label} 수요일` }, { text: `${label} 자정 넘어서부터 진짜 분위기가 살아난다.`, tag: `${area} 토요 심야` }],
+  ];
 
-  const pool = reviewPool[cat] || reviewPool.night;
-  const set = pool[venue.id.length % pool.length];
+  return templates[s % templates.length];
+}
+
+export function ReviewHighlight({ venue }: { venue: Venue }) {
+  const reviews = generateReviews(venue);
 
   return (
     <section className="my-8">
       <h3 className="text-base font-black text-[#111111] mb-4">직접 가본 손님의 한마디</h3>
       <div className="space-y-3">
-        {[0, 2].map((startIdx) => {
-          const text = set[startIdx];
-          const tag = set[startIdx + 1];
-          return (
-            <div key={startIdx} className="p-4 bg-surface-warm rounded-xl border border-rosegold/30">
-              <p className="text-sm text-[#1e293b] leading-relaxed mb-2">"{text}"</p>
-              <p className="text-xs font-bold text-[#94a3b8]">{tag}</p>
-            </div>
-          );
-        })}
+        {reviews.map((r, i) => (
+          <div key={i} className="p-4 bg-surface-warm rounded-xl border border-rosegold/30">
+            <p className="text-sm text-[#1e293b] leading-relaxed mb-2">"{r.text}"</p>
+            <p className="text-xs font-bold text-[#94a3b8]">{r.tag}</p>
+          </div>
+        ))}
       </div>
     </section>
   );

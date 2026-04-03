@@ -61,16 +61,18 @@ export function useOgMeta({ title, description, image, url, isHome, imageAlt }: 
     setMeta('twitter:image', absImage);
 
     return () => {
-      document.title = `전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103 | ${SITE_NAME}`;
-      setMeta('description', '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 비교해 보자');
-      setMeta('og:title', `전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103 | ${SITE_NAME}`);
-      setMeta('og:description', '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 비교해 보자');
+      const defaultTitle = '전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103';
+      const defaultDesc = '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 비교해 보자';
+      document.title = defaultTitle;
+      setMeta('description', defaultDesc);
+      setMeta('og:title', defaultTitle);
+      setMeta('og:description', defaultDesc);
       setMeta('og:image', `${BASE_URL}/og/default.jpg`);
-      setMeta('og:image:alt', '놀쿨 NOLCOOL');
+      setMeta('og:image:alt', '나이트 클럽 라운지 가이드');
       setMeta('og:url', BASE_URL);
       setMeta('twitter:card', 'summary_large_image');
-      setMeta('twitter:title', `전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103 | ${SITE_NAME}`);
-      setMeta('twitter:description', '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 비교해 보자');
+      setMeta('twitter:title', defaultTitle);
+      setMeta('twitter:description', defaultDesc);
       setMeta('twitter:image', `${BASE_URL}/og/default.jpg`);
     };
   }, [title, description, image, url, isHome, imageAlt]);

@@ -1148,19 +1148,38 @@
 }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 
-/* ===== PC / TABLET RESPONSIVE (768px+) ===== */
+/* ===== TABLET RESPONSIVE (768px+) ===== */
 @media (min-width: 768px) {
   body {
     max-width: 640px;
   }
-  /* PC: 카드 그리드 2열 유지 */
   .venue-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
   }
-  /* PC: 하단바 max-width 유지 */
   .phone-bar, .main-link-bar {
     max-width: 640px;
+  }
+}
+
+/* ===== PC RESPONSIVE (1024px+) ===== */
+@media (min-width: 1024px) {
+  body {
+    max-width: 1200px;
+  }
+  .venue-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  /* PC: 하단 고정바 숨김, 상단 메뉴만 사용 */
+  .phone-bar, .main-link-bar {
+    display: none;
+  }
+  main {
+    padding-bottom: 0 !important;
+  }
+  .site-footer {
+    padding-bottom: 0 !important;
   }
 }
 

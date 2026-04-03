@@ -14,8 +14,8 @@ export default function HomePage() {
   const premiumVenues = [getVenueById('ilsan-myeongwolgwan'), getVenueById('ilsan-room')].filter(Boolean);
 
   useOgMeta({
-    title: '전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103',
-    description: '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 비교해 보자.',
+    title: '놀쿨 — 한번 검색하면 밤문화 고민 끝나는 곳',
+    description: '나이트·클럽·라운지·룸·요정·호빠 103곳 현장 검증 완료. 실장 연락처부터 분위기·입장 절차까지 한눈에 비교하고 바로 예약하세요.',
     image: '',
     url: '',
     isHome: true,

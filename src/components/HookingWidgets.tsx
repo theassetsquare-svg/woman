@@ -32,10 +32,10 @@ export function ScrollProgressBar() {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] h-1 bg-black/5">
+    <div className="fixed top-0 left-0 right-0 z-[60] h-[3px] bg-black/5">
       <div
-        className="h-full bg-gradient-to-r from-accent to-rosegold transition-[width] duration-150"
-        style={{ width: `${progress}%` }}
+        className="h-full transition-[width] duration-150"
+        style={{ width: `${progress}%`, background: 'linear-gradient(90deg, #7C3AED, #A855F7, #C084FC)' }}
       />
     </div>
   );
@@ -1173,6 +1173,196 @@ export function SimpleMap({ venue }: { venue: Venue }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * 읽는 시간 — 상단 표시 (사용자 기대치 설정 → 읽기 완주율 UP)
+ */
+export function ReadTime({ venue }: { venue: Venue }) {
+  const label = getVenueLabel(venue);
+  const seed = hashSeed(venue.id);
+  const minutes = 3 + (seed % 3); // 3~5분
+
+  return (
+    <div className="flex items-center gap-2 mb-4 px-3 py-2 bg-surface-warm rounded-xl border border-rosegold/30">
+      <svg className="w-4 h-4 text-[#7C3AED] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <p className="text-xs font-bold text-[#475569]">
+        읽는 시간: <span className="text-[#7C3AED]">{minutes}분</span> · {label} 완벽 가이드
+      </p>
+    </div>
+  );
+}
+
+/**
+ * 숨겨진 장점 카드 — 스크롤 50% 도달 시 표시 (체류 유도)
+ */
+function generateHighlight(venue: Venue): { title: string; points: string[] } {
+  const label = getVenueLabel(venue);
+  const contact = venue.contact || '담당 실장';
+  const s = hashSeed(venue.id);
+  const variant = s % 4;
+  if (variant === 0) return {
+    title: `${label} 숨겨진 장점 3가지`,
+    points: [
+      `${contact}에게 미리 연락하면 프리미엄 자리 배정`,
+      `평일 방문 시 주말 대비 훨씬 여유로운 공간`,
+      `재방문 고객에게만 제공되는 특별 응대`,
+    ],
+  };
+  if (variant === 1) return {
+    title: `${label} 단골만 아는 포인트`,
+    points: [
+      `입장 전 ${contact}에게 이름을 남기면 대기 없음`,
+      `피크 타임 전 도착하면 원하는 자리 선점 가능`,
+      `${label} 시그니처 메뉴를 먼저 요청하면 응대가 달라진다`,
+    ],
+  };
+  if (variant === 2) return {
+    title: `${label}에서 놓치면 후회하는 것들`,
+    points: [
+      `${contact}의 추천을 따르면 실패 확률 제로`,
+      `금요일 밤 10시 이전이 최적의 타이밍`,
+      `재방문 시 취향을 기억하고 맞춰주는 서비스`,
+    ],
+  };
+  return {
+    title: `${label} 방문 전 필수 체크`,
+    points: [
+      `사전 예약 시 ${contact}이 동선까지 안내`,
+      `첫 방문이면 평일이 분위기 파악에 최적`,
+      `단골 전환율이 높은 이유가 방문하면 바로 체감된다`,
+    ],
+  };
+}
+
+export function StickyHighlight({ venue }: { venue: Venue }) {
+  const [show, setShow] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    const handler = () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total > 0 && scrolled / total >= 0.5) setShow(true);
+    };
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  if (!show || dismissed) return null;
+
+  const data = generateHighlight(venue);
+
+  return (
+    <div className="sticky-highlight fixed bottom-20 left-4 right-4 max-w-[460px] mx-auto z-[55] animate-fade-in-up">
+      <div className="p-4 bg-white border-2 border-[#7C3AED] rounded-2xl shadow-xl relative">
+        <button
+          onClick={() => setDismissed(true)}
+          className="absolute top-2 right-2 text-[#94a3b8] hover:text-[#111] text-sm p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
+          aria-label="닫기"
+        >
+          ✕
+        </button>
+        <p className="text-xs font-black text-[#7C3AED] mb-2">HIDDEN GEM</p>
+        <p className="text-sm font-black text-[#111] mb-3">{data.title}</p>
+        <div className="space-y-1.5">
+          {data.points.map((point, i) => (
+            <div key={i} className="flex items-start gap-2 text-xs text-[#1e293b] leading-relaxed">
+              <span className="text-[#7C3AED] font-bold mt-0.5 shrink-0">▸</span>
+              <span>{point}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 이탈 방지 팝업 — 스크롤 올릴 때 (이탈 감지) 표시
+ * "잠깐! 이것만 보고 가세요" + 최고 리뷰 인용
+ */
+function generateExitQuote(venue: Venue): string {
+  const label = getVenueLabel(venue);
+  const contact = venue.contact || '담당 실장';
+  const s = hashSeed(venue.id);
+  const variant = s % 5;
+  if (variant === 0) return `"${label} 처음 갔는데 ${contact}이 알아서 다 챙겨줬다. 다음엔 친구도 데려간다."`;
+  if (variant === 1) return `"${label} 분위기 기대 이상이었다. 여기 한 번이면 단골 확정이다."`;
+  if (variant === 2) return `"솔직히 ${label} 가기 전까지 반신반의했는데, 가보고 바로 인정했다."`;
+  if (variant === 3) return `"${label}에서 보낸 밤이 올해 최고였다. ${contact} 덕분에 완벽했다."`;
+  return `"여기저기 다녀봤지만 ${label}만큼 만족스러운 곳은 처음이다."`;
+}
+
+export function ExitPopup({ venue }: { venue: Venue }) {
+  const [show, setShow] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const lastScrollY = useRef(0);
+  const triggered = useRef(false);
+
+  useEffect(() => {
+    const handler = () => {
+      const currentY = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPct = total > 0 ? currentY / total : 0;
+
+      // 30% 이상 읽은 후 + 빠르게 위로 스크롤 시 트리거
+      if (
+        !triggered.current &&
+        scrollPct >= 0.3 &&
+        lastScrollY.current - currentY > 200
+      ) {
+        triggered.current = true;
+        setShow(true);
+      }
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  if (!show || dismissed) return null;
+
+  const quote = generateExitQuote(venue);
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4" onClick={() => setDismissed(true)}>
+      <div className="absolute inset-0 bg-black/50" />
+      <div
+        className="relative bg-white rounded-2xl p-6 max-w-[400px] w-full shadow-2xl animate-fade-in-up"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={() => setDismissed(true)}
+          className="absolute top-3 right-3 text-[#94a3b8] hover:text-[#111] min-w-[44px] min-h-[44px] flex items-center justify-center"
+          aria-label="닫기"
+        >
+          ✕
+        </button>
+        <p className="text-lg font-black text-[#111] mb-2">잠깐! 이것만 보고 가세요</p>
+        <div className="p-4 bg-surface-warm rounded-xl border border-rosegold/30 mb-4">
+          <p className="text-sm text-[#1e293b] leading-relaxed italic">{quote}</p>
+        </div>
+        <button
+          onClick={() => {
+            setDismissed(true);
+            window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+          }}
+          className="w-full bg-[#7C3AED] text-white text-sm font-bold py-3 rounded-xl min-h-[44px] hover:bg-[#6D28D9] transition-colors"
+        >
+          끝까지 읽기
+        </button>
+        <button
+          onClick={() => setDismissed(true)}
+          className="w-full mt-2 text-xs text-[#94a3b8] hover:text-[#475569] py-2 min-h-[44px]"
+        >
+          괜찮아요, 나갈게요
+        </button>
+      </div>
+    </div>
   );
 }
 

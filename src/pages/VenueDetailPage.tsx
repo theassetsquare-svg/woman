@@ -5,7 +5,7 @@ import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
-import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated, InsiderTip, AlsoVisited, haptic, BeforeAfter, TimeAttack, ReviewHighlight, SimpleMap } from '../components/HookingWidgets';
+import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated, InsiderTip, AlsoVisited, haptic, BeforeAfter, TimeAttack, ReviewHighlight, SimpleMap, ReadTime, StickyHighlight, ExitPopup } from '../components/HookingWidgets';
 import { useTrackVisit } from '../components/EngagementEngine';
 
 const MAIN = getMainLink();
@@ -121,6 +121,9 @@ export default function VenueDetailPage() {
         <span aria-hidden="true">/</span>
         <span className="text-[#111111] font-medium">{venue.name}</span>
       </nav>
+
+      {/* 읽는 시간 표시 */}
+      <ReadTime venue={venue} />
 
       {/* Hero */}
       <section className="mb-8 animate-fade-in-up">
@@ -433,6 +436,12 @@ export default function VenueDetailPage() {
         <p className="text-lg font-black mb-1">103개 전체 업소 실시간 순위</p>
         <p className="text-sm opacity-80">AI추천+리뷰 → 놀쿨 바로가기</p>
       </a>
+
+      {/* 숨겨진 장점 — 스크롤 50% */}
+      <StickyHighlight venue={venue} />
+
+      {/* 이탈 방지 팝업 — 스크롤 올릴 때 */}
+      <ExitPopup venue={venue} />
 
       {/* 하단 고정: 전화번호 바 */}
       {venue.phone && venue.phone !== '별도문의' && (

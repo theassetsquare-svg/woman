@@ -61,8 +61,8 @@ export function useOgMeta({ title, description, image, url, isHome, imageAlt }: 
     setMeta('twitter:image', absImage);
 
     return () => {
-      const defaultTitle = '전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103';
-      const defaultDesc = '전국 103곳 현장 검증 완료. 실장 연락처부터 분위기까지 비교해 보자';
+      const defaultTitle = '놀쿨 — 전국 나이트·클럽·라운지·룸·요정·호빠 TOP 103';
+      const defaultDesc = '놀쿨 — 전국 103곳 현장 검증. 실장 연락처부터 분위기까지 한눈에 비교';
       document.title = defaultTitle;
       setMeta('description', defaultDesc);
       setMeta('og:title', defaultTitle);

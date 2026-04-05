@@ -34,11 +34,11 @@ export default function HomePage() {
       <section className="hero-section">
         <div className="relative px-4 py-12 text-center">
           <p className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-3 animate-fade-in">
-            여성이 편안한 밤문화
+            나이트 · 클럽 · 라운지 · 룸 · 요정 · 호빠
           </p>
           <h1 className="text-3xl font-extrabold text-[#111111] leading-tight mb-3 animate-fade-in-up">
-            전국 나이트·클럽·라운지<br />
-            룸·요정·호빠 <span className="text-accent">TOP {venues.length}</span>
+            <span className="logo-text text-4xl">놀쿨</span><br />
+            전국 <span className="text-accent">TOP {venues.length}</span>
           </h1>
           <p className="text-sm text-[#333333] mb-6 leading-relaxed">
             현장 검증된 <span className="font-bold">{venues.length}곳</span>의 분위기·실장·입장 정보

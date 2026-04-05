@@ -38,8 +38,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-accent to-rosegold flex items-center justify-center text-white text-sm font-black shadow-md">
               N
             </span>
-            <span className="text-lg font-extrabold text-[#111111] tracking-tight">
-              나이트 가이드
+            <span className="text-lg tracking-tight">
+              <span className="logo-text">놀쿨</span>
             </span>
           </Link>
           <div className="flex items-center gap-2">

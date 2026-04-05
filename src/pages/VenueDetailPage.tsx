@@ -106,7 +106,7 @@ export default function VenueDetailPage() {
     return () => { scripts.forEach((s) => s.remove()); };
   }, [venue, venueContent]);
 
-  const catLabel = venue.category === 'club' ? '클럽' : venue.category === 'lounge' ? '라운지' : '나이트';
+  const catLabel = venue.category === 'club' ? '클럽' : venue.category === 'lounge' ? '라운지' : venue.category === 'room' ? '룸' : venue.category === 'yojeong' ? '요정' : venue.category === 'hoppa' ? '호빠' : '나이트';
 
   return (
     <div className="px-4 py-8">
@@ -443,16 +443,22 @@ export default function VenueDetailPage() {
       {/* 이탈 방지 팝업 — 스크롤 올릴 때 */}
       <ExitPopup venue={venue} />
 
-      {/* 하단 고정: 전화번호 바 */}
+      {/* 하단 고정: 전화번호 바 — 광고주는 닉네임 강조 */}
       {venue.phone && venue.phone !== '별도문의' && (
         <a
           href={`tel:${venue.phone.replace(/-/g, '')}`}
-          target="_blank"
-          rel="noopener noreferrer"
           onClick={() => haptic('medium')}
-          className="phone-bar flex items-center justify-center"
+          className="phone-bar flex items-center justify-center gap-3"
         >
-          {venue.contact ? `${venue.contact} ${venue.phone}` : venue.phone}
+          {venue.contact ? (
+            <>
+              <span className="text-[#F472B6] font-black text-lg">{venue.contact}</span>
+              <span className="text-white/60">|</span>
+              <span className="text-white font-bold">{venue.phone}</span>
+            </>
+          ) : (
+            <span className="text-white font-bold">{venue.phone}</span>
+          )}
         </a>
       )}
     </div>

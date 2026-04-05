@@ -1,19 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#450A0A"/>
-      <stop offset="100%" style="stop-color:#7F1D1D"/>
+      <stop offset="0%" style="stop-color:#1C1917"/>
+      <stop offset="100%" style="stop-color:#292524"/>
     </linearGradient>
     <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#F59E0B"/>
-      <stop offset="100%" style="stop-color:#FCD34D"/>
+      <stop offset="0%" style="stop-color:#DB2777"/>
+      <stop offset="100%" style="stop-color:#E8B4B8"/>
+    </linearGradient>
+    <linearGradient id="nick-bg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7C3AED"/>
+      <stop offset="100%" style="stop-color:#A855F7"/>
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
   <rect x="0" y="626" width="1200" height="4" fill="url(#accent)"/>
-  <text x="600" y="240" text-anchor="middle" font-family="sans-serif" font-size="48" font-weight="900" fill="white" letter-spacing="-1">일산명월관요정</text>
-  <text x="600" y="320" text-anchor="middle" font-family="sans-serif" font-size="28" fill="#F59E0B" font-weight="700">요정</text>
-  <text x="600" y="400" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#94a3b8" font-weight="600">일산</text>
-  <text x="600" y="540" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#64748b" font-weight="600">여성이 편안한 밤문화</text>
+  <rect x="556" y="130" width="88" height="40" rx="20" fill="rgba(232,180,184,0.15)" stroke="#A78BFA" stroke-width="2"/>
+  <text x="600" y="158" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#A78BFA" font-weight="800">요정</text>
+  <text x="600" y="260" text-anchor="middle" font-family="sans-serif" font-size="52" font-weight="900" fill="white" letter-spacing="-1">일산명월관요정</text>
+  <rect x="400" y="310" width="400" height="70" rx="16" fill="url(#nick-bg)" opacity="0.9"/>
+  <text x="600" y="356" text-anchor="middle" font-family="sans-serif" font-size="40" font-weight="900" fill="white">신실장</text>
+  <text x="600" y="440" text-anchor="middle" font-family="sans-serif" font-size="28" fill="#E8B4B8" font-weight="700">010-3695-4929</text>
+  <text x="600" y="560" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#64748b" font-weight="600">놀쿨 NOLCOOL</text>
 </svg>

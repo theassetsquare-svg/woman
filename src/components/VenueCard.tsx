@@ -3,7 +3,7 @@ import type { Venue } from '../data/venues';
 import { getVenueLabel } from '../data/venues';
 import { venuePath } from '../utils/slug';
 
-const catLabel = (c?: string) => c === 'club' ? '클럽' : c === 'lounge' ? '라운지' : '나이트';
+const catLabel = (c?: string) => c === 'club' ? '클럽' : c === 'lounge' ? '라운지' : c === 'room' ? '룸' : c === 'yojeong' ? '요정' : c === 'hoppa' ? '호빠' : '나이트';
 
 export default function VenueCard({ venue }: { venue: Venue }) {
   const label = getVenueLabel(venue);

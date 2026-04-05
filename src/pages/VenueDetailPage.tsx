@@ -125,17 +125,25 @@ export default function VenueDetailPage() {
       {/* 읽는 시간 표시 */}
       <ReadTime venue={venue} />
 
-      {/* Hero */}
+      {/* Hero — 가게이름 + 닉네임 썸네일 */}
       <section className="mb-8 animate-fade-in-up">
-        <div className="detail-hero-img mb-6">
-          <img
-            src={`/og/${venue.id}.jpg`}
-            alt={venueLabel}
-            width={1200}
-            height={630}
-            className="w-full h-auto block"
-            fetchPriority="high"
-          />
+        <div className="detail-hero-img mb-6 relative overflow-hidden" style={{ aspectRatio: '1200/630' }}>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1C1917] to-[#292524] flex flex-col items-center justify-center text-center px-4">
+            <span className="text-xs font-bold tracking-[0.15em] uppercase mb-3 px-4 py-1 rounded-full border"
+              style={{ color: venue.category === 'club' ? '#60A5FA' : venue.category === 'lounge' ? '#FBBF24' : venue.category === 'room' ? '#34D399' : venue.category === 'yojeong' ? '#A78BFA' : venue.category === 'hoppa' ? '#FB923C' : '#F472B6', borderColor: venue.category === 'club' ? '#60A5FA' : venue.category === 'lounge' ? '#FBBF24' : venue.category === 'room' ? '#34D399' : venue.category === 'yojeong' ? '#A78BFA' : venue.category === 'hoppa' ? '#FB923C' : '#F472B6' }}>
+              {catLabel}
+            </span>
+            <h2 className="text-2xl font-black text-white leading-tight mb-3 drop-shadow-lg">{venueLabel}</h2>
+            {venue.contact && (
+              <div className="bg-gradient-to-r from-[#7C3AED] to-[#A855F7] px-6 py-2 rounded-xl mb-2">
+                <span className="text-white font-black text-xl">{venue.contact}</span>
+              </div>
+            )}
+            {venue.phone && venue.phone !== '별도문의' && (
+              <p className="text-[#E8B4B8] font-bold text-base">{venue.phone}</p>
+            )}
+            <p className="text-[#64748b] text-xs font-semibold mt-3">놀쿨 NOLCOOL</p>
+          </div>
         </div>
 
         <div className="flex items-center gap-2 mb-3">

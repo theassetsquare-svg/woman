@@ -1171,9 +1171,9 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
-  /* PC: 하단 고정바 숨김, 상단 메뉴만 사용 */
+  /* PC: 하단 고정바 유지, 중앙 정렬 */
   .phone-bar, .main-link-bar {
-    display: none;
+    max-width: 1200px;
   }
   main {
     padding-bottom: 0 !important;

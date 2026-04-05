@@ -311,7 +311,7 @@ export default function VenueDetailPage() {
 
           {/* Quick Plan */}
           <section className="content-section">
-            <h2 className="text-lg">30초 플랜</h2>
+            <h2 className="text-lg">{venueLabel} 30초 플랜</h2>
             <div className="quickplan-box">
               <p className="text-[#111111] font-bold text-sm mb-3">{venueContent.quickPlan.decision}</p>
               <div className="space-y-2 mb-3">

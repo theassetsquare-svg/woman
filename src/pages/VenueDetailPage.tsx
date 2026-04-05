@@ -134,7 +134,7 @@ export default function VenueDetailPage() {
             width={1200}
             height={630}
             className="w-full h-auto block"
-            loading="lazy"
+            fetchPriority="high"
           />
         </div>
 

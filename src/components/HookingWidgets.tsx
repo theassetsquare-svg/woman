@@ -76,7 +76,7 @@ export function ComparisonTable({ venue }: { venue: Venue }) {
         {rows.map((row, i) => (
           <div key={i} className={`grid grid-cols-[1fr_auto_1fr] text-sm ${i % 2 ? 'bg-surface-warm/30' : ''}`}>
             <div className="py-2.5 px-3 text-center text-[#1e293b]">{row.a}</div>
-            <div className="py-2.5 px-2 text-center text-xs font-bold text-[#94a3b8]">{row.label}</div>
+            <div className="py-2.5 px-2 text-center text-xs font-bold text-[#64748B]">{row.label}</div>
             <div className="py-2.5 px-3 text-center text-[#1e293b]">{row.b}</div>
           </div>
         ))}
@@ -1013,7 +1013,7 @@ export function BeforeAfter({ venue }: { venue: Venue }) {
         <div className="p-4 space-y-2.5">
           {(flipped ? d.regular : d.first).map((item, i) => (
             <div key={i} className="flex items-start gap-2.5 text-sm text-[#1e293b] leading-relaxed">
-              <span className={`mt-0.5 shrink-0 text-xs font-bold ${flipped ? 'text-accent' : 'text-[#94a3b8]'}`}>{flipped ? '✓' : '·'}</span>
+              <span className={`mt-0.5 shrink-0 text-xs font-bold ${flipped ? 'text-accent' : 'text-[#64748B]'}`}>{flipped ? '✓' : '·'}</span>
               <span>{item}</span>
             </div>
           ))}
@@ -1110,7 +1110,7 @@ export function ReviewHighlight({ venue }: { venue: Venue }) {
         {reviews.map((r, i) => (
           <div key={i} className="p-4 bg-surface-warm rounded-xl border border-rosegold/30">
             <p className="text-sm text-[#1e293b] leading-relaxed mb-2">"{r.text}"</p>
-            <p className="text-xs font-bold text-[#94a3b8]">{r.tag}</p>
+            <p className="text-xs font-bold text-[#64748B]">{r.tag}</p>
           </div>
         ))}
       </div>
@@ -1261,7 +1261,7 @@ export function StickyHighlight({ venue }: { venue: Venue }) {
       <div className="p-4 bg-white border-2 border-[#7C3AED] rounded-2xl shadow-xl relative">
         <button
           onClick={() => setDismissed(true)}
-          className="absolute top-2 right-2 text-[#94a3b8] hover:text-[#111] text-sm p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
+          className="absolute top-2 right-2 text-[#64748B] hover:text-[#111] text-sm p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
           aria-label="닫기"
         >
           ✕
@@ -1337,7 +1337,7 @@ export function ExitPopup({ venue }: { venue: Venue }) {
       >
         <button
           onClick={() => setDismissed(true)}
-          className="absolute top-3 right-3 text-[#94a3b8] hover:text-[#111] min-w-[44px] min-h-[44px] flex items-center justify-center"
+          className="absolute top-3 right-3 text-[#64748B] hover:text-[#111] min-w-[44px] min-h-[44px] flex items-center justify-center"
           aria-label="닫기"
         >
           ✕
@@ -1357,7 +1357,7 @@ export function ExitPopup({ venue }: { venue: Venue }) {
         </button>
         <button
           onClick={() => setDismissed(true)}
-          className="w-full mt-2 text-xs text-[#94a3b8] hover:text-[#475569] py-2 min-h-[44px]"
+          className="w-full mt-2 text-xs text-[#64748B] hover:text-[#475569] py-2 min-h-[44px]"
         >
           괜찮아요, 나갈게요
         </button>

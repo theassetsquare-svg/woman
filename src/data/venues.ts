@@ -1859,7 +1859,7 @@ export const venues: Venue[] = [
   },
 ];
 
-const MAIN_LINK = 'https://ilsanroom.pages.dev';
+const MAIN_LINK = 'https://nolcool.com';
 
 export function getMainLink(): string {
   return MAIN_LINK;

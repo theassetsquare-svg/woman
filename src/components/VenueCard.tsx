@@ -36,7 +36,7 @@ export default function VenueCard({ venue }: { venue: Venue }) {
         {/* Row 1: Contact (지역은 이름에 이미 포함 시 생략) */}
         <div className="flex items-center gap-2 mb-1">
           {!areaInName && (
-            <span className="text-[13px] text-[#333333] font-semibold">
+            <span className="text-sm text-[#333333] font-semibold">
               {venue.area}
             </span>
           )}

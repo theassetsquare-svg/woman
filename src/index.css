@@ -1249,6 +1249,26 @@ img, video, iframe {
   box-shadow: 0 4px 16px rgba(232, 180, 184, 0.2);
 }
 
+/* ===== 접근성: 움직임 최소화 선호 대응 ===== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== 터치 타깃 보강(모바일 44px) ===== */
+@media (max-width: 767px) {
+  .nav-link, .breadcrumb a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
   width: 6px;

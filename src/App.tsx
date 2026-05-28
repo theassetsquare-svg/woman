@@ -1,19 +1,22 @@
 import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
-import { Component, type ReactNode } from 'react';
+import { Component, lazy, Suspense, type ReactNode } from 'react';
 import Layout from './components/Layout';
+// 주요 SEO 랜딩 페이지는 즉시 로드 (LCP/하이드레이션 지연 최소화)
 import HomePage from './pages/HomePage';
 import VenueListPage from './pages/VenueListPage';
-import VenueDetailPage from './pages/VenueDetailPage';
 import RegionPage from './pages/RegionPage';
 import CategoryPage from './pages/CategoryPage';
-import CommunityPage from './pages/CommunityPage';
-import GuidelinesPage from './pages/GuidelinesPage';
-import QuizPage from './pages/QuizPage';
-import SafetyPage from './pages/SafetyPage';
-import MagazinePage from './pages/MagazinePage';
-import RankingPage from './pages/RankingPage';
-import EventsPage from './pages/EventsPage';
-import MapPage from './pages/MapPage';
+// 상세 페이지는 무거운 본문 데이터(venueContent)를 끌어오므로 분할 — 홈/목록 초기 로드에서 제외
+const VenueDetailPage = lazy(() => import('./pages/VenueDetailPage'));
+// 보조 페이지는 코드분할 — 초기 번들에서 제외해 로딩 속도 개선
+const CommunityPage = lazy(() => import('./pages/CommunityPage'));
+const GuidelinesPage = lazy(() => import('./pages/GuidelinesPage'));
+const QuizPage = lazy(() => import('./pages/QuizPage'));
+const SafetyPage = lazy(() => import('./pages/SafetyPage'));
+const MagazinePage = lazy(() => import('./pages/MagazinePage'));
+const RankingPage = lazy(() => import('./pages/RankingPage'));
+const EventsPage = lazy(() => import('./pages/EventsPage'));
+const MapPage = lazy(() => import('./pages/MapPage'));
 import { useCanonical } from './hooks/useCanonical';
 import { getVenueById } from './data/venues';
 import { venuePath } from './utils/slug';
@@ -64,6 +67,7 @@ function App() {
       <BrowserRouter>
         <CanonicalUpdater />
         <Layout>
+          <Suspense fallback={<div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#475569', fontSize: '15px' }} role="status" aria-live="polite">불러오는 중…</div>}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/venues" element={<VenueListPage />} />
@@ -85,6 +89,7 @@ function App() {
             <Route path="/:regionId" element={<RegionPage />} />
             <Route path="/:region/:slug" element={<VenueDetailPage />} />
           </Routes>
+          </Suspense>
         </Layout>
       </BrowserRouter>
     </ErrorBoundary>

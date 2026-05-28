@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "gen:card-copy": "node scripts/gen-card-copy.mjs",
+    "gen:region-seo": "node scripts/gen-region-seo.mjs",
+    "seo:fix": "node scripts/gen-region-seo.mjs && node scripts/clean-content.mjs",
+    "seo:audit": "node scripts/audit.mjs",
     "lint:repeat-words": "node scripts/lint-repeat-words.mjs",
     "lint:similarity": "node scripts/lint-similarity.mjs"
   },
@@ -17,6 +20,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.1",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.2.1"
   },
   "devDependencies": {

@@ -155,21 +155,16 @@ let count = 0;
   count++;
 }
 
-// Region pages
-const regionMeta = {
-  gangnam: { title: '강남 클럽·라운지·나이트 TOP 6 — 금요 밤 필수 코스', desc: '청담H2O나이트부터 아르쥬, 레이스, 사운드, 하입, 컬러까지 강남권 핵심 6곳 비교' },
-  busan: { title: '부산연산동물나이트 — 따봉 실장 현장 검증', desc: '부산 연산동 대표 나이트클럽의 사운드·분위기·입장 안내를 상세히 정리' },
-  gyeonggi: { title: '경기 나이트 TOP 5 — 성남·수원·파주·인덕원·일산', desc: '경기도 주요 나이트클럽 5곳 현장 검증 완료' },
-  seoul: { title: '서울 나이트 TOP 3 — 수유·신림·상봉', desc: '서울 지역 나이트클럽 핵심 3곳 비교' },
-  ulsan: { title: '울산챔피언나이트 — 춘자 실장 10년 직영', desc: '울산 대표 나이트클럽 현장 검증 리뷰' },
-  incheon: { title: '인천아라비안나이트 — 이국적 콘셉트 검증', desc: '인천 남동구 아라비안 테마 나이트클럽 현장 리뷰' },
-  daejeon: { title: '대전세븐나이트 — 충청권 대표 나이트', desc: '대전 서구 세븐나이트 현장 검증 리뷰' },
-  itaewon: { title: '이태원클럽 와이키키유토피아 — 글로벌 파티', desc: '이태원 대표 글로벌 파티 클럽 현장 검증' },
-};
+// Region pages — 단일 소스 src/data/regionSeo.ts (RegionPage.tsx와 공유)
+const regionSeoSrc = readFileSync('src/data/regionSeo.ts', 'utf8');
+const regionMeta = {};
+for (const m of regionSeoSrc.matchAll(/'([a-z0-9-]+)':\s*\{\s*title:\s*"([^"]*)",\s*desc:\s*"([^"]*)"/g)) {
+  regionMeta[m[1]] = { title: m[2], desc: m[3] };
+}
 
 for (const regionId of regions) {
-  const meta = regionMeta[regionId] || { title: `${getRegionName(regionId)} 나이트·클럽`, desc: `${getRegionName(regionId)} 지역 정보` };
-  const fullTitle = `${meta.title} | ${SITE_NAME}`;
+  const meta = regionMeta[regionId] || { title: `${getRegionName(regionId)} 밤문화 가이드`, desc: `${getRegionName(regionId)} 지역 밤문화 정보를 정리했습니다.` };
+  const fullTitle = meta.title;
 
   const breadcrumb = {
     '@context': 'https://schema.org',
@@ -295,7 +290,7 @@ for (const cp of categoryPages) {
 for (const v of venues) {
   const hook = getHook(v.id);
   const desc = getDesc(v.id);
-  const title = `${v.keyword}${hook ? ' — ' + hook : ''} | ${SITE_NAME}`;
+  const title = `${v.keyword}${hook ? ' — ' + hook : ''}`;
 
   const breadcrumb = {
     '@context': 'https://schema.org',

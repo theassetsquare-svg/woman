@@ -30,27 +30,17 @@ export default function VenueDetailPage() {
       : { title: '업소를 찾을 수 없습니다', description: '', image: '', url: '' }
   );
 
-  if (!venue) {
-    return (
-      <div className="px-4 py-24 text-center">
-        <h1 className="text-xl mb-3">업소를 찾을 수 없습니다</h1>
-        <Link to="/venues" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover font-semibold text-base">
-          전체 목록으로 돌아가기
-        </Link>
-      </div>
-    );
-  }
+  // 방문 트래킹 (포인트 +5, 탐험 진행률 업데이트) — venue 없으면 no-op
+  useTrackVisit(venue?.id ?? '');
 
-  // 방문 트래킹 (포인트 +5, 탐험 진행률 업데이트)
-  useTrackVisit(venue.id);
+  const related = venue ? getVenuesByRegion(venue.region).filter((v) => v.id !== venue.id).slice(0, 3) : [];
+  const sameCat = venue ? venues.filter((v) => v.category === venue.category && v.id !== venue.id && v.region !== venue.region).slice(0, 3) : [];
+  const venueContent = venue ? getVenueContent(venue.id) : undefined;
+  const subKeywords = venue ? getSubKeywords(venue) : [];
 
-  const related = getVenuesByRegion(venue.region).filter((v) => v.id !== venue.id).slice(0, 3);
-  const sameCat = venues.filter((v) => v.category === venue.category && v.id !== venue.id && v.region !== venue.region).slice(0, 3);
-  const venueContent = getVenueContent(venue.id);
-  const subKeywords = getSubKeywords(venue);
-
-  // JSON-LD
+  // JSON-LD — Hook은 항상 호출하고 내부에서 venue 가드
   useEffect(() => {
+    if (!venue) return;
     const scripts: HTMLScriptElement[] = [];
 
     const breadcrumb = {
@@ -104,7 +94,18 @@ export default function VenueDetailPage() {
     scripts.push(s3);
 
     return () => { scripts.forEach((s) => s.remove()); };
-  }, [venue, venueContent]);
+  }, [venue, venueContent, venueLabel]);
+
+  if (!venue) {
+    return (
+      <div className="px-4 py-24 text-center">
+        <h1 className="text-xl mb-3">업소를 찾을 수 없습니다</h1>
+        <Link to="/venues" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover font-semibold text-base">
+          전체 목록으로 돌아가기
+        </Link>
+      </div>
+    );
+  }
 
   const catLabel = venue.category === 'club' ? '클럽' : venue.category === 'lounge' ? '라운지' : venue.category === 'room' ? '룸' : venue.category === 'yojeong' ? '요정' : venue.category === 'hoppa' ? '호빠' : '나이트';
 

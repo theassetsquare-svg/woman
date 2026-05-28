@@ -111,12 +111,8 @@ export function StreakTracker() {
 
 // ========== [3] 탐험 진행률 (자이가르닉) ==========
 export function ExplorationProgress() {
-  const [visited, setVisited] = useState<string[]>([]);
-
-  useEffect(() => {
-    const v = getLS('visitedVenues', []) as string[];
-    setVisited(v);
-  }, []);
+  // 마운트 시 1회만 읽으므로 지연 초기화 — 불필요한 추가 렌더 제거
+  const [visited] = useState<string[]>(() => getLS('visitedVenues', []) as string[]);
 
   const pct = Math.round((visited.length / venues.length) * 100);
   const nextMilestone = [10, 25, 50, 75, 100].find(m => pct < m) || 100;
@@ -158,11 +154,10 @@ export function useTrackVisit(venueId: string) {
 
 // ========== [5] 포인트 + 레벨 시스템 (도파민) ==========
 export function PointsBadge() {
-  const [points, setPoints] = useState(0);
+  const [points, setPoints] = useState(() => getLS('points', 0) as number);
 
   useEffect(() => {
-    setPoints(getLS('points', 0) as number);
-    // 방문할 때마다 업데이트
+    // 방문할 때마다 업데이트(폴링)
     const interval = setInterval(() => {
       setPoints(getLS('points', 0) as number);
     }, 3000);

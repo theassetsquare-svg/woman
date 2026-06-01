@@ -16,7 +16,8 @@
     "gsc:monitor": "node scripts/gsc-monitor.mjs",
     "lint:repeat-words": "node scripts/lint-repeat-words.mjs",
     "lint:similarity": "node scripts/lint-similarity.mjs",
-    "gsc:rank": "node scripts/gsc-rank-report.mjs"
+    "gsc:rank": "node scripts/gsc-rank-report.mjs",
+    "autopilot": "node scripts/autopilot.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",

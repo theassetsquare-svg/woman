@@ -68,7 +68,7 @@ export default function HomePage() {
         <div className="premium-section p-1 rounded-2xl">
           <div className="flex items-center gap-2 px-4 pt-4 mb-3">
             <span className="text-xs font-black text-[#B8860B] bg-[#FFF8DC] px-2.5 py-1 rounded-full border border-[#DAA520]">PREMIUM</span>
-            <span className="text-xs font-semibold text-[#333333]">신실장 </span>
+            <span className="text-xs font-semibold text-[#333333]">신실장 010-3695-4929</span>
           </div>
           <div className="grid grid-cols-2 gap-3 px-3 pb-4">
             {premiumVenues.map((v) => v && (
@@ -82,7 +82,7 @@ export default function HomePage() {
                 <p className="text-lg font-black text-[#111111] mb-1 leading-tight">{getVenueLabel(v)}</p>
                 <p className="text-xs text-[#555555] mb-3">{v.area}</p>
                 <a
-                  href="https://theassetsquare.com/"
+                  href="tel:01036954929"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block text-xs font-bold text-white bg-[#DAA520] px-4 py-2 rounded-lg hover:bg-[#B8860B] transition-colors"

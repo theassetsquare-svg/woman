@@ -41,8 +41,14 @@ export function dedupeSlug(path: string): string {
 
 /**
  * Build an absolute canonical URL from a relative path.
+ *
+ * The static host (Cloudflare Pages) serves directory pages with a trailing
+ * slash and 308-redirects the non-slash form to it. So the canonical signal
+ * MUST carry the trailing slash to match the URL that actually returns 200 —
+ * otherwise Google indexes both forms (slash + non-slash) as duplicates.
  */
 export function canonicalUrl(path: string): string {
   const clean = dedupeSlug(path);
-  return clean === '/' ? BASE_URL : BASE_URL + clean;
+  if (clean === '/') return BASE_URL + '/';
+  return BASE_URL + clean + '/';
 }

@@ -35,7 +35,9 @@ export function useOgMeta({ title, description, image, url, isHome, imageAlt }: 
   useEffect(() => {
     const resolvedImage = image || '/og/default.jpg';
     const absImage = `${BASE_URL}${resolvedImage}`;
-    const absUrl = `${BASE_URL}${url}`;
+    // Match the canonical (trailing-slash) form the host serves as 200.
+    const path = url === '/' || url === '' ? '/' : url.endsWith('/') ? url : `${url}/`;
+    const absUrl = `${BASE_URL}${path}`;
     const alt = imageAlt || title;
 
     // 홈페이지만 놀쿨 포함, 나머지는 가게이름 — 후킹제목만

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { venues, getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription, getSubKeywords, getMainLink } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
 import { useOgMeta } from '../hooks/useOgMeta';
+import { useRobots } from '../hooks/useRobots';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
 import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated, InsiderTip, AlsoVisited, haptic, BeforeAfter, TimeAttack, ReviewHighlight, SimpleMap, ReadTime, StickyHighlight, ExitPopup } from '../components/HookingWidgets';
@@ -29,6 +30,8 @@ export default function VenueDetailPage() {
         }
       : { title: '업소를 찾을 수 없습니다', description: '', image: '', url: '' }
   );
+  // 데이터에 없는 업소(삭제/구 URL)는 noindex 처리 — soft-404 방지
+  useRobots(!venue);
 
   // 방문 트래킹 (포인트 +5, 탐험 진행률 업데이트) — venue 없으면 no-op
   useTrackVisit(venue?.id ?? '');

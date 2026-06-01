@@ -1,4 +1,51 @@
+# Static feeds (no-op passthrough keeps explicit content-type handling)
 /sitemap.xml  /sitemap.xml  200
 /robots.txt   /robots.txt   200
 /rss.xml      /rss.xml      200
-/*    /index.html   200
+
+# ── Legacy / removed venue URLs (301) ──────────────────────────────
+# The venue dataset was fully rewritten; old slugs that Google still has
+# indexed must 301 to their renamed page (recover ranking) or to the region
+# page (preserve topical equity) instead of soft-404'ing to the homepage.
+
+# Renamed venues → new slug (recovers existing ranking)
+/busan/mulnight       /busan/mul-night/          301
+/busan/mulnight/      /busan/mul-night/          301
+/jangan/bbangbbang    /jangan/hoppa-bbangbbang/  301
+/jangan/bbangbbang/   /jangan/hoppa-bbangbbang/  301
+/geondae/wclub        /geondae/hoppa-w/          301
+/geondae/wclub/       /geondae/hoppa-w/          301
+
+# Removed venues → region page
+/jangan/cube          /jangan/    301
+/jangan/cube/         /jangan/    301
+/jangan/bini          /jangan/    301
+/jangan/bini/         /jangan/    301
+/gangnam/boston       /gangnam/   301
+/gangnam/boston/      /gangnam/   301
+/gangnam/blackhole    /gangnam/   301
+/gangnam/blackhole/   /gangnam/   301
+/gangnam/flirting     /gangnam/   301
+/gangnam/flirting/    /gangnam/   301
+/gangnam/i            /gangnam/   301
+/gangnam/i/           /gangnam/   301
+/busan/david          /busan/     301
+/busan/david/         /busan/     301
+/busan/aura           /busan/     301
+/busan/aura/          /busan/     301
+/busan/michelin       /busan/     301
+/busan/michelin/      /busan/     301
+/busan/menz           /busan/     301
+/busan/menz/          /busan/     301
+/busan/q              /busan/     301
+/busan/q/             /busan/     301
+
+# Old region that no longer exists (gyeonggi → suwon) and any old venue under it
+/gyeonggi/*           /suwon/     301
+
+# Legacy /venue/:id deep links → list page
+/venue/*              /venues/    301
+
+# NO catch-all rewrite. Real pages are prerendered static assets (served
+# directly); any unmatched path falls through to dist/404.html (HTTP 404,
+# noindex) so removed/old URLs get de-indexed instead of serving the homepage.

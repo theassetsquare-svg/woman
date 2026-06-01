@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { regions, getVenuesByRegion, getRegionName, getRegionCount, getMainLink } from '../data/venues';
 import { regionSeo } from '../data/regionSeo';
 import { useOgMeta } from '../hooks/useOgMeta';
+import { useRobots } from '../hooks/useRobots';
 import VenueCard from '../components/VenueCard';
 
 const BASE = 'https://woman-5nj.pages.dev';
@@ -25,6 +26,8 @@ export default function RegionPage() {
         }
       : { title: '지역을 찾을 수 없습니다', description: '', image: '', url: '' }
   );
+  // 존재하지 않는 지역(구 URL)은 noindex 처리
+  useRobots(!region);
 
   useEffect(() => {
     if (!region) return;

@@ -55,8 +55,17 @@ function getRegionName(regionId) {
   return rm ? rm[1] : regionId;
 }
 
+// Trailing-slash normalizer. The host serves directory pages with a trailing
+// slash (and 308-redirects the non-slash form), so every canonical signal must
+// carry the slash to match the URL that returns 200 — otherwise Google indexes
+// both forms as duplicates (cannibalization).
+function S(u) {
+  return u.endsWith('/') ? u : u + '/';
+}
+
 function generateHTML(opts) {
-  const { title, description, canonical, ogImage, h1, introText, jsonLd } = opts;
+  const { title, description, ogImage, h1, introText, jsonLd } = opts;
+  const canonical = S(opts.canonical);
   let html = template;
 
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${escHtml(title)}</title>`);
@@ -170,8 +179,8 @@ for (const regionId of regions) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: '홈', item: BASE },
-      { '@type': 'ListItem', position: 2, name: getRegionName(regionId), item: `${BASE}/${regionId}` },
+      { '@type': 'ListItem', position: 1, name: '홈', item: S(BASE) },
+      { '@type': 'ListItem', position: 2, name: getRegionName(regionId), item: S(`${BASE}/${regionId}`) },
     ],
   };
 
@@ -296,9 +305,9 @@ for (const v of venues) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: '홈', item: BASE },
-      { '@type': 'ListItem', position: 2, name: getRegionName(v.region), item: `${BASE}/${v.region}` },
-      { '@type': 'ListItem', position: 3, name: v.keyword, item: `${BASE}${v.path}` },
+      { '@type': 'ListItem', position: 1, name: '홈', item: S(BASE) },
+      { '@type': 'ListItem', position: 2, name: getRegionName(v.region), item: S(`${BASE}/${v.region}`) },
+      { '@type': 'ListItem', position: 3, name: v.keyword, item: S(`${BASE}${v.path}`) },
     ],
   };
 
@@ -306,7 +315,7 @@ for (const v of venues) {
     '@context': 'https://schema.org',
     '@type': 'NightClub',
     name: v.keyword,
-    url: `${BASE}${v.path}`,
+    url: S(`${BASE}${v.path}`),
     image: `${BASE}/og/${v.id}.jpg`,
   };
   if (v.phone && v.phone !== '별도문의') localBusiness.telephone = v.phone;
@@ -321,6 +330,59 @@ for (const v of venues) {
     jsonLd: [breadcrumb, localBusiness],
   }));
   count++;
+}
+
+// ====== 404 page (noindex) ======
+// Unmatched paths (e.g. removed venues) must return a real 404 with noindex so
+// Google drops them — instead of serving the homepage shell as a soft-404.
+{
+  let html = template;
+  html = html.replace(
+    /<title>[^<]*<\/title>/,
+    `<title>페이지를 찾을 수 없습니다 | ${SITE_NAME}</title>`,
+  );
+  html = html.replace(
+    /<meta name="robots" content="[^"]*"/,
+    '<meta name="robots" content="noindex, follow"',
+  );
+  // Drop the canonical so a 404 never points crawlers at a real URL.
+  html = html.replace(/\s*<link rel="canonical" href="[^"]*"\s*\/>/, '');
+  writeFileSync('dist/404.html', html);
+  count++;
+}
+
+// ====== sitemap.xml (trailing-slash, single canonical form) ======
+{
+  const staticPaths = [
+    '/',
+    '/venues',
+    ...categoryPages.map((c) => c.path),
+    '/quiz',
+    '/safety',
+    '/magazine',
+    '/ranking',
+    '/events',
+    '/map',
+    '/community',
+    '/community/guidelines',
+  ];
+  const regionPaths = regions.map((r) => `/${r}`);
+  const venuePaths = venues.map((v) => v.path);
+  const all = [...staticPaths, ...regionPaths, ...venuePaths];
+  const today = new Date().toISOString().slice(0, 10);
+  const SITEMAP_NS = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+  const urls = all
+    .map((p) => {
+      const loc = p === '/' ? `${BASE}/` : `${BASE}${p}/`;
+      const priority = p === '/' ? '1.0' : venuePaths.includes(p) ? '0.8' : '0.6';
+      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+    })
+    .join('\n');
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="${SITEMAP_NS}">\n${urls}\n</urlset>\n`;
+  writeFileSync('dist/sitemap.xml', xml);
+  writeFileSync('public/sitemap.xml', xml);
+  count++;
+  console.log(`Sitemap: ${all.length} URLs (trailing-slash).`);
 }
 
 console.log(`Prerender complete: ${count} pages generated.`);

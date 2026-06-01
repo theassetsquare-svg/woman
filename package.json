@@ -12,6 +12,8 @@
     "gen:region-seo": "node scripts/gen-region-seo.mjs",
     "seo:fix": "node scripts/gen-region-seo.mjs && node scripts/clean-content.mjs",
     "seo:audit": "node scripts/audit.mjs",
+    "audit:names": "node scripts/name-seo-audit.mjs",
+    "gsc:monitor": "node scripts/gsc-monitor.mjs",
     "lint:repeat-words": "node scripts/lint-repeat-words.mjs",
     "lint:similarity": "node scripts/lint-similarity.mjs"
   },

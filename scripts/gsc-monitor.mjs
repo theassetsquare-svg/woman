@@ -68,16 +68,24 @@ const LEGACY = [
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
 
-  // 1) GSC auth
+  // 1) GSC auth — 키가 없으면(헤드리스/CI 미설정) 경고 후 라이브 점검만 수행
   let gsc;
-  try {
-    gsc = await gscClient();
-    const sites = await gsc.listSites();
-    const me = (sites.siteEntry || []).find((s) => s.siteUrl === SITE);
-    if (!me) problems.push(`GSC: 서비스계정이 ${SITE} 속성에 접근 불가 (소유자 추가 필요)`);
-    else info.push(`GSC 접근 OK (${me.permissionLevel})`);
-  } catch (e) {
-    problems.push(`GSC 인증 실패: ${e.message}`);
+  const hasCreds =
+    !!process.env.GSC_CREDENTIALS_JSON ||
+    !!process.env.GOOGLE_APPLICATION_CREDENTIALS ||
+    fs.existsSync(`${process.env.HOME || ''}/.gsc/theasset-gsc.json`);
+  if (!hasCreds) {
+    warnings.push('GSC 키 미설정 — 라이브 URL 점검만 수행 (GSC 분석 건너뜀). 키 설정: scripts/set-gsc-secret.mjs');
+  } else {
+    try {
+      gsc = await gscClient();
+      const sites = await gsc.listSites();
+      const me = (sites.siteEntry || []).find((s) => s.siteUrl === SITE);
+      if (!me) problems.push(`GSC: 서비스계정이 ${SITE} 속성에 접근 불가 (소유자 추가 필요)`);
+      else info.push(`GSC 접근 OK (${me.permissionLevel})`);
+    } catch (e) {
+      problems.push(`GSC 인증 실패: ${e.message}`);
+    }
   }
 
   // 2+3) Live sitemap URL health + canonical match

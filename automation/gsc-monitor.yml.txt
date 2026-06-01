@@ -1,0 +1,77 @@
+name: GSC Monitor (daily)
+
+# 매일 사이트/GSC 건강검진을 자동 수행한다.
+#  - 라이브 URL 200/canonical/soft-404 점검
+#  - GSC 색인·키워드·카니발리제이션 분석
+#  - sitemap을 GSC에 자동 재제출
+#  - 문제 발견 시 job 실패 → GitHub가 저장소 소유자(theassetsquare@gmail.com)에게 자동 메일
+#  - (선택) MAIL_USERNAME/MAIL_PASSWORD 시크릿이 있으면 상세 리포트를 메일로 발송
+#
+# 필요한 시크릿:
+#  - GSC_CREDENTIALS_JSON : 서비스계정 키 JSON 전체 (필수)
+#  - MAIL_USERNAME, MAIL_PASSWORD : Gmail 주소 + 앱 비밀번호 (선택, 상세 메일용)
+
+on:
+  schedule:
+    - cron: '30 19 * * *' # 매일 04:30 KST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gsc-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Submit sitemap to GSC
+        if: ${{ env.GSC_CREDENTIALS_JSON != '' }}
+        env:
+          GSC_CREDENTIALS_JSON: ${{ secrets.GSC_CREDENTIALS_JSON }}
+        run: node scripts/gsc.mjs submit-sitemap https://woman-5nj.pages.dev/ || true
+
+      - name: Run health monitor
+        id: monitor
+        env:
+          GSC_CREDENTIALS_JSON: ${{ secrets.GSC_CREDENTIALS_JSON }}
+        run: node scripts/gsc-monitor.mjs
+
+      - name: Commit report
+        if: always()
+        run: |
+          if [ -n "$(git status --porcelain reports/gsc)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add reports/gsc
+            git commit -m "chore(monitor): GSC/site health report"
+            git push
+          fi
+
+      - name: Email report on problems (optional SMTP)
+        if: ${{ failure() && env.MAIL_USERNAME != '' }}
+        env:
+          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: '[놀쿨 사이트] GSC 모니터 문제 발견'
+          to: theassetsquare@gmail.com
+          from: GSC Monitor
+          body: file://reports/gsc/monitor-report.md
+
+  # 문제가 없어도 GitHub는 성공 알림을 보내지 않는다.
+  # 문제가 있으면 위 job이 실패 → GitHub가 소유자에게 자동 메일 발송.

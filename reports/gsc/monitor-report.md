@@ -1,13 +1,9 @@
 # GSC/사이트 모니터 리포트
-- 시각: 2026-06-01T19:50:11.490Z
+- 시각: 2026-06-01T20:04:22.014Z
 - 사이트: https://woman-5nj.pages.dev/
 
-## 🔴 문제 (5)
-- 레거시 soft-404 재발: /gangnam/boston → https://woman-5nj.pages.dev/gangnam/boston (홈 콘텐츠 200)
-- 레거시 soft-404 재발: /jangan/cube → https://woman-5nj.pages.dev/jangan/cube (홈 콘텐츠 200)
-- 레거시 soft-404 재발: /busan/david → https://woman-5nj.pages.dev/busan/david (홈 콘텐츠 200)
-- 레거시 soft-404 재발: /gangnam/blackhole → https://woman-5nj.pages.dev/gangnam/blackhole (홈 콘텐츠 200)
-- 레거시 soft-404 재발: /busan/mulnight → https://woman-5nj.pages.dev/busan/mulnight (홈 콘텐츠 200)
+## 🔴 문제 (0)
+- 없음 ✅
 
 ## 🟡 경고 (1)
 - 카니발리제이션 16건 (한 키워드에 2+ 페이지 경쟁)

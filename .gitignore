@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# 워크플로우는 OAuth 토큰 권한 부족으로 자동 푸시 불가 — 수동 추가용(참고본은 automation/)
+.github/workflows/gsc-monitor.yml

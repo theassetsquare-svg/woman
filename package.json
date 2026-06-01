@@ -15,7 +15,8 @@
     "audit:names": "node scripts/name-seo-audit.mjs",
     "gsc:monitor": "node scripts/gsc-monitor.mjs",
     "lint:repeat-words": "node scripts/lint-repeat-words.mjs",
-    "lint:similarity": "node scripts/lint-similarity.mjs"
+    "lint:similarity": "node scripts/lint-similarity.mjs",
+    "gsc:rank": "node scripts/gsc-rank-report.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",

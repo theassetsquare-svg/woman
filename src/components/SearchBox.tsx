@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchVenues, type SearchResult } from '../utils/searchIndex';
 import { getRegionName, getVenueLabel } from '../data/venues';
@@ -6,21 +6,15 @@ import { venuePath } from '../utils/slug';
 
 export default function SearchBox() {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (query.trim().length === 0) {
-      setResults([]);
-      setOpen(false);
-      return;
-    }
-    const r = searchVenues(query);
-    setResults(r.slice(0, 8));
-    setOpen(true);
-  }, [query]);
+  // 결과는 query에서 파생 — effect+setState 대신 렌더 중 계산(불필요 렌더 제거)
+  const results = useMemo<SearchResult[]>(
+    () => (query.trim().length === 0 ? [] : searchVenues(query).slice(0, 8)),
+    [query],
+  );
 
   // Close on outside click
   useEffect(() => {
@@ -51,7 +45,7 @@ export default function SearchBox() {
           type="text"
           placeholder="업소명으로 검색 (예: 보스턴, 강남호빠...)"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => { setQuery(e.target.value); setOpen(e.target.value.trim().length > 0); }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && results.length > 0) {
               e.preventDefault();

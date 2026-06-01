@@ -38,7 +38,7 @@ export default function QuizPage() {
 
   useOgMeta({
     title: '밤문화 MBTI — 나에게 맞는 곳은 어디?',
-    description: '10개 질문으로 알아보는 나의 밤문화 유형. 결과에 맞는 업소 추천까지.',
+    description: '클럽? 라운지? 룸? 10개 질문이면 내 밤문화 유형이 나옵니다. 결과에 딱 맞는 업소 추천까지 — 1분이면 오늘 갈 곳이 정해집니다.',
     image: '/og/default.jpg',
     url: '/quiz',
   });

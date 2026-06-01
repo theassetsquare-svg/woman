@@ -5,7 +5,7 @@ import { useOgMeta } from '../hooks/useOgMeta';
 export default function SafetyPage() {
   useOgMeta({
     title: '안전 가이드 — 음주 계산기·긴급 연락처·막차 정보',
-    description: '즐거운 밤을 위한 안전 가이드. 음주 계산기, 긴급 연락처, 대리운전 번호까지.',
+    description: '즐거운 밤은 안전이 먼저. 혈중 알코올 음주 계산기, 24시 긴급 연락처, 대리운전·콜택시 번호까지 한 화면에 모았습니다. 집에 무사히 가는 법.',
     image: '/og/default.jpg',
     url: '/safety',
   });

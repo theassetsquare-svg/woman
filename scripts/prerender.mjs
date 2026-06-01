@@ -154,7 +154,7 @@ let count = 0;
 // /venues
 {
   const title = `전국 나이트·클럽·라운지 ${venues.length}곳 — 지역별 필터 검색 | ${SITE_NAME}`;
-  const desc = '강남부터 울산까지 현장 검증된 업소만 모았습니다. 분위기·실장·카테고리별로 골라보세요';
+  const desc = '강남부터 울산까지 현장 검증한 업소만 모았습니다. 지역·분위기·실장·카테고리로 걸러 오늘 내게 딱 맞는 한 곳을 빠르게 고르세요.';
   writePage('/venues', generateHTML({
     title, description: desc,
     canonical: `${BASE}/venues`,
@@ -195,7 +195,7 @@ for (const regionId of regions) {
   count++;
 }
 
-// Category pages
+// Category pages — 후킹 메타는 CategoryPage.tsx의 catConfig를 단일 소스로 사용
 const categoryPages = [
   { path: '/clubs', label: '클럽', key: 'club' },
   { path: '/nights', label: '나이트', key: 'night' },
@@ -204,17 +204,21 @@ const categoryPages = [
   { path: '/yojeong', label: '요정', key: 'yojeong' },
   { path: '/hoppa', label: '호빠', key: 'hoppa' },
 ];
+const catSrc = readFileSync('src/pages/CategoryPage.tsx', 'utf8');
+const catMeta = {};
+for (const m of catSrc.matchAll(/(\w+):\s*\{\s*label:\s*'[^']*',\s*plural:\s*'[^']*',\s*title:\s*'([^']*)',\s*desc:\s*'([^']*)'/g)) {
+  catMeta[m[1]] = { title: m[2], desc: m[3] };
+}
 
 for (const cp of categoryPages) {
   const catVenues = venues.filter(v => v.category === cp.key);
-  const title = `${cp.label} ${catVenues.length}곳 — 전체보기 | ${SITE_NAME}`;
-  const desc = `전국 ${cp.label} ${catVenues.length}곳 현장 검증 완료. 분위기·실장·입장 정보 한눈에.`;
+  const meta = catMeta[cp.key] || { title: `전국 ${cp.label}`, desc: `전국 ${cp.label} ${catVenues.length}곳 현장 검증.` };
   writePage(cp.path, generateHTML({
-    title, description: desc,
+    title: meta.title, description: meta.desc,
     canonical: `${BASE}${cp.path}`,
     ogImage: `${BASE}/og/category-${cp.key}.jpg`,
     h1: `${cp.label} 전체보기`,
-    introText: desc,
+    introText: meta.desc,
   }));
   count++;
 }
@@ -223,7 +227,7 @@ for (const cp of categoryPages) {
 {
   writePage('/quiz', generateHTML({
     title: `밤문화 MBTI — 나에게 맞는 곳은 어디? | ${SITE_NAME}`,
-    description: '10개 질문으로 알아보는 나의 밤문화 유형. 결과에 맞는 업소 추천까지.',
+    description: '클럽? 라운지? 룸? 10개 질문이면 내 밤문화 유형이 나옵니다. 결과에 딱 맞는 업소 추천까지 — 1분이면 오늘 갈 곳이 정해집니다.',
     canonical: `${BASE}/quiz`,
     h1: '밤문화 MBTI',
     introText: '10개 질문으로 알아보는 나의 밤문화 유형.',
@@ -231,7 +235,7 @@ for (const cp of categoryPages) {
   count++;
   writePage('/safety', generateHTML({
     title: `안전 가이드 — 음주 계산기·긴급 연락처 | ${SITE_NAME}`,
-    description: '즐거운 밤을 위한 안전 가이드. 음주 계산기, 긴급 연락처, 대리운전 번호까지.',
+    description: '즐거운 밤은 안전이 먼저. 혈중 알코올 음주 계산기, 24시 긴급 연락처, 대리운전·콜택시 번호까지 한 화면에. 집에 무사히 가는 법을 챙기세요.',
     canonical: `${BASE}/safety`,
     h1: '안전 가이드',
     introText: '즐거운 밤도 안전이 먼저.',
@@ -243,7 +247,7 @@ for (const cp of categoryPages) {
 {
   writePage('/community', generateHTML({
     title: `커뮤니티 — 밤문화 후기·팁·파티모집 | ${SITE_NAME}`,
-    description: '전국 밤문화 솔직 후기, 꿀팁, 파티 모집. 진짜 경험한 사람들의 이야기.',
+    description: '전국 밤문화 솔직 후기와 꿀팁, 파티 모집까지. 광고가 아니라 진짜 다녀온 사람들의 생생한 이야기를 여기서 먼저 확인하세요.',
     canonical: `${BASE}/community`,
     h1: '커뮤니티',
     introText: '밤문화 후기, 꿀팁, 파티 모집까지. 진짜 경험한 사람들의 이야기.',
@@ -251,7 +255,7 @@ for (const cp of categoryPages) {
   count++;
   writePage('/community/guidelines', generateHTML({
     title: `커뮤니티 가이드라인 — 건강한 밤문화 이야기 | ${SITE_NAME}`,
-    description: '서로 존중하는 커뮤니티를 위한 가이드라인.',
+    description: '서로 존중하는 커뮤니티를 위한 가이드라인입니다. 욕설·허위정보·불법광고는 삭제되며, 건강한 밤문화 이야기만 남깁니다.',
     canonical: `${BASE}/community/guidelines`,
     h1: '커뮤니티 가이드라인',
     introText: '서로 존중하는 커뮤니티를 위한 가이드라인.',
@@ -263,7 +267,7 @@ for (const cp of categoryPages) {
 {
   writePage('/magazine', generateHTML({
     title: `매거진 — 밤문화 가이드 & 비교 분석 | ${SITE_NAME}`,
-    description: '강남 vs 홍대 비교, 나이트 초보 가이드, 룸과 요정 차이까지. 현장 기반 밤문화 매거진.',
+    description: '강남 vs 홍대 어디부터 갈까? 나이트 초보 가이드, 룸과 요정의 차이까지 — 현장에서 직접 겪은 사람이 정리한 밤문화 비교 매거진입니다.',
     canonical: `${BASE}/magazine`,
     h1: '매거진',
     introText: '현장 경험을 바탕으로 정리한 밤문화 가이드. 비교, 분석, 초보 안내까지.',
@@ -271,7 +275,7 @@ for (const cp of categoryPages) {
   count++;
   writePage('/ranking', generateHTML({
     title: `인기 랭킹 TOP 20 — 전국 나이트·클럽·라운지 | ${SITE_NAME}`,
-    description: '전국 나이트, 클럽, 라운지, 룸, 요정 인기 랭킹 TOP 20. 실장 연결 가능 업소 우선 표시.',
+    description: '전국 나이트·클럽·라운지·룸·요정 인기 랭킹 TOP 20. 실장 연결이 되는 업소를 우선으로, 지금 가장 핫한 곳을 순위로 확인하세요.',
     canonical: `${BASE}/ranking`,
     h1: '인기 랭킹 TOP 20',
     introText: '실장 연결 가능 업소를 우선으로, 전국 인기 업소를 한눈에.',
@@ -279,7 +283,7 @@ for (const cp of categoryPages) {
   count++;
   writePage('/events', generateHTML({
     title: `이벤트 캘린더 — 전국 밤문화 일정 | ${SITE_NAME}`,
-    description: '금요 나이트 피크타임, 토요 클럽 DJ 파티, 평일 이벤트까지. 전국 밤문화 일정을 한눈에.',
+    description: '금요 나이트 피크타임, 토요 클럽 DJ 파티, 평일 이벤트까지. 전국 밤문화 일정을 한눈에 모아 오늘 어디서 놀지 바로 정하세요.',
     canonical: `${BASE}/events`,
     h1: '이벤트 캘린더',
     introText: '전국 밤문화 주요 일정을 한눈에 확인하세요.',
@@ -287,7 +291,7 @@ for (const cp of categoryPages) {
   count++;
   writePage('/map', generateHTML({
     title: `지역별 업소 찾기 — 전국 나이트·클럽·라운지 | ${SITE_NAME}`,
-    description: '지역을 선택하면 해당 지역의 나이트, 클럽, 라운지, 룸, 요정 업소를 한눈에 확인할 수 있습니다.',
+    description: '지역만 고르면 끝. 전국 나이트·클럽·라운지·룸·요정을 지도에서 한눈에 찾아 내 근처 오늘 갈 곳을 바로 확인하세요.',
     canonical: `${BASE}/map`,
     h1: '지역별 업소 찾기',
     introText: '지역을 선택하면 해당 지역의 업소를 확인할 수 있습니다.',

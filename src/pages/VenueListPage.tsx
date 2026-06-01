@@ -7,7 +7,7 @@ import VenueCard from '../components/VenueCard';
 export default function VenueListPage() {
   useOgMeta({
     title: `전국 나이트·클럽·라운지 ${venues.length}곳 — 지역별 필터 검색`,
-    description: `강남부터 울산까지 현장 검증된 업소만 모았습니다. 분위기·실장·카테고리별로 내게 맞는 곳을 골라보세요`,
+    description: `강남부터 울산까지 현장 검증한 업소만 모았습니다. 지역·분위기·실장·카테고리로 걸러 오늘 내게 딱 맞는 한 곳을 빠르게 고르세요.`,
     image: '',
     url: '/venues',
   });

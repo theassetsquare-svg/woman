@@ -28,7 +28,7 @@ const samplePosts = [
 export default function CommunityPage() {
   useOgMeta({
     title: '커뮤니티 — 밤문화 후기·팁·파티모집',
-    description: '전국 밤문화 솔직 후기, 꿀팁, 파티 모집. 진짜 경험한 사람들의 이야기.',
+    description: '전국 밤문화 솔직 후기와 꿀팁, 파티 모집까지. 광고가 아니라 진짜 다녀온 사람들의 생생한 이야기를 여기서 먼저 확인하세요.',
     image: '/og/default.jpg',
     url: '/community',
   });

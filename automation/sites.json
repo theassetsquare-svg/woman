@@ -1,0 +1,27 @@
+{
+  "_comment": "오토파일럿 감시 대상. 형제 사이트(week1/week2/week3/night)도 같은 배열에 추가하면 공유 Worker가 함께 감시. woman = 놀쿨 위성.",
+  "sites": [
+    {
+      "id": "woman",
+      "name": "놀쿨 위성 (woman)",
+      "base": "https://woman-5nj.pages.dev",
+      "repo": "theassetsquare-svg/woman",
+      "sitemap": "https://woman-5nj.pages.dev/sitemap.xml",
+      "mainSite": "https://nolcool.com",
+      "ogDefault": "https://woman-5nj.pages.dev/og/default.jpg",
+      "deployHookSecret": "WOMAN_DEPLOY_HOOK",
+      "indexNowKeySecret": "WOMAN_INDEXNOW_KEY",
+      "gscProperty": "https://woman-5nj.pages.dev/",
+      "sampleRoutes": [
+        "/",
+        "/busan/mul-night/",
+        "/jangan/hoppa-bbangbbang/",
+        "/clubs/",
+        "/ilsan/",
+        "/quiz/",
+        "/safety/",
+        "/community/guidelines/"
+      ]
+    }
+  ]
+}

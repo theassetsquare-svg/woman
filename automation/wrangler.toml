@@ -1,0 +1,30 @@
+# 놀쿨 위성 오토파일럿 Worker — Cloudflare
+# 1회 설정(사장님): README "오토파일럿 1회 설정" 참고.
+name = "nolcool-autopilot"
+main = "worker.js"
+compatibility_date = "2025-06-01"
+
+# 매일 00:00 UTC = 09:00 KST 감시
+[triggers]
+crons = ["0 0 * * *"]
+
+# KV (알림 dedup·자가청소). 1회: wrangler kv namespace create AUTOPILOT_KV → id 붙여넣기
+[[kv_namespaces]]
+binding = "AUTOPILOT_KV"
+id = "PLACEHOLDER_KV_ID"
+
+# JSON import 사용
+[build]
+command = ""
+
+# 비밀값(코드/깃에 두지 말 것 — wrangler secret put 으로):
+#   RESEND_API_KEY   : Resend API 키
+#   ALERT_FROM       : 인증 도메인 발신 주소 (예: autopilot@yourdomain)
+#   ALERT_TO         : theassetsquare@gmail.com
+#   WOMAN_DEPLOY_HOOK: Cloudflare Pages Deploy Hook URL (woman)
+#   WOMAN_INDEXNOW_KEY: IndexNow 키(문자열) — /<key>.txt 도 public에 둘 것
+#   PSI_KEY          : (선택) PageSpeed Insights API 키 → CWV 측정
+#   RUN_KEY          : (선택) 수동 /run 엔드포인트 보호 키
+# 평문 vars (비민감):
+[vars]
+ALERT_TO = "theassetsquare@gmail.com"

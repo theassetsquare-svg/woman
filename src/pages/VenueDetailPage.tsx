@@ -6,7 +6,7 @@ import { useOgMeta } from '../hooks/useOgMeta';
 import { useRobots } from '../hooks/useRobots';
 import { venuePath } from '../utils/slug';
 import VenueCard from '../components/VenueCard';
-import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, FomoCounter, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, VSVote, InlineQuiz, SecretReveal, DailyViewCounter, InfiniteRelated, InsiderTip, AlsoVisited, haptic, BeforeAfter, TimeAttack, ReviewHighlight, SimpleMap, ReadTime, StickyHighlight, ExitPopup } from '../components/HookingWidgets';
+import { MidBreakHook, SimilarHook, AIRecommendHook, BlurLockSection, CompareHook, ShareButton, WriteReviewHook, CouponHook, ExploreProgress, AutoplayNext, ScrollProgressBar, ComparisonTable, SwipeGallery, InlineQuiz, SecretReveal, InfiniteRelated, InsiderTip, AlsoVisited, haptic, BeforeAfter, SimpleMap, ReadTime, StickyHighlight, ExitPopup } from '../components/HookingWidgets';
 import { useTrackVisit } from '../components/EngagementEngine';
 
 const MAIN = getMainLink();
@@ -171,17 +171,13 @@ export default function VenueDetailPage() {
         </div>
 
         <div className="info-box">
-          <p className="text-sm text-[#111111] leading-relaxed font-medium whitespace-pre-line">
+          <p className="text-base text-[#111111] leading-relaxed font-medium whitespace-pre-line">
             {venue.card_hook}
           </p>
         </div>
 
-        {/* FOMO + 오늘 N명 + 자이가르닉 */}
-        <div className="flex flex-wrap items-center gap-2 mt-4">
-          <FomoCounter />
-          <DailyViewCounter venueId={venue.id} />
-        </div>
-        <div className="mt-2">
+        {/* 탐색 진행률 (실데이터: 현재 업소 순번 / 전체) */}
+        <div className="mt-4">
           <ExploreProgress current={venues.indexOf(venue) + 1} total={venues.length} />
         </div>
       </section>
@@ -189,7 +185,7 @@ export default function VenueDetailPage() {
       {/* Detail Info */}
       <section className="content-section">
         <h2 className="text-lg">{venueLabel} 상세 정보</h2>
-        <p className="text-[#1e293b] text-sm leading-relaxed mb-4">{venue.description}</p>
+        <p className="text-[#1e293b] text-base leading-relaxed mb-4">{venue.description}</p>
 
         <div className="space-y-2 mb-4">
           <InfoRow label="주소" value={venue.address} />
@@ -212,9 +208,6 @@ export default function VenueDetailPage() {
       {/* 스와이프 갤러리 (6장 + 한줄 스토리) */}
       <SwipeGallery venue={venue} />
 
-      {/* Time Attack — 지금 예약하면 N번째 */}
-      <TimeAttack venue={venue} />
-
       {/* [후킹2] 중간 끊기 */}
       <MidBreakHook />
 
@@ -227,7 +220,7 @@ export default function VenueDetailPage() {
             <div className="summary-box">
               <ul className="space-y-2.5">
                 {venueContent.summary.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-sm text-[#1e293b] leading-relaxed">
+                  <li key={i} className="flex items-start gap-2.5 text-base text-[#1e293b] leading-relaxed">
                     <span className="w-5 h-5 rounded-full bg-accent/10 text-accent text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                       {i + 1}
                     </span>
@@ -241,7 +234,7 @@ export default function VenueDetailPage() {
           {/* Intro */}
           <section className="content-section">
             <h2 className="text-lg">{subKeywords[0]} 이용 가이드</h2>
-            <p className="text-[#1e293b] text-sm leading-[1.85] whitespace-pre-line">{venueContent.intro}</p>
+            <p className="text-[#1e293b] text-base leading-[1.85] whitespace-pre-line">{venueContent.intro}</p>
           </section>
 
           {/* 본문 이미지 1 — intro 아래 */}
@@ -261,7 +254,7 @@ export default function VenueDetailPage() {
           {venueContent.sections.slice(0, 3).map((sec, i) => (
             <section key={i} className="content-section">
               <h3 className="text-base font-bold text-[#111111]">{sec.title}</h3>
-              <p className="text-[#1e293b] text-sm leading-[1.85] whitespace-pre-line">{sec.body}</p>
+              <p className="text-[#1e293b] text-base leading-[1.85] whitespace-pre-line">{sec.body}</p>
               {/* 2번째 섹션 뒤 이미지 삽입 */}
               {i === 1 && (
                 <div className="my-4">
@@ -291,9 +284,6 @@ export default function VenueDetailPage() {
           {/* 첫 방문 vs 단골 */}
           <BeforeAfter venue={venue} />
 
-          {/* VS 투표 */}
-          <VSVote venue={venue} />
-
           {/* [후킹3] 비슷한 업소 추천 → 메인 */}
           <SimilarHook />
 
@@ -301,7 +291,7 @@ export default function VenueDetailPage() {
           {venueContent.sections.slice(3).map((sec, i) => (
             <section key={i + 3} className="content-section">
               <h3 className="text-base font-bold text-[#111111]">{sec.title}</h3>
-              <p className="text-[#1e293b] text-sm leading-[1.85] whitespace-pre-line">{sec.body}</p>
+              <p className="text-[#1e293b] text-base leading-[1.85] whitespace-pre-line">{sec.body}</p>
             </section>
           ))}
 
@@ -325,10 +315,10 @@ export default function VenueDetailPage() {
           <section className="content-section">
             <h2 className="text-lg">{venueLabel} 30초 플랜</h2>
             <div className="quickplan-box">
-              <p className="text-[#111111] font-bold text-sm mb-3">{venueContent.quickPlan.decision}</p>
+              <p className="text-[#111111] font-bold text-base mb-3">{venueContent.quickPlan.decision}</p>
               <div className="space-y-2 mb-3">
                 {venueContent.quickPlan.scenarios.map((s, i) => (
-                  <div key={i} className="flex items-start gap-2.5 text-sm text-[#1e293b] leading-relaxed">
+                  <div key={i} className="flex items-start gap-2.5 text-base text-[#1e293b] leading-relaxed">
                     <span className="text-accent font-bold mt-0.5 shrink-0">▸</span>
                     <span>{s}</span>
                   </div>
@@ -360,9 +350,6 @@ export default function VenueDetailPage() {
             </div>
           </section>
 
-          {/* 직접 가본 손님의 한마디 */}
-          <ReviewHighlight venue={venue} />
-
           {/* [후킹14] 리뷰 작성 */}
           <WriteReviewHook />
 
@@ -375,7 +362,7 @@ export default function VenueDetailPage() {
           {/* Conclusion */}
           <section className="content-section">
             <div className="conclusion-box">
-              <p className="text-[#111111] text-sm leading-[1.85] whitespace-pre-line relative">{venueContent.conclusion}</p>
+              <p className="text-[#111111] text-base leading-[1.85] whitespace-pre-line relative">{venueContent.conclusion}</p>
             </div>
           </section>
         </>
@@ -505,7 +492,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         </svg>
       </button>
       <div className={`faq-answer ${open ? '' : 'hidden'}`}>
-        <p className="text-[#1e293b] text-sm leading-relaxed whitespace-pre-line">{a}</p>
+        <p className="text-[#1e293b] text-base leading-relaxed whitespace-pre-line">{a}</p>
       </div>
     </div>
   );

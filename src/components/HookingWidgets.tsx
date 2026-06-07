@@ -189,7 +189,7 @@ export function MidBreakHook() {
       rel="noopener noreferrer"
       className="main-hook-banner block my-8"
     >
-      <p className="font-black text-base mb-1">전체 리뷰 93개 + 실시간 순위</p>
+      <p className="font-black text-base mb-1">실시간 순위 + 전체 비교</p>
       <p className="text-sm opacity-80">놀쿨에서 확인 →</p>
     </a>
   );
@@ -398,31 +398,7 @@ export function Top10Hook({ items }: { items: { rank: number; name: string }[] }
 }
 
 /**
- * FOMO — "N명이 보고 있습니다"
- */
-export function FomoCounter() {
-  const [count, setCount] = useState(() => 200 + Math.floor(Math.random() * 180));
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCount((prev) => {
-        const delta = Math.floor(Math.random() * 7) - 3;
-        return Math.max(150, Math.min(450, prev + delta));
-      });
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <span className="fomo-counter">
-      <span className="fomo-dot" />
-      {count}명이 보고 있습니다
-    </span>
-  );
-}
-
-/**
- * 자이가르닉 — "N/총 탐색 진행률"
+ * 자이가르닉 — "N/총 탐색 진행률" (실데이터: 업소 순번)
  */
 export function ExploreProgress({ current, total }: { current: number; total: number }) {
   const pct = Math.round((current / total) * 100);
@@ -476,7 +452,7 @@ export function AutoplayNext({ venue }: { venue: Venue }) {
       {seconds > 0 && (
         <button
           onClick={cancel}
-          className="block mx-auto mt-2 text-xs text-[#555555] hover:text-[#111111]"
+          className="mx-auto mt-2 px-4 min-h-[44px] inline-flex items-center justify-center text-xs text-[#555555] hover:text-[#111111]"
         >
           취소
         </button>
@@ -546,60 +522,6 @@ export function SwipeGallery({ venue }: { venue: Venue }) {
           />
         ))}
       </div>
-    </section>
-  );
-}
-
-/**
- * VS 투표 — 이 업소 vs 다른 업소
- */
-export function VSVote({ venue }: { venue: Venue }) {
-  const opponent = venues.find(
-    (v) => v.category === venue.category && v.id !== venue.id && v.region !== venue.region
-  );
-  const [voted, setVoted] = useState<string | null>(null);
-  const [counts, setCounts] = useState({ a: 0, b: 0 });
-
-  useEffect(() => {
-    const seed = venue.id.length + (opponent?.id.length || 0);
-    setCounts({ a: 120 + seed * 7 % 80, b: 95 + seed * 11 % 80 });
-  }, [venue.id, opponent?.id]);
-
-  if (!opponent) return null;
-
-  const total = counts.a + counts.b + (voted ? 1 : 0);
-  const pctA = Math.round(((counts.a + (voted === 'a' ? 1 : 0)) / total) * 100);
-  const pctB = 100 - pctA;
-
-  return (
-    <section className="my-8 p-5 bg-surface-warm border-2 border-rosegold rounded-2xl">
-      <h3 className="text-sm font-black text-accent text-center mb-4">VS 투표</h3>
-      <p className="text-center text-sm font-bold text-[#111111] mb-4">어디가 더 끌리나요?</p>
-      <div className="grid grid-cols-2 gap-3">
-        <button
-          onClick={() => !voted && setVoted('a')}
-          className={`p-3 rounded-xl border-2 text-left transition-all min-h-[48px] ${
-            voted === 'a' ? 'border-accent bg-accent/5' : voted ? 'border-rosegold/50 opacity-60' : 'border-rosegold hover:border-accent'
-          }`}
-        >
-          <p className="text-sm font-bold text-[#111111] truncate">{venue.name}</p>
-          <p className="text-xs text-[#555555]">{venue.area}</p>
-          {voted && <p className="text-xs font-black text-accent mt-1">{pctA}%</p>}
-        </button>
-        <button
-          onClick={() => !voted && setVoted('b')}
-          className={`p-3 rounded-xl border-2 text-left transition-all min-h-[48px] ${
-            voted === 'b' ? 'border-accent bg-accent/5' : voted ? 'border-rosegold/50 opacity-60' : 'border-rosegold hover:border-accent'
-          }`}
-        >
-          <p className="text-sm font-bold text-[#111111] truncate">{opponent.name}</p>
-          <p className="text-xs text-[#555555]">{opponent.area}</p>
-          {voted && <p className="text-xs font-black text-accent mt-1">{pctB}%</p>}
-        </button>
-      </div>
-      {voted && (
-        <p className="text-center text-xs text-[#555555] mt-3">{total}명 참여</p>
-      )}
     </section>
   );
 }
@@ -706,29 +628,6 @@ export function SecretReveal({ venue }: { venue: Venue }) {
         )}
       </div>
     </section>
-  );
-}
-
-/**
- * 오늘 N명이 봤습니다 — 일일 카운터
- */
-export function DailyViewCounter({ venueId }: { venueId: string }) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    const d = new Date();
-    const seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
-    let s = seed + venueId.length * 31;
-    s = (s * 16807) % 2147483647;
-    const base = 80 + (s % 320);
-    setCount(base);
-  }, [venueId]);
-
-  return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#555555] bg-surface-warm px-3 py-1.5 rounded-full border border-rosegold/30">
-      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-      오늘 {count}명이 봤습니다
-    </span>
   );
 }
 
@@ -1018,101 +917,6 @@ export function BeforeAfter({ venue }: { venue: Venue }) {
             </div>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-/**
- * Time Attack — 지금 예약하면 N번째 손님!
- */
-export function TimeAttack({ venue }: { venue: Venue }) {
-  const [queue, setQueue] = useState(0);
-
-  useEffect(() => {
-    const d = new Date();
-    const hour = d.getHours();
-    const seed = d.getDate() * 100 + venue.id.length;
-    const base = hour >= 20 ? 5 + (seed % 8) : hour >= 17 ? 12 + (seed % 10) : 20 + (seed % 15);
-    setQueue(base);
-
-    const timer = setInterval(() => {
-      setQueue((prev) => {
-        const delta = Math.random() < 0.6 ? -1 : 0;
-        return Math.max(2, prev + delta);
-      });
-    }, 8000);
-    return () => clearInterval(timer);
-  }, [venue.id]);
-
-  if (!venue.phone || venue.phone === '별도문의') return null;
-
-  return (
-    <section className="my-6">
-      <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-xs font-bold text-amber-700 mb-0.5">TIME ATTACK</p>
-            <p className="text-sm font-black text-[#111]">지금 전화하면 <span className="text-accent">{queue}번째</span> 손님</p>
-          </div>
-          <a
-            href={`tel:${venue.phone.replace(/-/g, '')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-accent text-white text-sm font-bold px-4 py-2.5 rounded-xl min-h-[44px] flex items-center"
-          >
-            바로 전화
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/**
- * Review Highlight — 직접 가본 손님의 한마디 (per-venue unique)
- */
-function generateReviews(venue: Venue): { text: string; tag: string }[] {
-  const label = getVenueLabel(venue);
-  const contact = venue.contact || '담당 실장';
-  const area = venue.area;
-  const s = hashSeed(venue.id);
-  const cat = venue.category || 'night';
-
-  const templates: { text: string; tag: string }[][] = cat === 'club' ? [
-    [{ text: `${label} DJ 라인업 확인하고 갔는데 기대 이상이었다.`, tag: `${area} 금요 피크` }, { text: `${label} 입장 분위기부터 다르다. 한번 오면 또 오게 된다.`, tag: `${label} 토요일` }],
-    [{ text: `${label} 바 카운터에서 한 잔 하면서 분위기 읽는 게 정석이다.`, tag: `${label} 평일` }, { text: `새벽 3시 ${label} 애프터가 진짜 본게임이다.`, tag: `${area} 심야` }],
-    [{ text: `${label} 테이블 예약하고 가니까 대기 시간 제로였다.`, tag: `${label} 그룹` }, { text: `${label}은 스탠딩보다 테이블이 체력 관리에 좋다.`, tag: `${area} 4인` }],
-  ] : cat === 'room' ? [
-    [{ text: `${label} 룸 독립성이 좋아서 대화에 집중할 수 있었다.`, tag: `${label} 접대` }, { text: `${contact} 실장님이 취향 기억하고 맞춰준다.`, tag: `${label} 3회차` }],
-    [{ text: `${label} 사전 연락했더니 세팅 끝나 있었다.`, tag: `${label} 예약` }, { text: `${label} 룸마다 분위기가 달라서 매번 새롭다.`, tag: `${area} 단골` }],
-    [{ text: `${label} 인원에 맞는 룸 추천받았는데 딱 맞았다.`, tag: `${label} 6인` }, { text: `${label} 조명 조절 가능해서 분위기 만들기 좋다.`, tag: `${area} 소모임` }],
-  ] : cat === 'hoppa' ? [
-    [{ text: `${label} 첫 방문인데 ${contact}이 잘 안내해줬다.`, tag: `${label} 첫 방문` }, { text: `${label} 호스트 매너가 진짜 좋았다.`, tag: `${area} 재방문` }],
-    [{ text: `${label}에서 선호 스타일 말하니까 딱 맞는 분 배정해줬다.`, tag: `${label} 2회차` }, { text: `${label} 부담 없는 분위기라 편하게 즐겼다.`, tag: `${area} 평일` }],
-    [{ text: `${label} 혼자 갔는데 전혀 어색하지 않았다.`, tag: `${label} 솔로` }, { text: `${label} 시간 가는 줄 몰랐다. 다음에 또 간다.`, tag: `${area} 주말` }],
-  ] : [
-    [{ text: `${label} 사운드가 진짜 다르다. 몸으로 듣는 느낌.`, tag: `${label} 주말 첫 방문` }, { text: `${label} 분위기 파악하고 바로 단골 결정했다.`, tag: `${area} 평일 3회차` }],
-    [{ text: `${label} ${contact} 추천 자리가 진짜 명당이었다.`, tag: `${label} 금요일` }, { text: `${label} 처음 갔는데 혼자 가도 어색하지 않았다.`, tag: `${area} 일요일` }],
-    [{ text: `${label} 평일에 가면 주말의 반값 느낌이다.`, tag: `${label} 수요일` }, { text: `${label} 자정 넘어서부터 진짜 분위기가 살아난다.`, tag: `${area} 토요 심야` }],
-  ];
-
-  return templates[s % templates.length];
-}
-
-export function ReviewHighlight({ venue }: { venue: Venue }) {
-  const reviews = generateReviews(venue);
-
-  return (
-    <section className="my-8">
-      <h3 className="text-base font-black text-[#111111] mb-4">직접 가본 손님의 한마디</h3>
-      <div className="space-y-3">
-        {reviews.map((r, i) => (
-          <div key={i} className="p-4 bg-surface-warm rounded-xl border border-rosegold/30">
-            <p className="text-sm text-[#1e293b] leading-relaxed mb-2">"{r.text}"</p>
-            <p className="text-xs font-bold text-[#64748B]">{r.tag}</p>
-          </div>
-        ))}
       </div>
     </section>
   );

@@ -54,7 +54,7 @@ export default function HomePage() {
                 to="/venues"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-semibold text-[#333333] bg-white border border-rosegold px-3 py-1.5 rounded-full hover:bg-surface-warm hover:text-accent transition-colors"
+                className="text-xs font-semibold text-[#333333] bg-white border border-rosegold px-3 py-1.5 rounded-full hover:bg-surface-warm hover:text-accent transition-colors min-h-[44px] inline-flex items-center"
               >
                 #{tag}
               </Link>
@@ -85,7 +85,7 @@ export default function HomePage() {
                   href="tel:01036954929"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-xs font-bold text-white bg-[#DAA520] px-4 py-2 rounded-lg hover:bg-[#B8860B] transition-colors"
+                  className="inline-flex items-center text-xs font-bold text-white bg-[#DAA520] px-4 py-2 rounded-lg hover:bg-[#B8860B] transition-colors min-h-[44px]"
                   onClick={(e) => e.stopPropagation()}
                 >
                   신실장 전화하기
@@ -125,7 +125,7 @@ export default function HomePage() {
                   href={`tel:${v.phone.replace(/-/g, '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="shrink-0 text-xs font-bold text-white bg-accent px-3 py-1.5 rounded-lg hover:bg-accent-hover transition-colors"
+                  className="shrink-0 text-xs font-bold text-white bg-accent px-3 py-1.5 rounded-lg hover:bg-accent-hover transition-colors min-h-[44px] inline-flex items-center"
                 >
                   {v.phone}
                 </a>
@@ -147,11 +147,6 @@ export default function HomePage() {
           { rank: 2, name: getVenueLabel(venues[2]) },
           { rank: 3, name: getVenueLabel(venues[3]) },
         ]} />
-      </section>
-
-      {/* [B] VS 대결 투표 */}
-      <section className="px-4 py-4">
-        <VSBattleWidget />
       </section>
 
       {/* [D] 첫 방문 가이드 */}
@@ -320,70 +315,6 @@ function RouletteWidget() {
   );
 }
 
-/** [B] VS 대결 투표 */
-function VSBattleWidget() {
-  const pair = useMemo(() => {
-    const day = new Date().getDay();
-    const a = venues[day % venues.length];
-    const b = venues[(day + 7) % venues.length];
-    return [a, b] as const;
-  }, []);
-
-  const [voted, setVoted] = useState<string | null>(null);
-  const [counts, setCounts] = useState(() => ({
-    a: 40 + Math.floor(Math.random() * 30),
-    b: 40 + Math.floor(Math.random() * 30),
-  }));
-
-  const vote = (side: 'a' | 'b') => {
-    if (voted) return;
-    setVoted(side);
-    setCounts((prev) => ({ ...prev, [side]: prev[side] + 1 }));
-  };
-
-  const total = counts.a + counts.b;
-  const pctA = Math.round((counts.a / total) * 100);
-  const pctB = 100 - pctA;
-
-  return (
-    <div className="cta-section p-5">
-      <h3 className="text-base font-extrabold text-[#111111] mb-1 text-center">이번주 VS 대결</h3>
-      <p className="text-xs text-[#475569] mb-4 text-center">어디가 더 끌리세요?</p>
-      <div className="grid grid-cols-2 gap-3">
-        {[
-          { side: 'a' as const, venue: pair[0], pct: pctA },
-          { side: 'b' as const, venue: pair[1], pct: pctB },
-        ].map(({ side, venue, pct }) => (
-          <button
-            key={side}
-            onClick={() => vote(side)}
-            className={`p-4 rounded-xl border-2 text-center transition-all ${
-              voted === side
-                ? 'border-accent bg-surface-warm'
-                : voted
-                ? 'border-rosegold opacity-60'
-                : 'border-rosegold hover:border-accent hover:bg-surface-warm'
-            }`}
-          >
-            <p className="text-sm font-black text-[#111111] mb-1 leading-tight">{getVenueLabel(venue)}</p>
-            <p className="text-xs text-[#475569]">{venue.area}</p>
-            {voted && (
-              <div className="mt-2">
-                <div className="h-1.5 bg-rosegold rounded-full overflow-hidden">
-                  <div className="h-full bg-accent rounded-full transition-all" style={{ width: `${pct}%` }} />
-                </div>
-                <p className="text-xs font-bold text-accent mt-1">{pct}%</p>
-              </div>
-            )}
-          </button>
-        ))}
-      </div>
-      {voted && (
-        <p className="text-xs text-[#475569] text-center mt-3">총 {total}명 참여</p>
-      )}
-    </div>
-  );
-}
 
 /** [E] 인기 시간대 */
 function PopularTimeWidget() {
@@ -411,7 +342,7 @@ function PopularTimeWidget() {
                 to={venuePath(v)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2.5 bg-white rounded-lg border border-rosegold hover:border-accent transition-colors"
+                className="flex items-center justify-between p-2.5 bg-white rounded-lg border border-rosegold hover:border-accent transition-colors min-h-[44px]"
               >
                 <span className="text-sm font-bold text-[#111111]">{getVenueLabel(v)}</span>
                 <span className="text-xs text-accent font-semibold">{v.contact} 실장</span>

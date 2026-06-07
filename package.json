@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/prerender.mjs",
+    "build": "tsc -b && vite build && node scripts/prerender.mjs && node scripts/gate-darkpatterns.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "gen:card-copy": "node scripts/gen-card-copy.mjs",
@@ -18,7 +18,8 @@
     "lint:similarity": "node scripts/lint-similarity.mjs",
     "gsc:rank": "node scripts/gsc-rank-report.mjs",
     "autopilot": "node scripts/autopilot.mjs",
-    "debug:browser": "node scripts/browser-debug.mjs"
+    "debug:browser": "node scripts/browser-debug.mjs",
+    "gate": "node scripts/gate-darkpatterns.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",

@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Header */}
       <header className="site-header sticky top-0 z-50">
         <div className="px-4 py-3 flex items-center justify-between">
-          <Link to="/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 group" aria-label="홈으로">
+          <Link to="/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 group min-h-[44px]" aria-label="홈으로">
             <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-accent to-rosegold flex items-center justify-center text-white text-sm font-black shadow-md">
               N
             </span>
@@ -91,7 +91,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   to="/venues"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-slate-400 hover:text-white transition-colors bg-white/5 px-3 py-1.5 rounded-lg"
+                  className="text-sm text-slate-400 hover:text-white transition-colors bg-white/5 px-3 py-1.5 rounded-lg min-h-[44px] inline-flex items-center"
                 >
                   {cat.label} ({venues.filter(cat.filter).length})
                 </Link>
@@ -211,7 +211,7 @@ function MobileMenu() {
     <div>
       <button
         onClick={() => setOpen(!open)}
-        className="text-[#111111] p-2 rounded-xl hover:bg-surface-warm transition-colors"
+        className="text-[#111111] p-2 rounded-xl hover:bg-surface-warm transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
         aria-label={open ? '메뉴 닫기' : '메뉴 열기'}
         aria-expanded={open}
       >

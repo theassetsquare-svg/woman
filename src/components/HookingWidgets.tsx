@@ -926,10 +926,6 @@ export function BeforeAfter({ venue }: { venue: Venue }) {
  * SimpleMap — 간단한 약도 + 여기서 N분 거리
  */
 export function SimpleMap({ venue }: { venue: Venue }) {
-  const seed = venue.id.length * 7 + venue.area.length;
-  const walkMin = 3 + (seed % 8);
-  const taxiMin = 5 + (seed % 10);
-
   const landmarks: Record<string, { station: string; landmark: string }> = {
     gangnam: { station: '강남역', landmark: '강남대로' },
     apgujeong: { station: '압구정로데오역', landmark: '갤러리아백화점' },
@@ -962,18 +958,13 @@ export function SimpleMap({ venue }: { venue: Venue }) {
           </span>
           <div>
             <p className="text-sm font-bold text-[#111]">{venue.address}</p>
-            <p className="text-xs text-[#64748B] mt-0.5">{info.landmark} 인근</p>
+            <p className="text-xs text-[#64748B] mt-0.5">{info.station} · {info.landmark} 인근</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          <div className="bg-white p-3 rounded-xl text-center border border-[#E2E8F0]">
-            <p className="text-lg font-black text-accent">{walkMin}분</p>
-            <p className="text-xs text-[#64748B] font-medium">{info.station}에서 도보</p>
-          </div>
-          <div className="bg-white p-3 rounded-xl text-center border border-[#E2E8F0]">
-            <p className="text-lg font-black text-[#111]">{taxiMin}분</p>
-            <p className="text-xs text-[#64748B] font-medium">택시 이용 시</p>
-          </div>
+        <div className="bg-white p-3 rounded-xl border border-[#E2E8F0]">
+          <p className="text-xs text-[#64748B] font-medium leading-relaxed">
+            가까운 역은 {info.station}, 주요 랜드마크는 {info.landmark}입니다. 정확한 위치와 도착 방법은 방문 전 전화로 확인하세요.
+          </p>
         </div>
       </div>
     </section>

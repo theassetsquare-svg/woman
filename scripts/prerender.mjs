@@ -134,10 +134,15 @@ function venueBody(v) {
   if (v.hours && v.hours !== '별도문의') nap.push(`<li><strong>영업시간</strong> ${escHtml(v.hours)}</li>`);
   if (v.phone && v.phone !== '별도문의') nap.push(`<li><strong>연락처</strong> ${escHtml(v.phone)}${v.contact ? ' (' + escHtml(v.contact) + ')' : ''}</li>`);
   const napBlock = nap.length ? `<h2>${escHtml(v.keyword)} 위치·이용 안내</h2><ul>${nap.join('')}</ul>` : '';
+  // 관련 업소(실연관: 같은 지역 + 같은 유형) — dead-end 방지·페이지간 이동
+  const sameRegion = venues.filter((x) => x.region === v.region && x.id !== v.id).slice(0, 4);
+  const sameCat = venues.filter((x) => x.category === v.category && x.region !== v.region && x.id !== v.id).slice(0, 4);
+  const relRegion = sameRegion.length ? `<h2>${escHtml(region)} 다른 업소</h2>${listLinks(sameRegion)}` : '';
+  const relCat = sameCat.length ? `<h2>다른 지역 ${escHtml(CAT[v.category] || '')} 추천</h2>${listLinks(sameCat)}` : '';
   return `<nav aria-label="breadcrumb"><a href="${S(BASE)}" target="_blank" rel="noopener noreferrer">홈</a> / <a href="${S(BASE + '/' + v.region)}" target="_blank" rel="noopener noreferrer">${escHtml(region)}</a> / <span>${escHtml(v.keyword)}</span></nav>
 <h1>${escHtml(v.keyword)}</h1>
 <p>${escHtml(v.description)}</p>${v.cardHook ? para(v.cardHook) : ''}
-${summary}${intro}${secs}${qp}${faq}${concl}${napBlock}
+${summary}${intro}${secs}${qp}${faq}${concl}${napBlock}${relRegion}${relCat}
 ${napLink(v.keyword)}`;
 }
 
@@ -169,6 +174,14 @@ function homeBody(allVenues, regionsList) {
 ${napLink('전국 업소')}`;
 }
 
+// 모든 페이지 공통 내부 내비 (dead-end/orphan 0 보장 — 홈·카테고리·허브 상호링크)
+function siteNav() {
+  const cats = categoryPages.map((c) => `<a href="${S(BASE + c.path)}" target="_blank" rel="noopener noreferrer">전국 ${escHtml(c.label)}</a>`).join(' · ');
+  const hubs = [['/venues', '전체 업소'], ['/ranking', '인기 랭킹'], ['/map', '지역별 찾기'], ['/magazine', '매거진'], ['/events', '이벤트'], ['/quiz', '밤문화 MBTI'], ['/safety', '안전 가이드'], ['/community', '커뮤니티'], ['/community/guidelines', '가이드라인']]
+    .map(([p, l]) => `<a href="${S(BASE + p)}" target="_blank" rel="noopener noreferrer">${escHtml(l)}</a>`).join(' · ');
+  return `<nav aria-label="사이트 메뉴"><a href="${S(BASE)}" target="_blank" rel="noopener noreferrer">놀쿨 홈</a> · ${cats} · ${hubs}</nav>`;
+}
+
 // ====== generateHTML ======
 function generateHTML(opts) {
   const { title, description, ogImage, jsonLd, bodyHtml } = opts;
@@ -188,7 +201,7 @@ function generateHTML(opts) {
     const ldScripts = jsonLd.map((ld) => `<script type="application/ld+json">${JSON.stringify(ld)}</script>`).join('\n    ');
     html = html.replace('</head>', `    ${ldScripts}\n  </head>`);
   }
-  const inner = bodyHtml || '';
+  const inner = (bodyHtml || '') + siteNav();
   html = html.replace('<div id="root"></div>', `<div id="root">${inner}</div>`);
   return html;
 }
@@ -224,7 +237,7 @@ const categoryPages = [
   html = html.replace(/<meta property="og:description" content="[^"]*"/, `<meta property="og:description" content="${escAttr(desc)}"`);
   html = html.replace(/<meta property="og:image" content="[^"]*"/, `<meta property="og:image" content="${BASE}/og/default.jpg"`);
   html = html.replace(/<meta name="twitter:image" content="[^"]*"/, `<meta name="twitter:image" content="${BASE}/og/default.jpg"`);
-  html = html.replace('<div id="root"></div>', `<div id="root">${homeBody(venues, regions)}</div>`);
+  html = html.replace('<div id="root"></div>', `<div id="root">${homeBody(venues, regions)}${siteNav()}</div>`);
   writeFileSync('dist/index.html', html);
   count++;
 }

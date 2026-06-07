@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import type { Venue } from '../data/venues';
 import { getMainLink, getVenueLabel, getVenuesByRegion, venues } from '../data/venues';
@@ -417,46 +417,19 @@ export function ExploreProgress({ current, total }: { current: number; total: nu
 /**
  * 오토플레이 — 글 읽고 후 다음 업소로 자동 이동 안내
  */
+// 자동 이동/카운트다운 없음 — 사용자가 직접 클릭하는 다음 추천 카드(다크패턴 제거).
 export function AutoplayNext({ venue }: { venue: Venue }) {
-  const [seconds, setSeconds] = useState(8);
-  const [cancelled, setCancelled] = useState(false);
-
-  const cancel = useCallback(() => setCancelled(true), []);
-
-  useEffect(() => {
-    if (cancelled) return;
-    if (seconds <= 0) return;
-    const timer = setTimeout(() => setSeconds((s) => s - 1), 1000);
-    return () => clearTimeout(timer);
-  }, [seconds, cancelled]);
-
-  if (cancelled) return null;
-
   return (
     <div className="autoplay-next">
-      <p className="text-sm font-bold text-[#111111] mb-2">
-        {seconds > 0 ? (
-          <>다음 업소로 {seconds}초 후 이동</>
-        ) : (
-          <>지금 바로 확인해 보세요</>
-        )}
-      </p>
+      <p className="text-sm font-bold text-[#111111] mb-2">다음 추천 업소</p>
       <Link
         to={venuePath(venue)}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-accent font-bold text-sm hover:text-accent-hover"
+        className="text-accent font-bold text-sm hover:text-accent-hover min-h-[44px] inline-flex items-center"
       >
         {getVenueLabel(venue)} 보러 가기 →
       </Link>
-      {seconds > 0 && (
-        <button
-          onClick={cancel}
-          className="mx-auto mt-2 px-4 min-h-[44px] inline-flex items-center justify-center text-xs text-[#555555] hover:text-[#111111]"
-        >
-          취소
-        </button>
-      )}
     </div>
   );
 }

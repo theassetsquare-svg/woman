@@ -335,7 +335,7 @@ function PopularTimeWidget() {
       <div className="space-y-2">
         {isNight ? (
           <>
-            <p className="text-sm text-[#333333]">지금 시간({hour}시) 기준 인기 업소</p>
+            <p className="text-base text-[#333333]">지금 시간({hour}시) 기준 인기 업소</p>
             {hotVenues.map((v) => (
               <Link
                 key={v.id}
@@ -351,8 +351,8 @@ function PopularTimeWidget() {
           </>
         ) : (
           <>
-            <p className="text-sm text-[#333333]">PM 9:00~10:00 도착 추천</p>
-            <p className="text-sm text-[#475569]">피크 전 도착하면 좋은 자리 선점 가능. 금·토는 특히 일찍 움직이세요.</p>
+            <p className="text-base text-[#333333]">PM 9:00~10:00 도착 추천</p>
+            <p className="text-base text-[#475569]">피크 전 도착하면 좋은 자리 선점 가능. 금·토는 특히 일찍 움직이세요.</p>
           </>
         )}
       </div>

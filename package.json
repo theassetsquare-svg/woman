@@ -19,6 +19,7 @@
     "gsc:rank": "node scripts/gsc-rank-report.mjs",
     "autopilot": "node scripts/autopilot.mjs",
     "debug:browser": "node scripts/browser-debug.mjs",
+    "gen:og": "node scripts/gen-og.mjs",
     "gate": "node scripts/gate-darkpatterns.mjs"
   },
   "dependencies": {
@@ -40,6 +41,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "libsodium-wrappers": "^0.8.4",
+    "opentype.js": "^2.0.0",
     "puppeteer-core": "^24.43.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",

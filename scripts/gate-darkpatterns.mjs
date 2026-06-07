@@ -20,6 +20,7 @@ const FAKE_STAT = [
   /명이 보고 있습니다/, /오늘 \d+명이 봤습니다/, /전체 리뷰 \d+개/,
   /리뷰 \d+개 \+ 실시간/, /\d+명 참여/, /이번주 VS 대결/, /VS 투표/,
   /직접 가본 손님의 한마디/, /지금 전화하면.{0,12}번째.{0,4}손님/,
+  /\d+초 후 이동/, // AutoplayNext 가짜 카운트다운
 ];
 const BANNED = [/2차/, /초이스/, /노래방/, /성매매/, /미성년/]; // 한글은 \b 미작동 → 평문
 const len = (s) => [...String(s)].length;
@@ -54,32 +55,67 @@ function textLen(htmlFrag) {
   return len(htmlFrag.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim());
 }
 let sameAsOK = false;
+const graph = {}; // route -> Set(target routes)  (내부 링크 그래프)
+const ROUTE_RE = /href="https:\/\/woman-5nj\.pages\.dev(\/[^"#?]*)"/g;
+function normRoute(p) { return p.endsWith('/') ? p : p + '/'; }
 if (existsSync('dist')) {
   const files = walk('dist');
   for (const f of files) {
     const html = readFileSync(f, 'utf8');
-    const route = f.replace(/^dist/, '').replace(/index\.html$/, '') || '/';
+    const route = normRoute(f.replace(/^dist/, '').replace(/index\.html$/, '') || '/');
+    const is404 = /<title>페이지를 찾을 수 없습니다/.test(html);
     // 금지어
     for (const re of BANNED) if (re.test(html)) note(`[금지어] ${re.source} @ ${route}`);
     if (/"sameAs":\s*\[\s*"https:\/\/nolcool\.com"/.test(html)) sameAsOK = true;
+    // og 치수 meta
+    if (!is404 && !/<meta property="og:image:height" content="1200"/.test(html)) note(`[og] og:image:height≠1200 @ ${route}`);
 
-    // SSR: #root 본문 실재 (비-JS 크롤러 가시성)
     const inner = rootInner(html);
+    if (is404) continue; // 404는 색인/그래프 제외
+    // SSR: #root 본문 실재
     if (textLen(inner) < 120) note(`[SSR] #root 본문 빈약(${textLen(inner)}자) @ ${route}`);
     if (!/href="https:\/\/nolcool\.com/.test(inner)) note(`[SSR] 놀쿨 href 부재 @ ${route}`);
-
     // meta 120~160
     const dm = html.match(/<meta name="description" content="([^"]*)"/);
     const dl = dm ? len(dm[1]) : 0;
     if (dl < 120 || dl > 160) note(`[meta] ${dl}자(120~160 이탈) @ ${route}`);
-
-    // venue(NightClub) → FAQPage 필수
+    // venue(NightClub) → FAQPage
     if (/"@type":"NightClub"/.test(html)) {
       if (!/"@type":"FAQPage"/.test(html)) note(`[schema] FAQPage 누락 @ ${route}`);
       if (!/자주 묻는 질문/.test(inner)) note(`[SSR] FAQ 본문 부재 @ ${route}`);
     }
+    // 내부 링크 그래프 (#root 기준)
+    graph[route] = graph[route] || new Set();
+    let mm; ROUTE_RE.lastIndex = 0;
+    while ((mm = ROUTE_RE.exec(inner)) !== null) {
+      const t = normRoute(mm[1]);
+      if (t !== route) graph[route].add(t);
+    }
   }
   if (!sameAsOK) note('[schema] Organization sameAs(nolcool) 누락');
+
+  // dead-end(onward 0) · orphan(inbound 0) 교차검증
+  const routes = Object.keys(graph);
+  const inbound = {};
+  routes.forEach((r) => (inbound[r] = 0));
+  for (const r of routes) for (const t of graph[r]) if (t in inbound) inbound[t]++;
+  for (const r of routes) {
+    if (graph[r].size === 0) note(`[dead-end] onward 링크 0 @ ${r}`);
+    if (r !== '/' && inbound[r] === 0) note(`[orphan] inbound 0 @ ${r}`);
+  }
+}
+
+// og 이미지 파일: 1200×1200 + 텍스트 실재(두부/빈카드 아님, 크기>20KB)
+if (existsSync('public/og')) {
+  const sharp = (await import('sharp')).default;
+  const ogs = readdirSync('public/og').filter((f) => f.endsWith('.jpg'));
+  for (const f of ogs) {
+    const p = join('public/og', f);
+    const sz = readFileSync(p).length;
+    const meta = await sharp(p).metadata();
+    if (meta.width !== 1200 || meta.height !== 1200) note(`[og] 치수 ${meta.width}x${meta.height}≠1200² @ ${f}`);
+    if (sz < 20000) note(`[og] ${Math.round(sz / 1024)}KB<20KB(두부/빈카드 의심) @ ${f}`);
+  }
 }
 
 // ── 3) 실 JS 렌더 (BASE 제공 시): 다크패턴0·본문16px·터치44·놀쿨 ──

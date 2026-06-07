@@ -228,7 +228,8 @@
 /* ===== VENUE GRID ===== */
 .venue-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* minmax(0,1fr): 1fr의 암묵 최소(auto=min-content)가 좁은 뷰포트에서 트랙을 뚫는 잘림 방지 */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
 }
 @media (min-width: 420px) {
@@ -568,6 +569,7 @@
 /* ===== HOOKING ITEM ===== */
 .hooking-item {
   display: flex;
+  flex-wrap: wrap; /* 좁은 뷰포트에서 우측 전화버튼이 다음 줄로 — 업소명 압착(27px) 방지 */
   gap: 1rem;
   align-items: flex-start;
   background: rgba(255, 255, 255, 0.6);
@@ -1154,7 +1156,7 @@
     max-width: 640px;
   }
   .venue-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;
   }
   .phone-bar, .main-link-bar {
@@ -1168,7 +1170,7 @@
     max-width: 1200px;
   }
   .venue-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.5rem;
   }
   /* PC: 하단 고정바 유지, 중앙 정렬 */
@@ -1260,13 +1262,11 @@ img, video, iframe {
   }
 }
 
-/* ===== 터치 타깃 보강(모바일 44px) ===== */
-@media (max-width: 767px) {
-  .nav-link, .breadcrumb a {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-  }
+/* ===== 터치 타깃 보강(전 뷰포트 44px — 768/태블릿 포함) ===== */
+.nav-link, .breadcrumb a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* ===== SCROLLBAR ===== */

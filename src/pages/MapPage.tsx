@@ -42,8 +42,8 @@ export default function MapPage() {
   return (
     <div className="px-4 py-8" style={{ maxWidth: 480, margin: '0 auto' }}>
       {/* Breadcrumb */}
-      <nav className="text-xs text-[#555555] mb-4">
-        <Link to="/" target="_blank" rel="noopener noreferrer" className="hover:text-accent">
+      <nav className="text-xs text-[#555555] mb-4 flex items-center">
+        <Link to="/" target="_blank" rel="noopener noreferrer" className="hover:text-accent min-h-[44px] inline-flex items-center">
           홈
         </Link>
         <span className="mx-1">/</span>

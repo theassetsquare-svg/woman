@@ -110,14 +110,14 @@ export default function HomePage() {
                   <span className="text-accent font-black text-sm">{v.contact}</span>
                   <span className="text-xs text-[#555555]">실장</span>
                 </div>
-                <div className="min-w-0 flex-1">
+                <div className="min-w-[8rem] flex-1">
                   <Link
                     to={venuePath(v)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#111111] font-bold text-sm hover:text-accent transition-colors block truncate"
+                    className="text-[#111111] font-bold text-sm hover:text-accent transition-colors flex items-center min-h-[44px] -my-3"
                   >
-                    {getVenueLabel(v)}
+                    <span className="truncate">{getVenueLabel(v)}</span>
                   </Link>
                   <p className="text-[#475569] text-xs mt-0.5">{v.area} · {v.hours}</p>
                 </div>

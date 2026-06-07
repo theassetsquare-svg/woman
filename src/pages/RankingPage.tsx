@@ -59,8 +59,8 @@ export default function RankingPage() {
   return (
     <div className="px-4 py-8" style={{ maxWidth: 480, margin: '0 auto' }}>
       {/* Breadcrumb */}
-      <nav className="text-xs text-[#555555] mb-4">
-        <Link to="/" target="_blank" rel="noopener noreferrer" className="hover:text-accent">
+      <nav className="text-xs text-[#555555] mb-4 flex items-center">
+        <Link to="/" target="_blank" rel="noopener noreferrer" className="hover:text-accent min-h-[44px] inline-flex items-center">
           홈
         </Link>
         <span className="mx-1">/</span>
@@ -78,7 +78,7 @@ export default function RankingPage() {
           <button
             key={fb.key}
             onClick={() => setFilter(fb.key)}
-            className={`px-3 py-1.5 text-sm font-semibold rounded-full border transition-colors ${
+            className={`px-4 py-1.5 min-h-[44px] text-sm font-semibold rounded-full border transition-colors ${
               filter === fb.key
                 ? 'bg-accent text-white border-accent'
                 : 'bg-white text-[#333333] border-rosegold hover:border-accent'

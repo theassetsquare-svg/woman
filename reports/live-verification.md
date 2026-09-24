@@ -100,7 +100,7 @@
 
 | Item | Status | Detail |
 |------|--------|--------|
-| title | OK | "부산연산동물나이트 — 연산동 대표 나이트, 따봉 실장 직영 \| 호빠 디렉토리" |
+| title | OK | "부산연산동물나이트 — 연산동 대표 나이트, (옛 제목 — 사람 이름 뺌) \| 호빠 디렉토리" |
 | h1 | OK | "부산연산동물나이트" |
 | JSON-LD | OK | BreadcrumbList + **NightClub** (not LocalBusiness) |
 

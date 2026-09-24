@@ -20,7 +20,7 @@ export default function VenueCard({ venue }: { venue: Venue }) {
       {/* Thumbnail */}
       <div className="venue-card-thumb">
         <img
-          src={`/og/${venue.id}.jpg`}
+          src={`/og/${venue.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : venue.id}.jpg`}
           alt={label}
           width={480}
           height={270}

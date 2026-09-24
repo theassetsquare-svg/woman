@@ -363,7 +363,7 @@ for (const v of venues) {
   };
   const localBusiness = {
     '@context': 'https://schema.org', '@type': 'NightClub',
-    name: v.keyword, url: S(`${BASE}${v.path}`), image: `${BASE}/og/${v.id}.jpg`,
+    name: v.keyword, url: S(`${BASE}${v.path}`), image: `${BASE}/og/${v.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : v.id}.jpg`,
   };
   if (v.description) localBusiness.description = v.description;
   if (v.phone && v.phone !== '별도문의') localBusiness.telephone = v.phone;
@@ -381,7 +381,7 @@ for (const v of venues) {
 
   writePage(v.path, generateHTML({
     title, description, canonical: `${BASE}${v.path}`,
-    ogImage: `${BASE}/og/${v.id}.jpg`, jsonLd, bodyHtml: venueBody(v),
+    ogImage: `${BASE}/og/${v.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : v.id}.jpg`, jsonLd, bodyHtml: venueBody(v),
   }));
   count++;
 }

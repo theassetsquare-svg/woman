@@ -16,7 +16,6 @@ const boards = [
 
 const samplePosts = [
   { board: '자유', title: '금요일 강남 어디가 핫한지 아는 분?', author: '밤의왕자', likes: 47, comments: 12 },
-  { board: '후기', title: '수원찬스돔나이트 다녀왔는데 강호동 실장 진짜 웃겨', author: '수원토박이', likes: 83, comments: 24 },
   { board: '팁', title: '나이트 처음 가는 사람이 꼭 알아야 할 5가지', author: '베테랑', likes: 156, comments: 31 },
   { board: '패션', title: '클럽 갈 때 이 조합이면 무조건 입장', author: '패션피플', likes: 72, comments: 18 },
   { board: 'Q&A', title: '홍대 vs 강남 클럽 분위기 차이가 뭐예요?', author: '초보탐험가', likes: 34, comments: 15 },

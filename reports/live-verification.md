@@ -94,7 +94,7 @@
 | title | OK | "수원호빠 비스트 — 새벽 8시까지, 12시간 논스톱 영업 \| 호빠 디렉토리" |
 | h1 | OK | "수원호빠 비스트" |
 | JSON-LD | OK | BreadcrumbList + LocalBusiness |
-| Phone | OK | 010-8289-9196 |
+| Phone | OK | 카톡 besta12 |
 
 ### 8. Detail (Night) — https://woman-5nj.pages.dev/busan/mulnight
 

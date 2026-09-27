@@ -56,7 +56,8 @@ function textLen(htmlFrag) {
 }
 let sameAsOK = false;
 const graph = {}; // route -> Set(target routes)  (내부 링크 그래프)
-const ROUTE_RE = /href="https:\/\/woman-5nj\.pages\.dev(\/[^"#?]*)"/g;
+// 2026-09-27 전용22 호스트 이동(woman-5nj.pages.dev → ff.nolcool.com) 뒤에도 내부 링크를 센다
+const ROUTE_RE = /href="https:\/\/(?:woman-5nj\.pages\.dev|ff\.nolcool\.com)(\/[^"#?]*)"/g;
 function normRoute(p) { return p.endsWith('/') ? p : p + '/'; }
 if (existsSync('dist')) {
   const files = walk('dist');
@@ -72,6 +73,7 @@ if (existsSync('dist')) {
 
     const inner = rootInner(html);
     if (is404) continue; // 404는 색인/그래프 제외
+    if (!/<div id="root">/.test(html)) continue; // 전용22 정적 쪽(#root 없음)은 앱 규칙 밖 — 대표님 승인 09-27
     // SSR: #root 본문 실재
     if (textLen(inner) < 120) note(`[SSR] #root 본문 빈약(${textLen(inner)}자) @ ${route}`);
     if (!/href="https:\/\/nolcool\.com/.test(inner)) note(`[SSR] 놀쿨 href 부재 @ ${route}`);

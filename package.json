@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/prerender.mjs && node scripts/gate-darkpatterns.mjs",
+    "build": "tsc -b && vite build && node scripts/prerender.mjs && node scripts/gate-darkpatterns.mjs && node scripts/dedicated-home.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "gen:card-copy": "node scripts/gen-card-copy.mjs",

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const BASE_URL = 'https://woman-5nj.pages.dev';
+const BASE_URL = 'https://ff.nolcool.com';
 const SITE_NAME = '놀쿨 NOLCOOL';
 
 interface OgMetaOptions {

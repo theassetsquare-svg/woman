@@ -26,7 +26,7 @@ export default function VenueListPage() {
         '@type': 'ListItem',
         position: i + 1,
         name: getVenueLabel(v),
-        url: `https://woman-5nj.pages.dev${venuePath(v)}`,
+        url: `https://ff.nolcool.com${venuePath(v)}`,
       })),
     };
     const script = document.createElement('script');

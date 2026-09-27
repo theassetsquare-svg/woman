@@ -93,7 +93,7 @@ if (regionUrlMatches) {
 
 // Verify all new venue URLs are in sitemap
 for (const v of venues) {
-  const url = `https://woman-5nj.pages.dev${venuePath(v)}`;
+  const url = `https://ff.nolcool.com${venuePath(v)}`;
   if (!sitemap.includes(url)) {
     console.log(`  ❌ Missing from sitemap: ${url}`);
     errors++;
@@ -101,7 +101,7 @@ for (const v of venues) {
 }
 // Verify all region URLs are in sitemap
 for (const r of regions) {
-  const url = `https://woman-5nj.pages.dev/${r}`;
+  const url = `https://ff.nolcool.com/${r}`;
   if (!sitemap.includes(url)) {
     console.log(`  ❌ Missing region from sitemap: ${url}`);
     errors++;

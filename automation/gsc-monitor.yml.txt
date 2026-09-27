@@ -38,7 +38,7 @@ jobs:
         if: ${{ env.GSC_CREDENTIALS_JSON != '' }}
         env:
           GSC_CREDENTIALS_JSON: ${{ secrets.GSC_CREDENTIALS_JSON }}
-        run: node scripts/gsc.mjs submit-sitemap https://woman-5nj.pages.dev/ || true
+        run: node scripts/gsc.mjs submit-sitemap https://ff.nolcool.com/ || true
 
       - name: Run health monitor
         id: monitor

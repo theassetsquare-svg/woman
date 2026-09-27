@@ -1,6 +1,6 @@
 # GSC/사이트 모니터 리포트
 - 시각: 2026-06-01T20:43:01.095Z
-- 사이트: https://woman-5nj.pages.dev/
+- 사이트: https://ff.nolcool.com/
 
 ## 🔴 문제 (0)
 - 없음 ✅

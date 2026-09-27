@@ -2,7 +2,7 @@
  * URL slug utilities — deduplicate region tokens from venue paths.
  */
 
-const BASE_URL = 'https://woman-5nj.pages.dev';
+const BASE_URL = 'https://ff.nolcool.com';
 
 /**
  * Strip the region prefix from a venue ID if it matches the region.

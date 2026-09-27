@@ -8,7 +8,7 @@ import fs from 'node:fs';
 const CHROME =
   process.env.CHROME_PATH ||
   '/nix/store/lpdrfl6n16q5zdf8acp4bni7yczzcx3h-idx-builtins/bin/chromium';
-const ORIGIN = (process.env.GSC_SITE || 'https://woman-5nj.pages.dev').replace(/\/$/, '');
+const ORIGIN = (process.env.GSC_SITE || 'https://ff.nolcool.com').replace(/\/$/, '');
 
 function sitemapPaths() {
   const sm = fs.readFileSync('public/sitemap.xml', 'utf8');

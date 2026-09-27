@@ -37,4 +37,4 @@ Allow: /
 User-agent: Kakaotalk-scrap
 Allow: /
 
-Sitemap: https://woman-5nj.pages.dev/sitemap.xml
+Sitemap: https://ff.nolcool.com/sitemap.xml

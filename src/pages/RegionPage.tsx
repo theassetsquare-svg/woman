@@ -6,7 +6,7 @@ import { useOgMeta } from '../hooks/useOgMeta';
 import { useRobots } from '../hooks/useRobots';
 import VenueCard from '../components/VenueCard';
 
-const BASE = 'https://woman-5nj.pages.dev';
+const BASE = 'https://ff.nolcool.com';
 const MAIN = getMainLink();
 
 export default function RegionPage() {

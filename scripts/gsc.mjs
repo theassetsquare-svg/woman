@@ -8,7 +8,7 @@
 import { gscClient } from './gsc-lib.mjs';
 
 const DEFAULT_SITE =
-  process.env.GSC_SITE || 'https://woman-5nj.pages.dev/';
+  process.env.GSC_SITE || 'https://ff.nolcool.com/';
 
 function dateRange(days) {
   const end = new Date();

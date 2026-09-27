@@ -10,7 +10,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { parseVenueContent } from './lib-content.mjs';
 
-const BASE = 'https://woman-5nj.pages.dev';
+const BASE = 'https://ff.nolcool.com';
 const SITE_NAME = '여성이 편안한 밤문화';
 const MAIN = 'https://nolcool.com';
 const template = readFileSync('dist/index.html', 'utf8');

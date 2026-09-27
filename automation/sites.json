@@ -4,14 +4,14 @@
     {
       "id": "woman",
       "name": "놀쿨 위성 (woman)",
-      "base": "https://woman-5nj.pages.dev",
+      "base": "https://ff.nolcool.com",
       "repo": "theassetsquare-svg/woman",
-      "sitemap": "https://woman-5nj.pages.dev/sitemap.xml",
+      "sitemap": "https://ff.nolcool.com/sitemap.xml",
       "mainSite": "https://nolcool.com",
-      "ogDefault": "https://woman-5nj.pages.dev/og/default.jpg",
+      "ogDefault": "https://ff.nolcool.com/og/default.jpg",
       "deployHookSecret": "WOMAN_DEPLOY_HOOK",
       "indexNowKeySecret": "WOMAN_INDEXNOW_KEY",
-      "gscProperty": "https://woman-5nj.pages.dev/",
+      "gscProperty": "https://ff.nolcool.com/",
       "sampleRoutes": [
         "/",
         "/busan/mul-night/",

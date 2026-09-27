@@ -107,7 +107,7 @@ export default function EventsPage() {
     organizer: {
       '@type': 'Organization',
       name: '여성이 편안한 밤문화',
-      url: 'https://woman-5nj.pages.dev',
+      url: 'https://ff.nolcool.com',
     },
   };
 

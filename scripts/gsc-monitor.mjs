@@ -14,7 +14,7 @@
 import fs from 'node:fs';
 import { gscClient } from './gsc-lib.mjs';
 
-const SITE = process.env.GSC_SITE || 'https://woman-5nj.pages.dev/';
+const SITE = process.env.GSC_SITE || 'https://ff.nolcool.com/';
 const ORIGIN = SITE.replace(/\/$/, '');
 const OUT_DIR = 'reports/gsc';
 const problems = [];

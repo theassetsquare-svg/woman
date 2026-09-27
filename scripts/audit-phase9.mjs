@@ -21,7 +21,7 @@ console.log('=== PHASE 9: Final SEO/AEO/GEO Audit ===\n');
 console.log('A) Naver Readiness');
 const robots = readFileSync(resolve(root, 'public/robots.txt'), 'utf-8');
 check('robots.txt allows Yeti', robots.includes('User-agent: Yeti') && robots.includes('Allow: /'));
-check('robots.txt has Sitemap', robots.includes('Sitemap: https://woman-5nj.pages.dev/sitemap.xml'));
+check('robots.txt has Sitemap', robots.includes('Sitemap: https://ff.nolcool.com/sitemap.xml'));
 check('RSS feed exists', existsSync(resolve(root, 'public/rss.xml')));
 const rss = readFileSync(resolve(root, 'public/rss.xml'), 'utf-8');
 check('RSS has 23 items', (rss.match(/<item>/g) || []).length === 23);

@@ -1,7 +1,7 @@
 # Live Site Verification Report
 
 **Date**: 2026-03-11
-**URL**: https://woman-5nj.pages.dev
+**URL**: https://ff.nolcool.com
 **Deploy**: Cloudflare Pages (main branch auto-deploy)
 **Commit**: d0f738a
 
@@ -21,20 +21,20 @@
 
 ## Live URL Sampling (10 pages)
 
-### 1. Home — https://woman-5nj.pages.dev
+### 1. Home — https://ff.nolcool.com
 
 | Item | Status | Detail |
 |------|--------|--------|
 | title | OK | "호빠 추천 TOP 25 — 오늘 밤 어디 갈지 3초면 끝 \| 호빠 디렉토리" |
 | h1 | OK | "전국 호빠 추천 TOP 25" |
 | meta description | OK | "강남·해운대·수원·대전·광주·창원 검증 완료..." |
-| canonical | OK | https://woman-5nj.pages.dev |
+| canonical | OK | https://ff.nolcool.com |
 | OG tags | OK | og:type, og:title, og:description, og:image set |
 | JSON-LD | OK | WebSite + Organization + ItemList (25 venues) |
 | CTA/Layout | OK | Venue cards visible, navigation functional |
 | FAQ/Internal links | OK | 25 venue links, region navigation |
 
-### 2. Venues List — https://woman-5nj.pages.dev/venues
+### 2. Venues List — https://ff.nolcool.com/venues
 
 | Item | Status | Detail |
 |------|--------|--------|
@@ -44,7 +44,7 @@
 | JSON-LD | OK | ItemList schema |
 | Search/Filter | OK | Region filter + text search |
 
-### 3. Night Page — https://woman-5nj.pages.dev/night
+### 3. Night Page — https://ff.nolcool.com/night
 
 | Item | Status | Detail |
 |------|--------|--------|
@@ -53,7 +53,7 @@
 | JSON-LD | OK | ItemList schema |
 | Grouping | OK | Venues grouped by area |
 
-### 4. Region Page (Gangnam) — https://woman-5nj.pages.dev/gangnam
+### 4. Region Page (Gangnam) — https://ff.nolcool.com/gangnam
 
 | Item | Status | Detail |
 |------|--------|--------|
@@ -63,31 +63,31 @@
 | Breadcrumb | OK | HTML breadcrumb visible |
 | Venues | OK | 4 Gangnam venues listed |
 
-### 5. Detail (Hobba) — https://woman-5nj.pages.dev/gangnam/boston
+### 5. Detail (Hobba) — https://ff.nolcool.com/gangnam/boston
 
 | Item | Status | Detail |
 |------|--------|--------|
 | title | OK | "강남호빠 보스턴 — 정찰제 12년 검증, 첫 방문 완벽 가이드 \| 호빠 디렉토리" |
 | h1 | OK | "강남호빠 보스턴" |
 | meta description | OK | "강남호빠 보스턴, 테헤란로에서 12년째 정찰제 운영..." |
-| canonical | OK | https://woman-5nj.pages.dev/gangnam/boston |
-| og:image | OK | https://woman-5nj.pages.dev/og/gangnam-boston.svg |
+| canonical | OK | https://ff.nolcool.com/gangnam/boston |
+| og:image | OK | https://ff.nolcool.com/og/gangnam-boston.svg |
 | JSON-LD | OK | BreadcrumbList + LocalBusiness |
 | FAQ | OK | FAQ items present |
 | Related venues | OK | "같은 지역 다른 호빠" section |
 | Phone bar | OK | 0507-0094-1200 |
 
-### 6. Detail (Hobba) — https://woman-5nj.pages.dev/busan/michelin
+### 6. Detail (Hobba) — https://ff.nolcool.com/busan/michelin
 
 | Item | Status | Detail |
 |------|--------|--------|
 | title | OK | "해운대호빠 미슐랭 — 에이스 5인 배치, 마린시티 야경 앞 \| 호빠 디렉토리" |
 | h1 | OK | "해운대호빠 미슐랭" |
-| og:image | OK | https://woman-5nj.pages.dev/og/busan-michelin.svg |
+| og:image | OK | https://ff.nolcool.com/og/busan-michelin.svg |
 | JSON-LD | OK | BreadcrumbList + LocalBusiness |
 | Phone | OK | "별도문의" (no phone bar) |
 
-### 7. Detail (Hobba) — https://woman-5nj.pages.dev/gyeonggi/suwon-beast
+### 7. Detail (Hobba) — https://ff.nolcool.com/gyeonggi/suwon-beast
 
 | Item | Status | Detail |
 |------|--------|--------|
@@ -96,7 +96,7 @@
 | JSON-LD | OK | BreadcrumbList + LocalBusiness |
 | Phone | OK | 카톡 besta12 |
 
-### 8. Detail (Night) — https://woman-5nj.pages.dev/busan/mulnight
+### 8. Detail (Night) — https://ff.nolcool.com/busan/mulnight
 
 | Item | Status | Detail |
 |------|--------|--------|
@@ -104,7 +104,7 @@
 | h1 | OK | "부산연산동물나이트" |
 | JSON-LD | OK | BreadcrumbList + **NightClub** (not LocalBusiness) |
 
-### 9. Detail (Club) — https://woman-5nj.pages.dev/gangnam/club-race
+### 9. Detail (Club) — https://ff.nolcool.com/gangnam/club-race
 
 | Item | Status | Detail |
 |------|--------|--------|
@@ -112,7 +112,7 @@
 | h1 | OK | "강남클럽 레이스" |
 | JSON-LD | OK | BreadcrumbList + **NightClub** |
 
-### 10. Detail (Lounge) — https://woman-5nj.pages.dev/gangnam/lounge-hype
+### 10. Detail (Lounge) — https://ff.nolcool.com/gangnam/lounge-hype
 
 | Item | Status | Detail |
 |------|--------|--------|

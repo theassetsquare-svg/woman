@@ -135,8 +135,8 @@ function venueBody(v) {
   if (v.phone && v.phone !== '별도문의') nap.push(`<li><strong>연락처</strong> ${escHtml(v.phone)}${v.contact ? ' (' + escHtml(v.contact) + ')' : ''}</li>`);
   const napBlock = nap.length ? `<h2>${escHtml(v.keyword)} 위치·이용 안내</h2><ul>${nap.join('')}</ul>` : '';
   // 관련 업소(실연관: 같은 지역 + 같은 유형) — dead-end 방지·페이지간 이동
-  const sameRegion = venues.filter((x) => x.region === v.region && x.id !== v.id).slice(0, 4);
-  const sameCat = venues.filter((x) => x.category === v.category && x.region !== v.region && x.id !== v.id).slice(0, 4);
+  const sameRegion = linkVenues.filter((x) => x.region === v.region && x.id !== v.id).slice(0, 4);
+  const sameCat = linkVenues.filter((x) => x.category === v.category && x.region !== v.region && x.id !== v.id).slice(0, 4);
   const relRegion = sameRegion.length ? `<h2>${escHtml(region)} 다른 업소</h2>${listLinks(sameRegion)}` : '';
   const relCat = sameCat.length ? `<h2>다른 지역 ${escHtml(CAT[v.category] || '')} 추천</h2>${listLinks(sameCat)}` : '';
   return `<nav aria-label="breadcrumb"><a href="${S(BASE)}" target="_blank" rel="noopener noreferrer">홈</a> / <a href="${S(BASE + '/' + v.region)}" target="_blank" rel="noopener noreferrer">${escHtml(region)}</a> / <span>${escHtml(v.keyword)}</span></nav>
@@ -148,6 +148,23 @@ ${napLink(v.keyword)}`;
 
 function listLinks(items) {
   return `<ul>${items.map((v) => `<li><a href="${S(BASE + v.path)}" target="_blank" rel="noopener noreferrer">${escHtml(v.keyword)}</a> — ${escHtml(v.area)} ${escHtml(CAT[v.category] || '')}</li>`).join('')}</ul>`;
+}
+// 전용22-8(2026-10-07) — 앱 자료에서 빼고 정적 쪽으로 둔 가게(src/data/staticVenueLinks.ts)는
+// 「링크만 있는 줄」로 목록·추천·곳 수에 남긴다(닉네임·번호·그림 0). 빼기 전 venues.ts 의 그 자리(after 가게 바로 뒤)에
+// 끼워 linkVenues 를 만든다 → 다른 쪽(지역·유형·전체 목록 · 가게 쪽의 「다른 업소」「다른 지역 추천」)의 HTML 이 빼기 전과 같다.
+// 쪽을 만드는 루프(가게 쪽 · 사이트맵)는 venues 그대로 쓴다 — 정적 쪽은 public/ 의 손 파일이 그대로 dist 로 간다.
+const staticLinks = [...readFileSync('src/data/staticVenueLinks.ts', 'utf8')
+  .matchAll(/\{\s*region:\s*"([^"]+)",\s*name:\s*"([^"]*)",\s*tail:\s*"([^"]*)",\s*href:\s*"([^"]*)",\s*category:\s*"([^"]*)",\s*area:\s*"([^"]*)",\s*after:\s*"([^"]*)"\s*\}/g)]
+  .map((m) => ({ region: m[1], name: m[2], tail: m[3], href: m[4], category: m[5], area: m[6], after: m[7] }));
+function buildLinkVenues(list) {
+  const out = [...list];
+  for (const s of staticLinks) {
+    if (!s.href.startsWith(BASE + '/')) throw new Error(`staticVenueLinks: 주소가 ${BASE}/ 로 시작하지 않음 — ${s.href}`);
+    const at = out.findIndex((x) => x.id === s.after);
+    if (at < 0) throw new Error(`staticVenueLinks: after 가게를 venues.ts 에서 못 찾음 — ${s.after}`);
+    out.splice(at + 1, 0, { id: 'static:' + s.href, region: s.region, category: s.category, keyword: s.name, area: s.area, path: s.href.slice(BASE.length) });
+  }
+  return out;
 }
 function regionBody(regionId, desc, list) {
   const name = getRegionName(regionId);
@@ -214,6 +231,7 @@ function writePage(path, html) {
 
 // ====== Generate ======
 const venues = parseVenues();
+const linkVenues = buildLinkVenues(venues); // 목록·추천·곳 수 전용(정적 쪽으로 둔 가게의 링크 줄 포함)
 const regions = [...new Set(venues.map((v) => v.region))];
 let count = 0;
 
@@ -229,7 +247,7 @@ const categoryPages = [
 // Home
 {
   const desc = finalizeMeta(
-    '놀쿨 — 전국 나이트·클럽·라운지·룸·요정·호빠 ' + venues.length + '곳 현장 검증 완료.',
+    '놀쿨 — 전국 나이트·클럽·라운지·룸·요정·호빠 ' + linkVenues.length + '곳 현장 검증 완료.',
     ['실장 연락처·분위기·위치·영업시간까지 지역별로 한눈에 비교하고 오늘 갈 곳을 실패 없이 고르세요.']
   );
   let html = template;
@@ -237,7 +255,7 @@ const categoryPages = [
   html = html.replace(/<meta property="og:description" content="[^"]*"/, `<meta property="og:description" content="${escAttr(desc)}"`);
   html = html.replace(/<meta property="og:image" content="[^"]*"/, `<meta property="og:image" content="${BASE}/og/default.jpg"`);
   html = html.replace(/<meta name="twitter:image" content="[^"]*"/, `<meta name="twitter:image" content="${BASE}/og/default.jpg"`);
-  html = html.replace('<div id="root"></div>', `<div id="root">${homeBody(venues, regions)}${siteNav()}</div>`);
+  html = html.replace('<div id="root"></div>', `<div id="root">${homeBody(linkVenues, regions)}${siteNav()}</div>`);
   writeFileSync('dist/index.html', html);
   count++;
 }
@@ -246,12 +264,12 @@ const categoryPages = [
 {
   const desc = finalizeMeta(
     '강남부터 울산까지 현장 검증한 업소만 모았습니다.',
-    ['지역·분위기·실장·카테고리로 걸러 오늘 내게 딱 맞는 한 곳을 빠르게 고르세요. 전국 ' + venues.length + '곳을 비교할 수 있습니다.']
+    ['지역·분위기·실장·카테고리로 걸러 오늘 내게 딱 맞는 한 곳을 빠르게 고르세요. 전국 ' + linkVenues.length + '곳을 비교할 수 있습니다.']
   );
   writePage('/venues', generateHTML({
-    title: `전국 나이트·클럽·라운지 ${venues.length}곳 — 지역별 필터 검색 | ${SITE_NAME}`,
+    title: `전국 나이트·클럽·라운지 ${linkVenues.length}곳 — 지역별 필터 검색 | ${SITE_NAME}`,
     description: desc, canonical: `${BASE}/venues`,
-    bodyHtml: guideBody('전체 업소 목록', '강남부터 울산까지 현장 검증한 전국 ' + venues.length + '곳을 지역·분위기·실장·카테고리로 비교하세요.') + listLinks(venues),
+    bodyHtml: guideBody('전체 업소 목록', '강남부터 울산까지 현장 검증한 전국 ' + linkVenues.length + '곳을 지역·분위기·실장·카테고리로 비교하세요.') + listLinks(linkVenues),
   }));
   count++;
 }
@@ -265,7 +283,7 @@ for (const m of regionSeoSrc.matchAll(/'([a-z0-9-]+)':\s*\{\s*title:\s*"([^"]*)"
 for (const regionId of regions) {
   const name = getRegionName(regionId);
   const meta = regionMeta[regionId] || { title: `${name} 밤문화 가이드`, desc: `${name} 지역 밤문화 정보를 정리했습니다.` };
-  const list = venues.filter((v) => v.region === regionId);
+  const list = linkVenues.filter((v) => v.region === regionId);
   const desc = finalizeMeta(meta.desc, [`${name} 지역 업소를 분위기·실장 연결·위치 기준으로 비교해 오늘 갈 곳을 정하세요.`]);
   const breadcrumb = {
     '@context': 'https://schema.org', '@type': 'BreadcrumbList',
@@ -288,7 +306,7 @@ for (const m of catSrc.matchAll(/(\w+):\s*\{\s*label:\s*'[^']*',\s*plural:\s*'[^
   catMeta[m[1]] = { title: m[2], desc: m[3] };
 }
 for (const cp of categoryPages) {
-  const list = venues.filter((v) => v.category === cp.key);
+  const list = linkVenues.filter((v) => v.category === cp.key);
   const meta = catMeta[cp.key] || { title: `전국 ${cp.label}`, desc: `전국 ${cp.label} ${list.length}곳 현장 검증.` };
   const desc = finalizeMeta(meta.desc, [`전국 ${cp.label} ${list.length}곳을 현장 검증 정보로 비교하고 실패 없는 한 곳을 고르세요.`]);
   writePage(cp.path, generateHTML({

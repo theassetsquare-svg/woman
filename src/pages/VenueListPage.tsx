@@ -2,11 +2,15 @@ import { useState, useMemo, useEffect } from 'react';
 import { venues, regions, getRegionCount, getVenueLabel } from '../data/venues';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { venuePath } from '../utils/slug';
+import { staticVenueLinks } from '../data/staticVenueLinks';
 import VenueCard from '../components/VenueCard';
+
+// 전용22-8(2026-10-07) — 정적 쪽으로 둔 가게(링크만 있는 줄)도 곳 수에 넣어 센다(프리렌더 HTML 과 같은 숫자).
+const TOTAL = venues.length + staticVenueLinks.length;
 
 export default function VenueListPage() {
   useOgMeta({
-    title: `전국 나이트·클럽·라운지 ${venues.length}곳 — 지역별 필터 검색`,
+    title: `전국 나이트·클럽·라운지 ${TOTAL}곳 — 지역별 필터 검색`,
     description: `강남부터 울산까지 현장 검증한 업소만 모았습니다. 지역·분위기·실장·카테고리로 걸러 오늘 내게 딱 맞는 한 곳을 빠르게 고르세요.`,
     image: '',
     url: '/venues',
@@ -21,12 +25,15 @@ export default function VenueListPage() {
       '@context': 'https://schema.org',
       '@type': 'ItemList',
       name: '전국 나이트·클럽·라운지 목록',
-      numberOfItems: venues.length,
-      itemListElement: venues.map((v, i) => ({
+      numberOfItems: TOTAL,
+      itemListElement: [
+        ...venues.map((v) => ({ name: getVenueLabel(v), url: `https://ff.nolcool.com${venuePath(v)}` })),
+        ...staticVenueLinks.map((s) => ({ name: s.name, url: s.href })),
+      ].map((it, i) => ({
         '@type': 'ListItem',
         position: i + 1,
-        name: getVenueLabel(v),
-        url: `https://ff.nolcool.com${venuePath(v)}`,
+        name: it.name,
+        url: it.url,
       })),
     };
     const script = document.createElement('script');
@@ -58,7 +65,7 @@ export default function VenueListPage() {
       <div className="mb-8">
         <h1 className="mb-2">전체 업소 목록</h1>
         <p className="text-[#475569] text-sm leading-relaxed">
-          전국 {venues.length}곳을 검색하고 비교하세요.
+          전국 {TOTAL}곳을 검색하고 비교하세요.
         </p>
       </div>
 

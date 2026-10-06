@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { regions, getVenuesByRegion, getRegionName, getRegionCount, getMainLink } from '../data/venues';
 import { regionSeo } from '../data/regionSeo';
+import { staticVenueLinks } from '../data/staticVenueLinks';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { useRobots } from '../hooks/useRobots';
 import VenueCard from '../components/VenueCard';
@@ -15,6 +16,8 @@ export default function RegionPage() {
   const venueList = regionId ? getVenuesByRegion(regionId) : [];
 
   const seo = region ? regionSeo[region.id] : null;
+  // 정적 쪽으로 둔 가게 — 링크만 있는 줄(라우터 밖 쪽이라 보통 a · 닉네임·번호·그림 0)
+  const staticLinks = staticVenueLinks.filter((s) => s.region === regionId);
 
   useOgMeta(
     region
@@ -101,6 +104,25 @@ export default function RegionPage() {
             <VenueCard key={v.id} venue={v} />
           ))}
         </div>
+      )}
+
+      {/* 정적 쪽으로 둔 가게 — 링크만 있는 줄 */}
+      {staticLinks.length > 0 && (
+        <ul className="mt-6 text-base text-[#475569]">
+          {staticLinks.map((s) => (
+            <li key={s.href}>
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center min-h-[44px] text-accent hover:text-accent-hover font-semibold"
+              >
+                {s.name}
+              </a>{' '}
+              — {s.tail}
+            </li>
+          ))}
+        </ul>
       )}
 
       {/* 메인 유입 CTA */}

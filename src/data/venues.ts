@@ -1,3 +1,4 @@
+import { staticVenueLinks } from './staticVenueLinks';
 export interface Venue {
   id: string;
   name: string;
@@ -150,24 +151,6 @@ export const venues: Venue[] = [
     card_value: '강남 대표 전통 · 레전드급 · PM 9:00~',
     card_tags: '강남 · 30년전통 · 레전드',
     keyword: '강남줄리아나나이트',
-    category: 'night',
-  },
-  {
-    id: 'sinlim-grandprix-night',
-    name: '신림그랑프리나이트',
-    region: 'seoul-etc',
-    area: '신림',
-    seoArea: '신림',
-    address: '서울 관악구 신림동',
-    description: '관악구 최대 규모의 대형 나이트클럽입니다.',
-    hours: 'PM 9:00 ~ AM 5:00',
-    phone: '별도문의',
-    tags: ['신림', '관악구', '나이트', '대규모'],
-    card_hook: '관악구 최대 무대.\n역에서 5분, 금요 밤 인파가 몰리는 곳.',
-    card_value: '관악구 최대 · PM 9:00~',
-    card_tags: '신림 · 대규모 · 강력사운드',
-    keyword: '신림그랑프리나이트',
-    contact: '',
     category: 'night',
   },
   {
@@ -1885,7 +1868,6 @@ const seoHooks: Record<string, string> = {
   // 나이트 서울
   'cheongdam-h2o-night': 'VIP 동선 설계, 펩시맨 실장의 고급 경험',
   'gangnam-juliana-night': '30년 전통이 증명하는 레전드급 무대의 저력',
-  'sinlim-grandprix-night': '역에서 5분, 관악 최대 무대',
   'sangbong-hankukgwan-night': '전통 명소, 세대를 넘어 이어지는 단골 신뢰',
   'suyu-shampoo-night': '강북 최강 사운드, 평일에도 빈자리 없는 이유',
   'doksan-gukbingwan-night': '금천구 유일 대형 무대, 가산에서도 찾아오는 입소문',
@@ -2010,7 +1992,6 @@ const seoDescriptions: Record<string, string> = {
   // 나이트 서울
   'cheongdam-h2o-night': '청담H2O나이트는 펩시맨 실장이 이끄는 강남권 최고급 공간입니다. VIP 전용 동선이 설계되어 입장부터 퇴장까지 격이 다릅니다.',
   'gangnam-juliana-night': '강남줄리아나나이트는 30년 전통의 레전드급 무대입니다. 세대를 넘어 사랑받는 강남 밤문화의 상징이며, 방문 전 현장 확인을 추천합니다.',
-  'sinlim-grandprix-night': '역에서 도보 5분, 금요일 밤이면 인파가 몰립니다.',
   'sangbong-hankukgwan-night': '상봉동한국관나이트만의 묵직한 라이브 밴드 사운드가 중랑구 밤을 지배합니다. 망우·면목동 단골이 매주 채우는 살아있는 무대입니다.',
   'suyu-shampoo-night': '수유샴푸나이트는 수유역 바로 앞, 강북 음향의 기준을 새로 세운 곳입니다. 동네 단골이 탄탄해서 평일에도 빈 테이블이 드뭅니다.',
   'doksan-gukbingwan-night': '독산국빈관나이트는 금천구 유일 대형 나이트입니다. 격조 있는 분위기로 지역 대표 자리를 지키며, 가산·구로에서도 찾아옵니다.',
@@ -2166,7 +2147,8 @@ export function getRegionName(regionId: string): string {
 }
 
 export function getRegionCount(regionId: string): number {
-  return venues.filter((v) => v.region === regionId).length;
+  // 전용22-8(2026-10-07) — 정적 쪽으로 둔 가게(staticVenueLinks)도 그 지역 곳 수에 넣어 센다(목록 쪽 「N곳」과 같은 숫자)
+  return venues.filter((v) => v.region === regionId).length + staticVenueLinks.filter((s) => s.region === regionId).length;
 }
 
 export function getNightVenues(): Venue[] {

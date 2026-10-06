@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { venues, regions, getVenueLabel, getMainLink } from '../data/venues';
 import { useOgMeta } from '../hooks/useOgMeta';
+import { staticVenueLinks } from '../data/staticVenueLinks';
 import VenueCard from '../components/VenueCard';
 
 const MAIN = getMainLink();
@@ -140,6 +141,9 @@ export default function CategoryPage() {
   const guide = firstVisitGuide[catKey] || [];
   const isHoppa = catKey === 'hoppa';
 
+  // 전용22-8(2026-10-07) — 정적 쪽으로 둔 가게: 곳 수에 넣어 세고 링크만 있는 줄로 싣는다(닉네임·번호·그림 0)
+  const staticLinks = staticVenueLinks.filter((s) => s.category === catKey);
+
   // VS 대결 — 같은 카테고리 내
   const vsA = filteredVenues[0];
   const vsB = filteredVenues.length > 1 ? filteredVenues[1] : undefined;
@@ -155,7 +159,7 @@ export default function CategoryPage() {
 
       {/* Header */}
       <section className="px-4 mb-6">
-        <h1 className="text-2xl font-extrabold text-[#111111] mb-2">{cat.label} <span className="text-accent">{filteredVenues.length}곳</span></h1>
+        <h1 className="text-2xl font-extrabold text-[#111111] mb-2">{cat.label} <span className="text-accent">{filteredVenues.length + staticLinks.length}곳</span></h1>
         <p className="text-sm text-[#333333] leading-[1.85] whitespace-pre-line">{cat.intro}</p>
       </section>
 
@@ -208,6 +212,24 @@ export default function CategoryPage() {
               <VenueCard key={v.id} venue={v} />
             ))}
           </div>
+        )}
+        {/* 정적 쪽으로 둔 가게 — 링크만 있는 줄 */}
+        {staticLinks.filter((s) => selectedRegion === 'all' || s.region === selectedRegion).length > 0 && (
+          <ul className="mt-6 text-base text-[#475569]">
+            {staticLinks.filter((s) => selectedRegion === 'all' || s.region === selectedRegion).map((s) => (
+              <li key={s.href}>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center min-h-[44px] text-accent hover:text-accent-hover font-semibold"
+                >
+                  {s.name}
+                </a>{' '}
+                — {s.tail}
+              </li>
+            ))}
+          </ul>
         )}
       </section>
 

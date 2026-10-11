@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { venues, getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription, getSubKeywords, getMainLink } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
+import { getInquiryCard } from '../data/inquiryCards';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { useRobots } from '../hooks/useRobots';
 import { venuePath } from '../utils/slug';
@@ -19,14 +20,16 @@ export default function VenueDetailPage() {
   const venueLabel = venue ? getVenueLabel(venue) : '';
   const hook = venue ? getVenueHook(venue.id) : '';
   const seoDesc = venue ? getVenueSeoDescription(venue.id) : '';
+  // 일산31-3 — 광고주가 없는 가게 쪽의 「광고문의」 카드(src/data/inquiryCards.ts) · 있으면 맨 위 그림과 대표 그림을 그 카드로
+  const inq = venue ? getInquiryCard(venue.id) : undefined;
   useOgMeta(
     venue
       ? {
           title: `${venueLabel} — ${hook}`,
           description: seoDesc || venue.description,
-          image: `/og/${venue.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : venue.id}.jpg`,
+          image: inq ? inq.card : `/og/${venue.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : venue.id}.jpg`,
           url: venuePath(venue),
-          imageAlt: venueLabel,
+          imageAlt: inq ? inq.alt : venueLabel,
         }
       : { title: '업소를 찾을 수 없습니다', description: '', image: '', url: '' }
   );
@@ -85,7 +88,7 @@ export default function VenueDetailPage() {
       '@type': 'NightClub',
       name: venueLabel,
       url: `${BASE}${venuePath(venue)}`,
-      image: `${BASE}/og/${venue.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : venue.id}.jpg`,
+      image: getInquiryCard(venue.id) ? `${BASE}${getInquiryCard(venue.id)!.card}` : `${BASE}/og/${venue.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : venue.id}.jpg`,
       address: venue.address,
     };
     if (venue.phone && venue.phone !== '별도문의') localBusiness.telephone = venue.phone;
@@ -131,6 +134,16 @@ export default function VenueDetailPage() {
 
       {/* Hero — 가게이름 + 닉네임 썸네일 */}
       <section className="mb-8 animate-fade-in-up">
+        {inq ? (
+          <img
+            src={inq.card}
+            alt={inq.alt}
+            width={1200}
+            height={1200}
+            className="mb-6"
+            style={{ display: 'block', width: '100%', maxWidth: 480, height: 'auto', margin: '0 auto 1.5rem', borderRadius: 16 }}
+          />
+        ) : (
         <div className="detail-hero-img mb-6 relative overflow-hidden" style={{ aspectRatio: '1200/630' }}>
           <div className="absolute inset-0 bg-gradient-to-br from-[#1C1917] to-[#292524] flex flex-col items-center justify-center text-center px-4">
             <span className="text-xs font-bold tracking-[0.15em] uppercase mb-3 px-4 py-1 rounded-full border"
@@ -149,6 +162,7 @@ export default function VenueDetailPage() {
             <p className="text-[#64748b] text-xs font-semibold mt-3">놀쿨 NOLCOOL</p>
           </div>
         </div>
+        )}
 
         <div className="flex items-center gap-2 mb-3">
           <span className="venue-badge-night" data-cat={venue.category}>{catLabel}</span>
@@ -191,6 +205,7 @@ export default function VenueDetailPage() {
           <InfoRow label="주소" value={venue.address} />
           <InfoRow label="영업시간" value={venue.hours} />
           <InfoRow label="연락처" value={venue.phone} />
+          {inq && <InfoRow label="문의" value={inq.text} />}
         </div>
 
         <div className="flex flex-wrap gap-2">

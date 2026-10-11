@@ -97,25 +97,7 @@ export const venues: Venue[] = [
     category: 'room',
   },
 
-  // ===== 요정 (1) =====
-  {
-    id: 'ilsan-myeongwolgwan',
-    name: '일산명월관요정',
-    region: 'ilsan',
-    area: '일산',
-    seoArea: '일산',
-    address: '고양시 일산동구 장항로 895-1',
-    description: '전통 한식과 기생 문화를 계승한 일산 유일의 정통 요정입니다.',
-    hours: 'PM 6:00 ~ AM 12:00',
-    phone: '010-3695-4929',
-    tags: ['일산', '요정', '전통'],
-    card_hook: '전통 기생 문화를 잇는 정통 요정.\n한식과 풍류가 어우러지는 품격의 자리.',
-    card_value: '정통 요정 · PM 6:00~',
-    card_tags: '일산 · 전통요정 · 한식풍류',
-    keyword: '일산명월관요정',
-    contact: '신실장',
-    category: 'yojeong',
-  },
+  // ===== 요정 (1) — 일산명월관요정은 일산31-3(2026-10-12)에 정적 쪽(public/ilsan/myeongwolgwan/index.html)으로 옮김 · 목록·곳 수는 staticVenueLinks.ts =====
 
   // ===== 나이트 서울 (12) =====
   {
@@ -1865,10 +1847,8 @@ export function getVenueLabel(venue: Venue): string {
 
 const seoHooks: Record<string, string> = {
   // 룸
-  'ilsan-room': '총책임자가 직접 관리하는 고급 접객, 격조의 차이를 느끼다',
+  'ilsan-room': '고급 접객, 격조의 차이를 느끼다',
   'haeundae-goguryeo': '마린시티 오션뷰 아래 펼쳐지는 최고급 접대의 정석',
-  // 요정
-  'ilsan-myeongwolgwan': '전통 풍류와 한식이 어우러지는 품격 있는 자리',
   // 나이트 서울
   'cheongdam-h2o-night': 'VIP 동선 설계, 펩시맨 실장의 고급 경험',
   'gangnam-juliana-night': '30년 전통이 증명하는 레전드급 무대의 저력',
@@ -1991,8 +1971,6 @@ const seoDescriptions: Record<string, string> = {
   // 룸
   'ilsan-room': '일산룸은 고양시 대표 고급 룸살롱입니다. 격조 높은 접객과 체계적 운영이 강점이며, 사전 예약 후 방문을 권장합니다.',
   'haeundae-goguryeo': '해운대고구려는 마린시티 오션뷰를 갖춘 부산 최고급 룸입니다. 바다를 배경으로 한 색다른 접대 공간으로, 사전 문의가 필수입니다.',
-  // 요정
-  'ilsan-myeongwolgwan': '일산명월관요정은 전통 한식과 기생 문화를 계승한 정통 요정입니다. 풍류와 품격을 동시에 경험할 수 있다.',
   // 나이트 서울
   'cheongdam-h2o-night': '청담H2O나이트는 펩시맨 실장이 이끄는 강남권 최고급 공간입니다. VIP 전용 동선이 설계되어 입장부터 퇴장까지 격이 다릅니다.',
   'gangnam-juliana-night': '강남줄리아나나이트는 30년 전통의 레전드급 무대입니다. 세대를 넘어 사랑받는 강남 밤문화의 상징이며, 방문 전 현장 확인을 추천합니다.',

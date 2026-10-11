@@ -133,6 +133,9 @@ function venueBody(v) {
   if (v.address) nap.push(`<li><strong>주소</strong> ${escHtml(v.address)}</li>`);
   if (v.hours && v.hours !== '별도문의') nap.push(`<li><strong>영업시간</strong> ${escHtml(v.hours)}</li>`);
   if (v.phone && v.phone !== '별도문의') nap.push(`<li><strong>연락처</strong> ${escHtml(v.phone)}${v.contact ? ' (' + escHtml(v.contact) + ')' : ''}</li>`);
+  const inq = inquiryCards[v.id];
+  if (inq) nap.push(`<li><strong>문의</strong> ${escHtml(inq.text)}</li>`);
+  const inqImg = inq ? `\n<img src="${escAttr(inq.card)}" width="1200" height="1200" alt="${escAttr(inq.alt)}" style="max-width:100%;height:auto" />` : '';
   const napBlock = nap.length ? `<h2>${escHtml(v.keyword)} 위치·이용 안내</h2><ul>${nap.join('')}</ul>` : '';
   // 관련 업소(실연관: 같은 지역 + 같은 유형) — dead-end 방지·페이지간 이동
   const sameRegion = linkVenues.filter((x) => x.region === v.region && x.id !== v.id).slice(0, 4);
@@ -140,7 +143,7 @@ function venueBody(v) {
   const relRegion = sameRegion.length ? `<h2>${escHtml(region)} 다른 업소</h2>${listLinks(sameRegion)}` : '';
   const relCat = sameCat.length ? `<h2>다른 지역 ${escHtml(CAT[v.category] || '')} 추천</h2>${listLinks(sameCat)}` : '';
   return `<nav aria-label="breadcrumb"><a href="${S(BASE)}" target="_blank" rel="noopener noreferrer">홈</a> / <a href="${S(BASE + '/' + v.region)}" target="_blank" rel="noopener noreferrer">${escHtml(region)}</a> / <span>${escHtml(v.keyword)}</span></nav>
-<h1>${escHtml(v.keyword)}</h1>
+<h1>${escHtml(v.keyword)}</h1>${inqImg}
 <p>${escHtml(v.description)}</p>${v.cardHook ? para(v.cardHook) : ''}
 ${summary}${intro}${secs}${qp}${faq}${concl}${napBlock}${relRegion}${relCat}
 ${napLink(v.keyword)}`;
@@ -156,6 +159,12 @@ function listLinks(items) {
 const staticLinks = [...readFileSync('src/data/staticVenueLinks.ts', 'utf8')
   .matchAll(/\{\s*region:\s*"([^"]+)",\s*name:\s*"([^"]*)",\s*tail:\s*"([^"]*)",\s*href:\s*"([^"]*)",\s*category:\s*"([^"]*)",\s*area:\s*"([^"]*)",\s*after:\s*"([^"]*)"\s*\}/g)]
   .map((m) => ({ region: m[1], name: m[2], tail: m[3], href: m[4], category: m[5], area: m[6], after: m[7] }));
+// 일산31-3(2026-10-12) — 「광고문의」 카드(src/data/inquiryCards.ts): 광고주가 없는 가게 쪽의 맨 위 그림 · og:image · 구조화 데이터 그림 · 「문의」 줄.
+// 목록·추천은 그대로(다른 쪽 HTML 변화 0) — 그 가게 쪽 하나만 바뀐다.
+const inquiryCards = Object.fromEntries([...readFileSync('src/data/inquiryCards.ts', 'utf8')
+  .matchAll(/\{\s*id:\s*"([^"]+)",\s*card:\s*"([^"]+)",\s*text:\s*"([^"]*)",\s*alt:\s*"([^"]*)"\s*\}/g)]
+  .map((m) => [m[1], { card: m[2], text: m[3], alt: m[4] }]));
+const ogImageOf = (v) => (inquiryCards[v.id] ? `${BASE}${inquiryCards[v.id].card}` : `${BASE}/og/${v.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : v.id}.jpg`);
 function buildLinkVenues(list) {
   const out = [...list];
   for (const s of staticLinks) {
@@ -214,6 +223,9 @@ function generateHTML(opts) {
   html = html.replace(/<meta name="twitter:title" content="[^"]*"/, `<meta name="twitter:title" content="${escAttr(title)}"`);
   html = html.replace(/<meta name="twitter:description" content="[^"]*"/, `<meta name="twitter:description" content="${escAttr(description)}"`);
   if (ogImage) html = html.replace(/<meta name="twitter:image" content="[^"]*"/, `<meta name="twitter:image" content="${escAttr(ogImage)}"`);
+  // 일산31-3 — 카드가 png 인 쪽(광고문의 카드)은 그림 종류·대체 글도 그 카드에 맞춘다(그 밖의 쪽은 틀 값 그대로)
+  if (ogImage && /\.png$/i.test(ogImage)) html = html.replace(/<meta property="og:image:type" content="[^"]*"/, '<meta property="og:image:type" content="image/png"');
+  if (opts.ogImageAlt) html = html.replace(/<meta property="og:image:alt" content="[^"]*"/, `<meta property="og:image:alt" content="${escAttr(opts.ogImageAlt)}"`);
   if (jsonLd) {
     const ldScripts = jsonLd.map((ld) => `<script type="application/ld+json">${JSON.stringify(ld)}</script>`).join('\n    ');
     html = html.replace('</head>', `    ${ldScripts}\n  </head>`);
@@ -381,7 +393,7 @@ for (const v of venues) {
   };
   const localBusiness = {
     '@context': 'https://schema.org', '@type': 'NightClub',
-    name: v.keyword, url: S(`${BASE}${v.path}`), image: `${BASE}/og/${v.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : v.id}.jpg`,
+    name: v.keyword, url: S(`${BASE}${v.path}`), image: ogImageOf(v),
   };
   if (v.description) localBusiness.description = v.description;
   if (v.phone && v.phone !== '별도문의') localBusiness.telephone = v.phone;
@@ -399,7 +411,7 @@ for (const v of venues) {
 
   writePage(v.path, generateHTML({
     title, description, canonical: `${BASE}${v.path}`,
-    ogImage: `${BASE}/og/${v.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : v.id}.jpg`, jsonLd, bodyHtml: venueBody(v),
+    ogImage: ogImageOf(v), ogImageAlt: inquiryCards[v.id]?.alt, jsonLd, bodyHtml: venueBody(v),
   }));
   count++;
 }

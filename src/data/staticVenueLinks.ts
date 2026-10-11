@@ -8,4 +8,6 @@ export interface StaticVenueLink { region: string; name: string; tail: string; h
 
 export const staticVenueLinks: StaticVenueLink[] = [
   { region: "seoul-etc", name: "신림그랑프리나이트", tail: "신림 나이트", href: "https://ff.nolcool.com/seoul-etc/sinlim-grandprix-night/", category: "night", area: "신림", after: "gangnam-juliana-night" },
+  // 일산31-3(2026-10-12) — 일산명월관요정도 같은 꼴: 앱 자료에서 빼고 정적 쪽(public/ilsan/myeongwolgwan/index.html)으로 둔다.
+  { region: "ilsan", name: "일산명월관요정", tail: "일산 요정", href: "https://ff.nolcool.com/ilsan/myeongwolgwan/", category: "yojeong", area: "일산", after: "haeundae-goguryeo" },
 ];

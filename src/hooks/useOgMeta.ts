@@ -52,7 +52,7 @@ export function useOgMeta({ title, description, image, url, isHome, imageAlt }: 
     setMeta('og:image', absImage);
     setMeta('og:image:width', '1200');
     setMeta('og:image:height', '630');
-    setMeta('og:image:type', 'image/jpeg');
+    setMeta('og:image:type', /\.png$/i.test(resolvedImage) ? 'image/png' : 'image/jpeg');
     setMeta('og:image:alt', alt);
     setMeta('og:url', absUrl);
     setMeta('og:type', 'website');

@@ -8,7 +8,8 @@ const 쪽들 = readdirSync('public', { withFileTypes: true })
   .map((e) => e.name).sort();
 // 전용22-8(2026-10-07) — 앱 자료에서 빼고 정적 쪽으로 둔 가게 쪽. 두 겹 폴더라 위 한 겹 읽기(정규식)에 안 잡혀 경로로 더한다.
 // 일산31-3(2026-10-12) — 일산명월관요정(ilsan/myeongwolgwan)도 같은 꼴(앱 자료에서 빼고 정적 쪽).
-for (const d of ['seoul-etc/sinlim-grandprix-night', 'ilsan/myeongwolgwan']) if (existsSync(`public/${d}/index.html`)) 쪽들.push(d);
+// 전체57-1(2026-10-25) — 성남샴푸나이트(seongnam/shampoo-night)도 같은 꼴.
+for (const d of ['seoul-etc/sinlim-grandprix-night', 'ilsan/myeongwolgwan', 'seongnam/shampoo-night']) if (existsSync(`public/${d}/index.html`)) 쪽들.push(d);
 writeFileSync('dist/index.html', readFileSync('dedicated/home.html', 'utf8'));
 let sm = readFileSync('dist/sitemap.xml', 'utf8');
 const 오늘 = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);

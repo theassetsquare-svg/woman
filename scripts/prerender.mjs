@@ -177,7 +177,10 @@ function buildLinkVenues(list) {
 }
 function regionBody(regionId, desc, list) {
   const name = getRegionName(regionId);
-  return `<h1>${escHtml(name)} 나이트·클럽</h1>${para(desc)}
+  // 전체57-1(2026-10-25) — 광고문의 카드가 있는 지역 쪽만 h1 바로 뒤에 카드 그림(그 밖의 지역 쪽은 앞 판과 같다)
+  const inq = inquiryCards[regionId];
+  const inqImg = inq ? `\n<img src="${escAttr(inq.card)}" width="1200" height="1200" alt="${escAttr(inq.alt)}" style="max-width:100%;height:auto" />` : '';
+  return `<h1>${escHtml(name)} 나이트·클럽</h1>${inqImg}${para(desc)}
 <h2>${escHtml(name)} 업소 목록 (${list.length}곳)</h2>${listLinks(list)}
 ${napLink(name + ' 밤문화')}`;
 }
@@ -304,9 +307,14 @@ for (const regionId of regions) {
       { '@type': 'ListItem', position: 2, name: name, item: S(`${BASE}/${regionId}`) },
     ],
   };
+  // 전체57-1(2026-10-25) — 광고문의 카드가 있는 지역 쪽: og:image(·twitter·종류·대체 글) + 구조화 데이터 그림을 그 카드로
+  const inqR = inquiryCards[regionId];
+  const jsonLdR = [breadcrumb];
+  if (inqR) jsonLdR.push({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: meta.title, url: S(`${BASE}/${regionId}`), image: `${BASE}${inqR.card}` });
   writePage(`/${regionId}`, generateHTML({
     title: meta.title, description: desc, canonical: `${BASE}/${regionId}`,
-    jsonLd: [breadcrumb], bodyHtml: regionBody(regionId, meta.desc, list),
+    ogImage: inqR ? `${BASE}${inqR.card}` : undefined, ogImageAlt: inqR?.alt,
+    jsonLd: jsonLdR, bodyHtml: regionBody(regionId, meta.desc, list),
   }));
   count++;
 }

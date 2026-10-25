@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { regions, getVenuesByRegion, getRegionName, getRegionCount, getMainLink } from '../data/venues';
 import { regionSeo } from '../data/regionSeo';
 import { staticVenueLinks } from '../data/staticVenueLinks';
+import { getInquiryCard } from '../data/inquiryCards';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { useRobots } from '../hooks/useRobots';
 import VenueCard from '../components/VenueCard';
@@ -18,14 +19,17 @@ export default function RegionPage() {
   const seo = region ? regionSeo[region.id] : null;
   // 정적 쪽으로 둔 가게 — 링크만 있는 줄(라우터 밖 쪽이라 보통 a · 닉네임·번호·그림 0)
   const staticLinks = staticVenueLinks.filter((s) => s.region === regionId);
+  // 전체57-1(2026-10-25) — 광고문의 카드가 있는 지역 쪽(scripts/prerender.mjs 와 같은 카드)
+  const inq = region ? getInquiryCard(region.id) : undefined;
 
   useOgMeta(
     region
       ? {
           title: seo?.title || `${getRegionName(region.id)} 밤문화 가이드`,
           description: seo?.desc || `${getRegionName(region.id)} 지역 밤문화 정보를 정리했습니다.`,
-          image: '',
+          image: inq ? inq.card : '',
           url: `/${region.id}`,
+          imageAlt: inq?.alt,
         }
       : { title: '지역을 찾을 수 없습니다', description: '', image: '', url: '' }
   );
@@ -72,6 +76,15 @@ export default function RegionPage() {
 
       <div className="mb-8">
         <h1 className="mb-2">{region.name} 밤문화 가이드</h1>
+        {inq && (
+          <img
+            src={inq.card}
+            alt={inq.alt}
+            width={1200}
+            height={1200}
+            style={{ display: 'block', width: '100%', maxWidth: 480, height: 'auto', margin: '0 auto 1.5rem', borderRadius: 16 }}
+          />
+        )}
         <p className="text-[#475569] text-sm leading-relaxed">
           {seo ? seo.desc : `${region.name} 지역 검증된 ${venueList.length}곳 정보를 확인하세요.`}
         </p>

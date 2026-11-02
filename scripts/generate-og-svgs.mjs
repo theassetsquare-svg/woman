@@ -20,6 +20,22 @@ while ((match = venueRegex.exec(content)) !== null) {
   });
 }
 
+// 광고주 판별용 phone/contact 를 각 업소 블록에서 추가로 읽는다.
+// phone 이 있고 '별도문의' 가 아니면 광고주 → 실장·번호 노출.
+// 없으면 비광고주 → '광고문의 · 카톡 besta12' 노출.
+function adInfo(id) {
+  const i = content.indexOf(`id: '${id}'`);
+  const chunk = i >= 0 ? content.slice(i, i + 1400) : '';
+  const pm = chunk.match(/phone:\s*'([^']*)'/);
+  const cm = chunk.match(/contact:\s*'([^']*)'/);
+  const phone = pm ? pm[1] : '';
+  return {
+    phone: phone && phone !== '별도문의' ? phone : '',
+    contact: cm ? cm[1] : '',
+  };
+}
+for (const v of venues) Object.assign(v, adInfo(v.id));
+
 console.log(`Found ${venues.length} venues`);
 
 // Color schemes by category
@@ -69,6 +85,14 @@ function generateSvg(venue) {
   const escapedName = escapeXml(displayName);
   const escapedArea = escapeXml(area);
 
+  // 광고주면 실장·번호, 아니면 광고문의(카톡 besta12)
+  const isAd = !!venue.phone;
+  const ctaText = isAd
+    ? `${venue.contact ? venue.contact + ' 실장 · ' : ''}${venue.phone}`
+    : '광고문의 · 카톡 besta12';
+  const ctaColor = isAd ? colors.accent2 : colors.accent1;
+  const escapedCta = escapeXml(ctaText);
+
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -86,7 +110,8 @@ function generateSvg(venue) {
   <text x="600" y="240" text-anchor="middle" font-family="sans-serif" font-size="${fontSize}" font-weight="900" fill="white" letter-spacing="-1">${escapedName}</text>
   <text x="600" y="320" text-anchor="middle" font-family="sans-serif" font-size="28" fill="${colors.accent1}" font-weight="700">${categoryLabel}</text>
   <text x="600" y="400" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#94a3b8" font-weight="600">${escapedArea}</text>
-  <text x="600" y="540" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#64748b" font-weight="600">여성이 편안한 밤문화</text>
+  <text x="600" y="500" text-anchor="middle" font-family="sans-serif" font-size="30" fill="${ctaColor}" font-weight="800">${escapedCta}</text>
+  <text x="600" y="562" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#64748b" font-weight="600">여성이 편안한 밤문화</text>
 </svg>`;
 }
 

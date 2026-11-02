@@ -87,8 +87,11 @@ function generateSvg(venue) {
 
   // 광고주면 실장·번호, 아니면 광고문의(카톡 besta12)
   const isAd = !!venue.phone;
+  const nick = venue.contact
+    ? (venue.contact.endsWith('실장') ? venue.contact : venue.contact + ' 실장')
+    : '';
   const ctaText = isAd
-    ? `${venue.contact ? venue.contact + ' 실장 · ' : ''}${venue.phone}`
+    ? `${nick ? nick + ' · ' : ''}${venue.phone}`
     : '광고문의 · 카톡 besta12';
   const ctaColor = isAd ? colors.accent2 : colors.accent1;
   const escapedCta = escapeXml(ctaText);

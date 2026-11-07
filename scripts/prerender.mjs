@@ -16,6 +16,8 @@ const MAIN = 'https://nolcool.com';
 const template = readFileSync('dist/index.html', 'utf8');
 const venuesSrc = readFileSync('src/data/venues.ts', 'utf8');
 const CONTENT = parseVenueContent('src/data/venueContent.ts');
+// 정리68-2(2026-11-07) — 상위노출 정리: 다른 가게 쪽(가게 전용 사이트와 지역이 다름)은 주소·글 그대로 두고 noindex + 사이트맵에서 뺀다(dedicated/noindex-paths.json).
+const NOINDEX = new Set(JSON.parse(readFileSync('dedicated/noindex-paths.json', 'utf8')).paths.map((p) => String(p).replace(/\/$/, '')));
 
 const CAT = { night: '나이트', club: '클럽', lounge: '라운지', room: '룸', yojeong: '요정', hoppa: '호빠' };
 
@@ -222,6 +224,7 @@ function generateHTML(opts) {
   html = html.replace(/<meta property="og:title" content="[^"]*"/, `<meta property="og:title" content="${escAttr(title)}"`);
   html = html.replace(/<meta property="og:description" content="[^"]*"/, `<meta property="og:description" content="${escAttr(description)}"`);
   html = html.replace(/<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${escAttr(canonical)}"`);
+  if (opts.noindex) html = html.replace(/<meta name="robots" content="[^"]*"/, '<meta name="robots" content="noindex, follow"');
   if (ogImage) html = html.replace(/<meta property="og:image" content="[^"]*"/, `<meta property="og:image" content="${escAttr(ogImage)}"`);
   html = html.replace(/<meta name="twitter:title" content="[^"]*"/, `<meta name="twitter:title" content="${escAttr(title)}"`);
   html = html.replace(/<meta name="twitter:description" content="[^"]*"/, `<meta name="twitter:description" content="${escAttr(description)}"`);
@@ -312,7 +315,7 @@ for (const regionId of regions) {
   const jsonLdR = [breadcrumb];
   if (inqR) jsonLdR.push({ '@context': 'https://schema.org', '@type': 'CollectionPage', name: meta.title, url: S(`${BASE}/${regionId}`), image: `${BASE}${inqR.card}` });
   writePage(`/${regionId}`, generateHTML({
-    title: meta.title, description: desc, canonical: `${BASE}/${regionId}`,
+    title: meta.title, description: desc, canonical: `${BASE}/${regionId}`, noindex: NOINDEX.has(`/${regionId}`),
     ogImage: inqR ? `${BASE}${inqR.card}` : undefined, ogImageAlt: inqR?.alt,
     jsonLd: jsonLdR, bodyHtml: regionBody(regionId, meta.desc, list),
   }));
@@ -418,7 +421,7 @@ for (const v of venues) {
   }
 
   writePage(v.path, generateHTML({
-    title, description, canonical: `${BASE}${v.path}`,
+    title, description, canonical: `${BASE}${v.path}`, noindex: NOINDEX.has(v.path),
     ogImage: ogImageOf(v), ogImageAlt: inquiryCards[v.id]?.alt, jsonLd, bodyHtml: venueBody(v),
   }));
   count++;
@@ -438,7 +441,7 @@ for (const v of venues) {
 // sitemap.xml
 {
   const staticPaths = ['/', '/venues', ...categoryPages.map((c) => c.path), '/quiz', '/safety', '/magazine', '/ranking', '/events', '/map', '/community', '/community/guidelines'];
-  const all = [...staticPaths, ...regions.map((r) => `/${r}`), ...venues.map((v) => v.path)];
+  const all = [...staticPaths, ...regions.map((r) => `/${r}`), ...venues.map((v) => v.path)].filter((p) => !NOINDEX.has(p));   // 정리68-2 — noindex 쪽은 사이트맵에서 뺌
   const today = new Date().toISOString().slice(0, 10);
   const NS = 'http://www.sitemaps.org/schemas/sitemap/0.9';
   const urls = all.map((p) => {

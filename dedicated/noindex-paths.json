@@ -1,0 +1,31 @@
+{
+ "_설명": "정리68-2(2026-11-07) 상위노출 정리 — 가게 전용 사이트(수원찬스돔나이트 · 수원)와 지역이 다른 다른 가게 쪽. 주소·글 그대로 두고 <meta name=\"robots\" content=\"noindex, follow\"> + sitemap.xml 에서 뺌(301 0 · 지우기 0). 출처 state/consolidate/plan-*.json(scripts/rank/consolidate-plan.mjs --plan --site=ff) · 근거 docs/참고/상위노출/상위노출_공식방법_2026-11-01.md 3절 1·10번",
+ "paths": [
+  "/ansan/hit-night",
+  "/bucheon/gorae-night",
+  "/busan/asiad-night",
+  "/cheongju/dontellmama-night",
+  "/daegu/hobak-night",
+  "/daejeon/seven-night",
+  "/geondae/hoppa-w",
+  "/gumi",
+  "/gumi/hobak-night",
+  "/guri",
+  "/guri/hobak-night",
+  "/gwangju/cheomdan-empa-night",
+  "/haeundae",
+  "/ilsan/room",
+  "/ilsan/shampoo-night",
+  "/incheon/arabian-night",
+  "/indeogwon",
+  "/indeogwon/gukbingwan-night",
+  "/jeju",
+  "/jeju/night",
+  "/osan/hobak-night",
+  "/paju",
+  "/paju/skydome-night",
+  "/seoul-etc/doksan-gukbingwan-night",
+  "/seoul-etc/sangbong-hankukgwan-night",
+  "/seoul-etc/suyu-shampoo-night"
+ ]
+}

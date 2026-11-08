@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { venues, getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription, getSubKeywords, getMainLink } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
 import { getInquiryCard } from '../data/inquiryCards';
+import { getRepLink } from '../data/repLinks';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { useRobots } from '../hooks/useRobots';
 import { venuePath } from '../utils/slug';
@@ -22,6 +23,8 @@ export default function VenueDetailPage() {
   const seoDesc = venue ? getVenueSeoDescription(venue.id) : '';
   // 일산31-3 — 광고주가 없는 가게 쪽의 「광고문의」 카드(src/data/inquiryCards.ts) · 있으면 맨 위 그림과 대표 그림을 그 카드로
   const inq = venue ? getInquiryCard(venue.id) : undefined;
+  // 네이버70-1(2026-11-08) — 대표 쪽이 다른 사이트에 있는 겹침 쪽이면 h1 바로 뒤에 링크 한 줄(src/data/repLinks.ts)
+  const rep = venue ? getRepLink(venuePath(venue)) : undefined;
   useOgMeta(
     venue
       ? {
@@ -170,6 +173,11 @@ export default function VenueDetailPage() {
         </div>
 
         <h1 className="text-2xl leading-tight mb-3">{venueLabel}</h1>
+        {rep && (
+          <p className="zq-replink" data-r="replink" style={{ margin: '6px 0 16px', fontSize: '.95rem', lineHeight: 1.7 }}>
+            {rep.name} 안내는 <a href={rep.href}>{rep.label}</a>로 옮겨 정리했습니다. {rep.tail}
+          </p>
+        )}
 
         <p className="text-sm text-[#475569] mb-4">
           {getRegionName(venue.region)} · {venue.area}

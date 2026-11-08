@@ -4,6 +4,7 @@ import { regions, getVenuesByRegion, getRegionName, getRegionCount, getMainLink 
 import { regionSeo } from '../data/regionSeo';
 import { staticVenueLinks } from '../data/staticVenueLinks';
 import { getInquiryCard } from '../data/inquiryCards';
+import { getRepLink } from '../data/repLinks';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { useRobots } from '../hooks/useRobots';
 import VenueCard from '../components/VenueCard';
@@ -21,6 +22,8 @@ export default function RegionPage() {
   const staticLinks = staticVenueLinks.filter((s) => s.region === regionId);
   // 전체57-1(2026-10-25) — 광고문의 카드가 있는 지역 쪽(scripts/prerender.mjs 와 같은 카드)
   const inq = region ? getInquiryCard(region.id) : undefined;
+  // 네이버70-1(2026-11-08) — 대표 쪽이 다른 사이트에 있는 겹침 쪽이면 h1 바로 뒤에 링크 한 줄(src/data/repLinks.ts)
+  const rep = region ? getRepLink('/' + region.id) : undefined;
 
   useOgMeta(
     region
@@ -76,6 +79,11 @@ export default function RegionPage() {
 
       <div className="mb-8">
         <h1 className="mb-2">{region.name} 밤문화 가이드</h1>
+        {rep && (
+          <p className="zq-replink" data-r="replink" style={{ margin: '6px 0 16px', fontSize: '.95rem', lineHeight: 1.7 }}>
+            {rep.name} 안내는 <a href={rep.href}>{rep.label}</a>로 옮겨 정리했습니다. {rep.tail}
+          </p>
+        )}
         {inq && (
           <img
             src={inq.card}

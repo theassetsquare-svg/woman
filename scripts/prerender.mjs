@@ -145,7 +145,7 @@ function venueBody(v) {
   const relRegion = sameRegion.length ? `<h2>${escHtml(region)} 다른 업소</h2>${listLinks(sameRegion)}` : '';
   const relCat = sameCat.length ? `<h2>다른 지역 ${escHtml(CAT[v.category] || '')} 추천</h2>${listLinks(sameCat)}` : '';
   return `<nav aria-label="breadcrumb"><a href="${S(BASE)}" target="_blank" rel="noopener noreferrer">홈</a> / <a href="${S(BASE + '/' + v.region)}" target="_blank" rel="noopener noreferrer">${escHtml(region)}</a> / <span>${escHtml(v.keyword)}</span></nav>
-<h1>${escHtml(v.keyword)}</h1>${inqImg}
+<h1>${escHtml(v.keyword)}</h1>${repLinkHtml(v.path)}${inqImg}
 <p>${escHtml(v.description)}</p>${v.cardHook ? para(v.cardHook) : ''}
 ${summary}${intro}${secs}${qp}${faq}${concl}${napBlock}${relRegion}${relCat}
 ${napLink(v.keyword)}`;
@@ -166,6 +166,16 @@ const staticLinks = [...readFileSync('src/data/staticVenueLinks.ts', 'utf8')
 const inquiryCards = Object.fromEntries([...readFileSync('src/data/inquiryCards.ts', 'utf8')
   .matchAll(/\{\s*id:\s*"([^"]+)",\s*card:\s*"([^"]+)",\s*text:\s*"([^"]*)",\s*alt:\s*"([^"]*)"\s*\}/g)]
   .map((m) => [m[1], { card: m[2], text: m[3], alt: m[4] }]));
+// 네이버70-1(2026-11-08) — 같은 가게 대표 쪽이 다른 사이트에 있는 겹침 쪽(src/data/repLinks.ts): h1 바로 뒤에 대표 쪽 링크 한 줄.
+// 검색 제외는 dedicated/noindex-paths.json 이 맡는다 — 링크 줄이 있는 쪽이 그 목록에 없으면 빌드를 멈춘다.
+const repLinks = Object.fromEntries([...readFileSync('src/data/repLinks.ts', 'utf8')
+  .matchAll(/\{\s*path:\s*"([^"]+)",\s*name:\s*"([^"]+)",\s*href:\s*"([^"]+)",\s*label:\s*"([^"]+)",\s*tail:\s*"([^"]*)"\s*\}/g)]
+  .map((m) => [m[1], { name: m[2], href: m[3], label: m[4], tail: m[5] }]));
+for (const p of Object.keys(repLinks)) if (!NOINDEX.has(p)) throw new Error(`repLinks: ${p} 가 dedicated/noindex-paths.json 에 없음 — 겹침 쪽은 검색 제외가 먼저`);
+const repLinkHtml = (p) => {
+  const r = repLinks[String(p).replace(/\/$/, '')];
+  return r ? `\n<p class="zq-replink" data-r="replink" style="margin:6px 0 16px;font-size:.95rem;line-height:1.7">${escHtml(r.name)} 안내는 <a href="${escAttr(r.href)}">${escHtml(r.label)}</a>로 옮겨 정리했습니다. ${escHtml(r.tail)}</p>` : '';
+};
 const ogImageOf = (v) => (inquiryCards[v.id] ? `${BASE}${inquiryCards[v.id].card}` : `${BASE}/og/${v.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : v.id}.jpg`);
 function buildLinkVenues(list) {
   const out = [...list];
@@ -182,7 +192,7 @@ function regionBody(regionId, desc, list) {
   // 전체57-1(2026-10-25) — 광고문의 카드가 있는 지역 쪽만 h1 바로 뒤에 카드 그림(그 밖의 지역 쪽은 앞 판과 같다)
   const inq = inquiryCards[regionId];
   const inqImg = inq ? `\n<img src="${escAttr(inq.card)}" width="1200" height="1200" alt="${escAttr(inq.alt)}" style="max-width:100%;height:auto" />` : '';
-  return `<h1>${escHtml(name)} 나이트·클럽</h1>${inqImg}${para(desc)}
+  return `<h1>${escHtml(name)} 나이트·클럽</h1>${repLinkHtml('/' + regionId)}${inqImg}${para(desc)}
 <h2>${escHtml(name)} 업소 목록 (${list.length}곳)</h2>${listLinks(list)}
 ${napLink(name + ' 밤문화')}`;
 }
@@ -251,6 +261,7 @@ function writePage(path, html) {
 const venues = parseVenues();
 const linkVenues = buildLinkVenues(venues); // 목록·추천·곳 수 전용(정적 쪽으로 둔 가게의 링크 줄 포함)
 const regions = [...new Set(venues.map((v) => v.region))];
+for (const p of Object.keys(repLinks)) if (!venues.some((v) => v.path === p) && !regions.some((r) => '/' + r === p)) throw new Error(`repLinks: 쪽을 못 찾음 — ${p}`);
 let count = 0;
 
 const categoryPages = [

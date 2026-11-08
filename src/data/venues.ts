@@ -833,14 +833,14 @@ export const venues: Venue[] = [
     region: 'daegu',
     area: '대구',
     seoArea: '대구',
-    address: '대구 수성구',
-    description: '수성구 핵심 상권, 세련된 인테리어와 사운드가 조화로운 무대입니다.',
+    address: '대구 달서구 달구벌대로 1910',
+    description: '달서구 핵심 상권, 세련된 인테리어와 사운드가 조화로운 무대입니다.',
     hours: 'PM 9:00 ~ AM 5:00',
     phone: '별도문의',
-    tags: ['대구', '수성구', '나이트', '바밤바', '고급'],
-    card_hook: '수성구 핵심 상권의 세련된 무대.\n인테리어와 사운드 조화가 남다른 공간.',
-    card_value: '대구 수성구 · 고급 · PM 9:00~',
-    card_tags: '대구수성 · 세련된 · 격있는무대',
+    tags: ['대구', '달서구', '나이트', '바밤바', '고급'],
+    card_hook: '달서구 핵심 상권의 세련된 무대.\n인테리어와 사운드 조화가 남다른 공간.',
+    card_value: '대구 달서구 · 고급 · PM 9:00~',
+    card_tags: '대구달서 · 세련된 · 격있는무대',
     keyword: '대구바밤바나이트',
     category: 'night',
   },
@@ -1878,7 +1878,7 @@ const seoHooks: Record<string, string> = {
   // 나이트 대구/경북
   'daegu-hankukgwan-night': '도심 한복판 경북 전역 구심점, 전통이 곧 신뢰',
   'daegu-hobak-night': '달서구 상권, 서부 주민이 가까이 즐기는 편리함',
-  'daegu-babamba-night': '수성구 핵심 상권, 세련된 인테리어와 음향 조화',
+  'daegu-babamba-night': '달서구 핵심 상권, 세련된 인테리어와 음향 조화',
   'daegu-totoga-night': '동구 신흥 핫플, 파격 이벤트와 젊은 감성의 급부상',
   'gumi-hobak-night': '공단 도시 유일 대형, 퇴근 후 해방감을 찾는 곳',
   // 나이트 부산/울산
@@ -1999,7 +1999,7 @@ const seoDescriptions: Record<string, string> = {
   // 나이트 대구/경북
   'daegu-hankukgwan-night': '대구한국관나이트 중구점은 반월당 교차로 도보 3분, 경북권 접근성 최강입니다. 매주 토요일 콜라보 DJ 이벤트가 열리는 곳입니다.',
   'daegu-hobak-night': '달서구 상인동 먹자골목 끝, 대구호박나이트 네온사인이 보입니다. 2호선 상인역 도보 4분 접근성과 넉넉한 주차장이 서대구권 직장인을 끌어모읍니다.',
-  'daegu-babamba-night': '대구바밤바나이트는 수성구 핵심 상권의 세련된 무대입니다. 인테리어와 사운드 조화가 독보적이며, 격조 있는 밤이 기다린다.',
+  'daegu-babamba-night': '대구바밤바나이트는 달서구 핵심 상권의 세련된 무대입니다. 인테리어와 사운드 조화가 독보적이며, 격조 있는 밤이 기다린다.',
   'daegu-totoga-night': '대구토토가나이트는 동구 신흥 핫플레이스입니다. 파격적인 이벤트와 젊은 감성으로 급부상 중이며, SNS 인증샷 명소입니다.',
   'gumi-hobak-night': '구미공단 3교대 끝나면 구미호박나이트로 향합니다. 경북 제조업 수도의 밤을 책임지며, 새벽 2시까지 열기가 식지 않는 곳입니다.',
   // 나이트 부산/울산

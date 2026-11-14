@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { venues, getVenueByRegionSlug, getRegionName, getVenuesByRegion, getVenueLabel, getVenueHook, getVenueSeoDescription, getSubKeywords, getMainLink } from '../data/venues';
 import { getVenueContent } from '../data/venueContent';
 import { getInquiryCard } from '../data/inquiryCards';
+import { getVenueAd, ldTel } from '../data/venueAds';
 import { getRepLink } from '../data/repLinks';
 import { useOgMeta } from '../hooks/useOgMeta';
 import { useRobots } from '../hooks/useRobots';
@@ -23,6 +24,9 @@ export default function VenueDetailPage() {
   const seoDesc = venue ? getVenueSeoDescription(venue.id) : '';
   // 일산31-3 — 광고주가 없는 가게 쪽의 「광고문의」 카드(src/data/inquiryCards.ts) · 있으면 맨 위 그림과 대표 그림을 그 카드로
   const inq = venue ? getInquiryCard(venue.id) : undefined;
+  // 일산83-1(2026-11-15) — 광고주가 있는 가게 쪽(src/data/venueAds.ts): 카드 · 「광고」 표시 · 연락처 · 문의(담당) 줄 · 아래 고정 전화바(번호만) · 구조화 데이터 전화
+  const ad = venue ? getVenueAd(venue.id) : undefined;
+  const topCard = ad || inq;
   // 네이버70-1(2026-11-08) — 대표 쪽이 다른 사이트에 있는 겹침 쪽이면 h1 바로 뒤에 링크 한 줄(src/data/repLinks.ts)
   const rep = venue ? getRepLink(venuePath(venue)) : undefined;
   useOgMeta(
@@ -30,9 +34,9 @@ export default function VenueDetailPage() {
       ? {
           title: `${venueLabel} — ${hook}`,
           description: seoDesc || venue.description,
-          image: inq ? inq.card : `/og/${venue.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : venue.id}.jpg`,
+          image: topCard ? topCard.card : `/og/${venue.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : venue.id}.jpg`,
           url: venuePath(venue),
-          imageAlt: inq ? inq.alt : venueLabel,
+          imageAlt: topCard ? topCard.alt : venueLabel,
         }
       : { title: '업소를 찾을 수 없습니다', description: '', image: '', url: '' }
   );
@@ -91,10 +95,12 @@ export default function VenueDetailPage() {
       '@type': 'NightClub',
       name: venueLabel,
       url: `${BASE}${venuePath(venue)}`,
-      image: getInquiryCard(venue.id) ? `${BASE}${getInquiryCard(venue.id)!.card}` : `${BASE}/og/${venue.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : venue.id}.jpg`,
+      image: getVenueAd(venue.id) ? `${BASE}${getVenueAd(venue.id)!.card}` : getInquiryCard(venue.id) ? `${BASE}${getInquiryCard(venue.id)!.card}` : `${BASE}/og/${venue.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : venue.id}.jpg`,
       address: venue.address,
     };
     if (venue.phone && venue.phone !== '별도문의') localBusiness.telephone = venue.phone;
+    const vad = getVenueAd(venue.id);
+    if (vad) localBusiness.telephone = ldTel(vad.tel);
     const s3 = document.createElement('script');
     s3.type = 'application/ld+json';
     s3.dataset.dynamic = 'true';
@@ -137,10 +143,10 @@ export default function VenueDetailPage() {
 
       {/* Hero — 가게이름 + 닉네임 썸네일 */}
       <section className="mb-8 animate-fade-in-up">
-        {inq ? (
+        {topCard ? (
           <img
-            src={inq.card}
-            alt={inq.alt}
+            src={topCard.card}
+            alt={topCard.alt}
             width={1200}
             height={1200}
             className="mb-6"
@@ -170,6 +176,7 @@ export default function VenueDetailPage() {
         <div className="flex items-center gap-2 mb-3">
           <span className="venue-badge-night" data-cat={venue.category}>{catLabel}</span>
           <span className="venue-badge-open text-sm px-3 py-0.5">영업중</span>
+          {ad && <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#222] text-white">광고</span>}
         </div>
 
         <h1 className="text-2xl leading-tight mb-3">{venueLabel}</h1>
@@ -212,8 +219,8 @@ export default function VenueDetailPage() {
         <div className="space-y-2 mb-4">
           <InfoRow label="주소" value={venue.address} />
           <InfoRow label="영업시간" value={venue.hours} />
-          <InfoRow label="연락처" value={venue.phone} />
-          {inq && <InfoRow label="문의" value={inq.text} />}
+          <InfoRow label="연락처" value={ad ? ad.tel : venue.phone} />
+          {ad ? <InfoRow label="문의" value={`담당 ${ad.nick}`} /> : inq && <InfoRow label="문의" value={inq.text} />}
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -465,8 +472,19 @@ export default function VenueDetailPage() {
       {/* 이탈 방지 팝업 — 스크롤 올릴 때 */}
       <ExitPopup venue={venue} />
 
+      {/* 일산83-1 — 광고주 쪽(src/data/venueAds.ts): 하단 고정 전화바 · 번호만 */}
+      {ad && (
+        <a
+          href={`tel:${ad.tel.replace(/-/g, '')}`}
+          onClick={() => haptic('medium')}
+          className="phone-bar flex items-center justify-center gap-3"
+        >
+          <span className="text-white font-bold">{ad.tel}</span>
+        </a>
+      )}
+
       {/* 하단 고정: 전화번호 바 — 광고주는 닉네임 강조 */}
-      {venue.phone && venue.phone !== '별도문의' && (
+      {!ad && venue.phone && venue.phone !== '별도문의' && (
         <a
           href={`tel:${venue.phone.replace(/-/g, '')}`}
           onClick={() => haptic('medium')}

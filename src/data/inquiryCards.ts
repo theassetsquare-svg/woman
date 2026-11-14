@@ -7,7 +7,7 @@
 export interface InquiryCard { id: string; card: string; text: string; alt: string; }
 
 export const inquiryCards: InquiryCard[] = [
-  { id: "ilsan-room", card: "/ilsan/room/card-ilsan-room-a69f4b39.png", text: "광고문의 카톡 besta12", alt: "일산룸 광고문의 카톡 besta12" },
+  // 일산83-1(2026-11-15) — 일산룸(ilsan-room)은 광고주 쪽이 되어 venueAds.ts 로 옮김(대표님 2026-11-13 · 위 10-11 줄을 대신함) · 옛 카드 그림 파일은 그대로 둠
   // 전체57-1(2026-10-25) — 대표님 지시 2026-10-25 15:0x 「광고문의 썸네일이미지를 먼저 만들어」 · 가게 쪽 둘
   { id: "ansan-hit-night", card: "/ansan/hit-night/card-ansan-hit-night-232b3ed2.png", text: "광고문의 카톡 besta12", alt: "안산히트나이트 광고문의 카톡 besta12" },
   { id: "yeongdeungpo-terminal-night", card: "/seoul-etc/yeongdeungpo-terminal-night/card-yeongdeungpo-terminal-night-339b4ac0.png", text: "광고문의 카톡 besta12", alt: "영등포터미널나이트 광고문의 카톡 besta12" },

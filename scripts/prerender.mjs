@@ -136,8 +136,15 @@ function venueBody(v) {
   if (v.hours && v.hours !== '별도문의') nap.push(`<li><strong>영업시간</strong> ${escHtml(v.hours)}</li>`);
   if (v.phone && v.phone !== '별도문의') nap.push(`<li><strong>연락처</strong> ${escHtml(v.phone)}${v.contact ? ' (' + escHtml(v.contact) + ')' : ''}</li>`);
   const inq = inquiryCards[v.id];
-  if (inq) nap.push(`<li><strong>문의</strong> ${escHtml(inq.text)}</li>`);
-  const inqImg = inq ? `\n<img src="${escAttr(inq.card)}" width="1200" height="1200" alt="${escAttr(inq.alt)}" style="max-width:100%;height:auto" />` : '';
+  const ad = venueAds[v.id];
+  if (ad) {
+    nap.push(`<li><strong>연락처</strong> ${escHtml(ad.tel)}</li>`);   // 화면(VenueDetailPage InfoRow)과 같은 글자 꼴 — 전화 링크는 아래 고정 전화바 하나
+    nap.push(`<li><strong>문의</strong> 담당 ${escHtml(ad.nick)}</li>`);
+  } else if (inq) nap.push(`<li><strong>문의</strong> ${escHtml(inq.text)}</li>`);
+  const card = ad || inq;
+  const inqImg = card ? `\n<img src="${escAttr(card.card)}" width="1200" height="1200" alt="${escAttr(card.alt)}" style="max-width:100%;height:auto" />` : '';
+  const adMark = ad ? '<p><span class="text-xs font-bold px-2 py-0.5 rounded bg-[#222] text-white">광고</span></p>\n' : '';
+  const adBar = ad ? `\n<a href="${telHref(ad.tel)}" class="phone-bar flex items-center justify-center gap-3"><span class="text-white font-bold">${escHtml(ad.tel)}</span></a>` : '';
   const napBlock = nap.length ? `<h2>${escHtml(v.keyword)} 위치·이용 안내</h2><ul>${nap.join('')}</ul>` : '';
   // 관련 업소(실연관: 같은 지역 + 같은 유형) — dead-end 방지·페이지간 이동
   const sameRegion = linkVenues.filter((x) => x.region === v.region && x.id !== v.id).slice(0, 4);
@@ -145,10 +152,10 @@ function venueBody(v) {
   const relRegion = sameRegion.length ? `<h2>${escHtml(region)} 다른 업소</h2>${listLinks(sameRegion)}` : '';
   const relCat = sameCat.length ? `<h2>다른 지역 ${escHtml(CAT[v.category] || '')} 추천</h2>${listLinks(sameCat)}` : '';
   return `<nav aria-label="breadcrumb"><a href="${S(BASE)}" target="_blank" rel="noopener noreferrer">홈</a> / <a href="${S(BASE + '/' + v.region)}" target="_blank" rel="noopener noreferrer">${escHtml(region)}</a> / <span>${escHtml(v.keyword)}</span></nav>
-<h1>${escHtml(v.keyword)}</h1>${repLinkHtml(v.path)}${inqImg}
+${adMark}<h1>${escHtml(v.keyword)}</h1>${repLinkHtml(v.path)}${inqImg}
 <p>${escHtml(v.description)}</p>${v.cardHook ? para(v.cardHook) : ''}
 ${summary}${intro}${secs}${qp}${faq}${concl}${napBlock}${relRegion}${relCat}
-${napLink(v.keyword)}`;
+${napLink(v.keyword)}${adBar}`;
 }
 
 function listLinks(items) {
@@ -166,6 +173,15 @@ const staticLinks = [...readFileSync('src/data/staticVenueLinks.ts', 'utf8')
 const inquiryCards = Object.fromEntries([...readFileSync('src/data/inquiryCards.ts', 'utf8')
   .matchAll(/\{\s*id:\s*"([^"]+)",\s*card:\s*"([^"]+)",\s*text:\s*"([^"]*)",\s*alt:\s*"([^"]*)"\s*\}/g)]
   .map((m) => [m[1], { card: m[2], text: m[3], alt: m[4] }]));
+// 일산83-1(2026-11-15) — 광고주 세트(src/data/venueAds.ts): 그 가게 쪽 하나에만 카드 · og · 구조화 데이터 그림과 전화 · 「광고」 표시 ·
+// 연락처 · 문의(담당) 줄 · 아래 고정 전화바(번호만). 목록·추천·홈은 그대로(가게 자료의 phone 칸을 쓰지 않는다 — 다른 쪽 HTML 변화 0).
+const adSrc = readFileSync('src/data/venueAds.ts', 'utf8');
+const venueAds = Object.fromEntries([...adSrc
+  .matchAll(/\{\s*id:\s*"([^"]+)",\s*card:\s*"([^"]+)",\s*nick:\s*"([^"]+)",\s*tel:\s*"([^"]+)",\s*alt:\s*"([^"]*)"\s*\}/g)]
+  .map((m) => [m[1], { card: m[2], nick: m[3], tel: m[4], alt: m[5] }]));
+if ((adSrc.match(/\{\s*id:\s*"/g) || []).length !== Object.keys(venueAds).length) throw new Error('venueAds: 칸 순서(id, card, nick, tel, alt)가 다른 줄이 있음 — 읽지 못한 줄은 쪽에서 빠진다');
+for (const id of Object.keys(venueAds)) if (inquiryCards[id]) throw new Error(`venueAds: ${id} 가 inquiryCards.ts 에도 있음 — 광고주 쪽은 광고문의 카드에 두지 않는다`);
+const telHref = (tel) => `tel:${tel.replace(/-/g, '')}`;
 // 네이버70-1(2026-11-08) — 같은 가게 대표 쪽이 다른 사이트에 있는 겹침 쪽(src/data/repLinks.ts): h1 바로 뒤에 대표 쪽 링크 한 줄.
 // 검색 제외는 dedicated/noindex-paths.json 이 맡는다 — 링크 줄이 있는 쪽이 그 목록에 없으면 빌드를 멈춘다.
 const repLinks = Object.fromEntries([...readFileSync('src/data/repLinks.ts', 'utf8')
@@ -176,7 +192,7 @@ const repLinkHtml = (p) => {
   const r = repLinks[String(p).replace(/\/$/, '')];
   return r ? `\n<p class="zq-replink" data-r="replink" style="margin:6px 0 16px;font-size:.95rem;line-height:1.7">${escHtml(r.name)} 안내는 <a href="${escAttr(r.href)}">${escHtml(r.label)}</a>로 옮겨 정리했습니다. ${escHtml(r.tail)}</p>` : '';
 };
-const ogImageOf = (v) => (inquiryCards[v.id] ? `${BASE}${inquiryCards[v.id].card}` : `${BASE}/og/${v.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : v.id}.jpg`);
+const ogImageOf = (v) => (venueAds[v.id] ? `${BASE}${venueAds[v.id].card}` : inquiryCards[v.id] ?`${BASE}${inquiryCards[v.id].card}` : `${BASE}/og/${v.id === 'daejeon-won-night' ? 'daejeon-won-night-v2' : v.id}.jpg`);
 function buildLinkVenues(list) {
   const out = [...list];
   for (const s of staticLinks) {
@@ -419,6 +435,7 @@ for (const v of venues) {
   };
   if (v.description) localBusiness.description = v.description;
   if (v.phone && v.phone !== '별도문의') localBusiness.telephone = v.phone;
+  if (venueAds[v.id]) localBusiness.telephone = `+82-${venueAds[v.id].tel.slice(1)}`;   // 일산83-1 — 광고주 쪽(이 사이트 광고주 쪽과 같은 +82 꼴)
   if (v.address) localBusiness.address = { '@type': 'PostalAddress', streetAddress: v.address, addressLocality: v.area, addressCountry: 'KR' };
   const oh = parseHours(v.hours);
   if (oh) localBusiness.openingHours = oh;
@@ -433,7 +450,7 @@ for (const v of venues) {
 
   writePage(v.path, generateHTML({
     title, description, canonical: `${BASE}${v.path}`, noindex: NOINDEX.has(v.path),
-    ogImage: ogImageOf(v), ogImageAlt: inquiryCards[v.id]?.alt, jsonLd, bodyHtml: venueBody(v),
+    ogImage: ogImageOf(v), ogImageAlt: venueAds[v.id]?.alt ?? inquiryCards[v.id]?.alt, jsonLd, bodyHtml: venueBody(v),
   }));
   count++;
 }

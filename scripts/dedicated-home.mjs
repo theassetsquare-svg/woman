@@ -14,10 +14,23 @@ writeFileSync('dist/index.html', readFileSync('dedicated/home.html', 'utf8'));
 let sm = readFileSync('dist/sitemap.xml', 'utf8');
 const 오늘 = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
 let 더함 = 0;
+// 일산83-1(2026-11-15) — 광고주 세트의 「사이트맵 그림 줄」: 이 목록의 쪽만 그 쪽 og:image(1:1 광고주 카드)를 그림 줄로 단다 · 다른 쪽 줄은 그대로
+const 그림줄쪽 = new Set(['ilsan/myeongwolgwan']);
+const 쪽그림 = (d) => {
+  const m = readFileSync(`public/${d}/index.html`, 'utf8').match(/<meta property="og:image" content="([^"]+)"/);
+  if (!m || !m[1].startsWith(`${HOST}/${d}/`)) throw new Error(`[dedicated-home] ${d}: og:image 가 그 쪽 폴더의 카드가 아님 — ${m ? m[1] : '없음'}`);
+  return m[1];
+};
 for (const d of 쪽들) {
   const loc = `${HOST}/${d}/`;
   if (sm.includes(`<loc>${loc}</loc>`)) continue;
-  sm = sm.replace('</urlset>', `  <url><loc>${loc}</loc><lastmod>${오늘}</lastmod></url>\n</urlset>`); 더함++;
+  const 그림 = 그림줄쪽.has(d) ? `<image:image><image:loc>${쪽그림(d)}</image:loc></image:image>` : '';
+  sm = sm.replace('</urlset>', `  <url><loc>${loc}</loc><lastmod>${오늘}</lastmod>${그림}</url>\n</urlset>`); 더함++;
+}
+if (sm.includes('<image:image>') && !sm.includes('xmlns:image=')) {
+  const 앞 = sm;
+  sm = sm.replace(/<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/, '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">');
+  if (sm === 앞) throw new Error('[dedicated-home] 사이트맵 머리(urlset)를 못 찾아 그림 이름공간을 못 넣음');
 }
 writeFileSync('dist/sitemap.xml', sm);
 console.log(`[dedicated-home] 홈 교체 · 사이트맵 +${더함} (쪽 ${쪽들.length})`);
